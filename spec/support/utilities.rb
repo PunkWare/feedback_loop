@@ -1,5 +1,5 @@
 def full_title(page_title)
-  base_title = "Backlog Blooming"
+  base_title = "Feedback Loop"
   
   if page_title.empty?
     base_title
