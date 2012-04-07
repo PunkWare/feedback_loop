@@ -115,10 +115,10 @@ describe "Authenticated pages" do
 
 		describe "in the Surveys controller" do
 
-			#describe "submitting to the create action" do
-			#  before { post surveys_path }
-			#  specify { response.should redirect_to(signin_path) }
-			#end
+			describe "submitting to the create action" do
+				before { post surveys_path }
+				specify { response.should redirect_to(signin_path) }
+			end
 
 			describe "when trying to edit a survey" do
 				let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
@@ -196,15 +196,9 @@ describe "Authenticated pages" do
 		end
 		
 		describe "in the Surveys controller" do
-
-			#describe "submitting to the create action" do
-		  	#  before { post surveys_path }
-		  	#  specify { response.should redirect_to(signin_path) }
-		  	#end
+			let(:survey) { FactoryGirl.create(:survey, user: wrong_user, title: "Survey 1") }
 
 			describe "when trying to edit a survey" do
-				let(:survey) { FactoryGirl.create(:survey, user: wrong_user, title: "Survey 1") }
-
 				describe "visiting the edit survey page" do
 					before { visit edit_survey_path(survey) }
 					it { should have_title('Home') }
@@ -214,6 +208,11 @@ describe "Authenticated pages" do
 					before { put survey_path(survey) }
 					specify { response.should redirect_to(root_path) }
 				end
+			end
+
+			describe "when submitting a DELETE request to the Surveys#destroy action" do
+				before { delete survey_path(survey) }
+				specify { response.should redirect_to(root_path) }        
 			end
 		end
 	end
