@@ -1,0 +1,23 @@
+<% provide(:title, "My surveys") %>
+<div class="row">
+  <aside class="span4">
+    	<section>
+      		<h1>
+        		<%= gravatar_for @user %>
+        		<%= @user.name %>
+      		</h1>
+    	</section>
+  	</aside>
+	<div class="span8">
+    	<% if @user.surveys.any? %>
+      		<h3>Surveys (<%= @user.surveys.count %>)</h3>
+			<p class="surveys">
+				<span class="header_title">Title</span>
+			</p>
+      		<ol class="surveys">
+        		<%= render @surveys %>
+      		</ol>
+      		<%= will_paginate @surveys %>
+    	<% end %>
+  	</div>
+</div>
