@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(params[:user])
 		if @user.save
-			flash[ :success ] = "Welcome and let's bloom !"
+			flash[ :success ] = "Welcome to Feedback Loop!"
 			
 			#redirect_to user_path(@user)
 			
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
 		
 		if @user.update_attributes(params[:user])
 			
-			flash[:success] = "Profile updated"
+			flash[:success] = "Profile updated."
 			
 			# the user is signed again as part of a successful profile update;
 			# this is because the remember token gets reset when the user is saved

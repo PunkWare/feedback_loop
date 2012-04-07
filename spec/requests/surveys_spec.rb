@@ -8,6 +8,56 @@ describe "Regarding all survey pages :" do
 		it { should have_heading(heading) }
 	end
 
+	describe "When testing title and h1 on new page, " do
+		let(:user) { FactoryGirl.create(:user) }
+
+		before do
+			sign_in user
+			visit new_survey_path
+		end
+		
+		let(:heading) {'New survey'}
+		let(:page_title) {heading}
+
+		it_should_behave_like "all survey pages"
+
+		describe "when filling fields on new page" do
+			let(:create_survey_button) {'Create my survey'}
+
+			describe "with invalid information," do
+				it "should not create a survey" do
+					expect { click_button create_survey_button }.not_to change(Survey, :count)
+				end
+
+				describe "should display error messages" do
+					before { click_button create_survey_button }
+
+					it { should have_flash_message('Title can\'t be blank','error') }   
+				end
+			end
+
+			describe " with valid information, " do
+				before do
+					fill_in "Title",         with: "fake"
+				end
+
+				it "should create a survey" do
+					expect do
+						click_button create_survey_button
+					end.to change(Survey, :count).by(1)
+				end
+
+				describe "after saving the survey" do
+					let(:survey) { Survey.find_by_title('fake') }
+					before { click_button create_survey_button }      
+
+					it { should have_title('My surveys') }
+					it { should have_flash_message('Survey created','success') }
+				end
+			end
+		end
+	end
+
 	describe "When testing title and h1 on edit page, " do
 		let(:user) { FactoryGirl.create(:user) }
 		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }

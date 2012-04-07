@@ -2,6 +2,22 @@ class SurveysController < ApplicationController
 	before_filter :signed_in_user
 	before_filter :correct_user,    only: [:destroy, :edit, :update]
 
+	def create
+		@survey = current_user.surveys.build(params[:survey])
+		if @survey.save
+			flash[ :success ] = "Survey created."
+				
+			redirect_to user_surveys_path
+				
+		else
+			render 'new'
+		end
+	end
+	
+	def new
+		@survey = current_user.surveys.build
+	end
+
 	def edit
 		@survey = Survey.find(params[:id]) 
 	end
@@ -11,7 +27,7 @@ class SurveysController < ApplicationController
 		
 		if @survey.update_attributes(params[:survey])
 			
-			flash[:success] = "Survey updated"
+			flash[:success] = "Survey updated."
 			
 			redirect_to user_surveys_path
 		else

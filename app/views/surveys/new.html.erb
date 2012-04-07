@@ -1,0 +1,15 @@
+<%= provide(:title, 'New survey') %>
+<h1>New survey</h1>
+
+<%= render 'shared/error_messages', object: @survey %>
+
+<div class="row">
+	<div class="span6 offset3">
+			<%= form_for(@survey) do |f| %>
+			
+				<%= render 'fields', f: f %>
+
+				<%= f.submit "Create my survey", :class => "btn btn-large btn-primary" %>
+			<% end %>
+	</div>
+</div>
