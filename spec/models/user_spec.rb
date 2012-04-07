@@ -12,6 +12,8 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+
+  it { should respond_to(:surveys) }
   
   # Session management (with cookie) related
   it { should respond_to(:remember_token) }
@@ -107,5 +109,27 @@ describe User do
   describe "Remember cookie token" do
     before { @user.save }
     its(:remember_token) {should_not be_blank}
+  end
+
+  describe "survey associations" do
+    before { @user.save }
+    let!(:second_survey) do 
+      FactoryGirl.create(:survey, user: @user, title: "Second Survey")
+    end
+    let!(:first_survey) do
+      FactoryGirl.create(:survey, user: @user, title: "First Survey")
+    end
+
+    it "should have the right surveys in the right order" do
+      @user.surveys.should == [first_survey, second_survey]
+    end
+    
+    it "should destroy associated surveys when user is deleted" do
+      surveys = @user.surveys
+      @user.destroy
+      surveys.each do |survey|
+        Survey.find_by_id(survey.id).should be_nil
+      end
+    end
   end
 end

@@ -15,7 +15,7 @@ describe "info_pages" do
   describe "home page" do
     before { visit root_path }
     let(:page_title) {home_page_title}
-    let(:heading) {'Backlog Blooming'}  
+    let(:heading) {'Feedback Loop'}  
     
     it_should_behave_like "all static pages"
   end

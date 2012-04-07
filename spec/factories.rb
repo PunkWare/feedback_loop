@@ -9,4 +9,9 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :survey do
+    sequence(:title)  { |n| "Survey #{n}" }
+    user
+  end
 end
