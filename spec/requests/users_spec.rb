@@ -244,4 +244,38 @@ describe "Regarding all user pages :" do
       it { should_not have_link('delete', href: user_path(another_admin)) }
     end
   end
+
+  describe "When displaying user's surveys page" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:heading) {user.name}
+    let(:page_title) {'My surveys'}
+
+    # as a non signed-in user
+    before do
+      visit user_surveys_path
+    end
+
+    it { should_not have_title(full_title(page_title)) }
+
+    describe "as a signed-in user," do
+      let!(:survey1) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
+      let!(:survey2) { FactoryGirl.create(:survey, user: user, title: "Survey 2") }
+      
+      before do
+        sign_in user
+        visit user_surveys_path
+      end
+      
+      it_should_behave_like "all user pages"
+      
+      describe "the surveys" do
+        it { should have_content(survey1.title) }
+      
+        it { should have_content(survey2.title) }
+        
+        it { should have_content(user.surveys.count) }
+      end
+    end
+  end
+
 end

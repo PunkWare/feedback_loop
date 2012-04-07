@@ -17,12 +17,16 @@ ActiveRecord::Schema.define(:version => 20120406182005) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "key"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "closed",     :default => false
+    t.boolean  "anonymous",  :default => false
+    t.boolean  "private",    :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
+  add_index "surveys", ["created_at"], :name => "index_surveys_on_created_at"
   add_index "surveys", ["key"], :name => "index_surveys_on_key"
-  add_index "surveys", ["user_id", "title"], :name => "index_surveys_on_user_id_and_title"
+  add_index "surveys", ["user_id", "closed", "created_at"], :name => "index_surveys_on_user_id_and_closed_and_created_at"
 
   create_table "users", :force => true do |t|
     t.string   "name"

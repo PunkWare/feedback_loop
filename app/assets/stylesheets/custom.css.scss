@@ -191,3 +191,45 @@ input, textarea, select, .uneditable-input {
   }
 }
 
+/* surveys index */
+
+.surveys {
+  list-style: none;
+  margin: 10px 0 0 0;
+
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+}
+
+.header_title {
+  float: none;
+}
+
+.task_title {
+  display: block;
+}
+
+.task_remaining_effort {
+    float: right;
+  width : 5%;
+  text-align: right;  
+}
+
+.timestamp {
+  color: $grayLight;
+}
+
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
+
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}
+

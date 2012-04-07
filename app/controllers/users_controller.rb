@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # arranges the signed_in_user method to be called before the given actions (edit and update)
-  before_filter :signed_in_user,  only: [:show, :edit, :update] 
+  before_filter :signed_in_user,  only: [:show, :edit, :update, :surveys] 
   before_filter :new_user,        only: [:new, :create]
   before_filter :correct_user,    only: [:show, :edit, :update]
   before_filter :admin_user,      only: [:index, :destroy]
@@ -31,6 +31,11 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+  end
+
+  def surveys
+    @user = current_user
+    @surveys = @user.surveys.paginate(page: params[:page])
   end
   
   def edit
@@ -71,18 +76,6 @@ class UsersController < ApplicationController
   end
   
   private
-      def signed_in_user
-        unless signed_in?
-          # used to store location of the URI requested by the user.
-          # permit the forwarding whien the user has signed in
-          store_location
-          
-          redirect_to signin_path, notice: "Please sign in." unless signed_in?
-          # the line above is equivalent to :
-          #flash[:notice] = "Please sign in."
-          #redirect_to signin_path unless signed_in?
-        end
-      end
       
       def new_user
         flash[:error] = "You already have an account."
