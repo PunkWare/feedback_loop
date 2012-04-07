@@ -109,6 +109,22 @@ describe "Signin, and signout pages" do
         # it shouldn't allow to go to view profile page, and forward to sign in page instead
         specify { response.should redirect_to(root_path) }
       end
+
+      describe "in the Surveys controller" do
+
+        #describe "submitting to the create action" do
+        #  before { post surveys_path }
+        #  specify { response.should redirect_to(signin_path) }
+        #end
+
+        describe "submitting to the destroy action" do
+          before do
+            survey = FactoryGirl.create(:survey)
+            delete survey_path(survey)
+          end
+          specify { response.should redirect_to(signin_path) }
+        end
+      end
     end
     
     describe "for signed-in users" do
