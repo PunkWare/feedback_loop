@@ -9,8 +9,8 @@ class Survey < ActiveRecord::Base
 	default_scope order: 'surveys.created_at DESC'
 
 	private
-  
-    	def create_key
-      		self.key = SecureRandom.urlsafe_base64
-    	end
+
+		def create_key
+			self.key = SecureRandom.urlsafe_base64
+		end
 end

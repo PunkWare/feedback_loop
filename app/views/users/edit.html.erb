@@ -7,12 +7,12 @@
 	<div class="span6 offset3">
 		<%= form_for(@user) do |f| %>   
 
-      		<%= render 'fields', f: f %>
+			<%= render 'fields', f: f %>
 
-      		<%= f.submit "Save changes", :class => "btn btn-large btn-primary" %>
-    	<% end %>
+			<%= f.submit "Save changes", :class => "btn btn-large btn-primary" %>
+		<% end %>
 
 		<%= gravatar_for @user %>
-    	<a href="http://gravatar.com/emails" target="_blank">change</a>
-  </div>
+		<a href="http://gravatar.com/emails" target="_blank">change</a>
+	</div>
 </div>

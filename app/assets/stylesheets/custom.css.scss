@@ -5,95 +5,95 @@
 $grayMediumLight: #eaeaea;
 
 @mixin box_sizing {
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	box-sizing: border-box;
 }
 
 /* universal */
 
 html {
-  overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 body {
-  padding-top: 60px;
+	padding-top: 60px;
 }
 
 section {
-  overflow: auto;
+	overflow: auto;
 }
 
 textarea {
-  resize: vertical;
+	resize: vertical;
 }
 
 .center {
-  	text-align: center;
+		text-align: center;
 	h1 {
-  		margin-bottom: 10px;
+			margin-bottom: 10px;
 	}
 }
 
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
+	line-height: 1;
 }
 
 h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
+	font-size: 3em;
+	letter-spacing: -2px;
+	margin-bottom: 30px;
+	text-align: center;
 }
 
 h2 {
-  font-size: 1.7em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $grayLight;
+	font-size: 1.7em;
+	letter-spacing: -1px;
+	margin-bottom: 30px;
+	text-align: center;
+	font-weight: normal;
+	color: $grayLight;
 }
 
 p {
-  font-size: 1.1em;
-  line-height: 1.7em;
+	font-size: 1.1em;
+	line-height: 1.7em;
 }
 
 /* header */
 
 #logo {
-  	float: left;
-  	margin-right: 10px;
-  	font-size: 1.7em;
-  	color: white;
-  	text-transform: uppercase;
-  	letter-spacing: -1px;
-  	padding-top: 9px;
-  	font-weight: bold;
-  	line-height: 1;
+		float: left;
+		margin-right: 10px;
+		font-size: 1.7em;
+		color: white;
+		text-transform: uppercase;
+		letter-spacing: -1px;
+		padding-top: 9px;
+		font-weight: bold;
+		line-height: 1;
 
 	&:hover {
-  		color: white;
-  		text-decoration: none;
+			color: white;
+			text-decoration: none;
 	}
 }
 
 /* footer */
 
 footer {
-  	margin-top: 45px;
-  	padding-top: 5px;
-  	border-top: 1px solid $grayMediumLight;
-  	color: $grayLight;
+		margin-top: 45px;
+		padding-top: 5px;
+		border-top: 1px solid $grayMediumLight;
+		color: $grayLight;
 
 	a {
-  		color: $gray;
+			color: $gray;
 		
 		&:hover { 
-  			color: $grayDarker;
+				color: $grayDarker;
 		}
 	}
 	
@@ -102,12 +102,12 @@ footer {
 	}
 	
 	ul {
-	  	float: right;
-	  	list-style: none;
+			float: right;
+			list-style: none;
 	
 		li {
-		  float: left;
-		  margin-left: 10px;
+			float: left;
+			margin-left: 10px;
 		}
 	}
 }
@@ -115,121 +115,121 @@ footer {
 /* sidebar */
 
 aside {
-  section {
-    padding: 10px 0;
-    border-top: 1px solid $grayLighter;
-    &:first-child {
-      border: 0;
-      padding-top: 0;
-    }
-    span {
-      display: block;
-      margin-bottom: 3px;
-      line-height: 1;
-    }
-    h1 {
-      font-size: 1.6em;
-      text-align: left;
-      letter-spacing: -1px;
-      margin-bottom: 3px;
-    }
-  }
+	section {
+		padding: 10px 0;
+		border-top: 1px solid $grayLighter;
+		&:first-child {
+			border: 0;
+			padding-top: 0;
+		}
+		span {
+			display: block;
+			margin-bottom: 3px;
+			line-height: 1;
+		}
+		h1 {
+			font-size: 1.6em;
+			text-align: left;
+			letter-spacing: -1px;
+			margin-bottom: 3px;
+		}
+	}
 }
 
 /* forms */
 
 input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  padding: 10px;
-  height: auto;
-  margin-bottom: 15px;
-  @include box_sizing;
+	border: 1px solid #bbb;
+	width: 100%;
+	padding: 10px;
+	height: auto;
+	margin-bottom: 15px;
+	@include box_sizing;
 }
 
 #error_explanation {
-  color:#f00;
-  ul {
-    list-style: none;
-    margin: 0 0 18px 0;
-  }
+	color:#f00;
+	ul {
+		list-style: none;
+		margin: 0 0 18px 0;
+	}
 }
 
 .field_with_errors {
-  @extend .control-group;
-  @extend .error;
- }
+	@extend .control-group;
+	@extend .error;
+}
 
 
 .gravatar {
-  float: left;
-  margin-right: 10px;
+	float: left;
+	margin-right: 10px;
 }
 
 /* miscellaneous */
 
 .debug_dump {
-  clear: both;
-  float: left;
-  width: 100%;
-  margin-top: 45px;
-  @include box_sizing;
+	clear: both;
+	float: left;
+	width: 100%;
+	margin-top: 45px;
+	@include box_sizing;
 }
 
 /* users index */
 
 .users {
-  list-style: none;
-  margin: 0;
-  li {
-    overflow: auto;
-    padding: 10px 0;
-    border-top: 1px solid $grayLighter;
-    &:last-child {
-      border-bottom: 1px solid $grayLighter
-    }
-  }
+	list-style: none;
+	margin: 0;
+	li {
+		overflow: auto;
+		padding: 10px 0;
+		border-top: 1px solid $grayLighter;
+		&:last-child {
+			border-bottom: 1px solid $grayLighter
+		}
+	}
 }
 
 /* surveys index */
 
 .surveys {
-  list-style: none;
-  margin: 10px 0 0 0;
+	list-style: none;
+	margin: 10px 0 0 0;
 
-  li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
-  }
+	li {
+		padding: 10px 0;
+		border-top: 1px solid #e8e8e8;
+	}
 }
 
 .header_title {
-  float: none;
+	float: none;
 }
 
 .task_title {
-  display: block;
+	display: block;
 }
 
 .task_remaining_effort {
-    float: right;
-  width : 5%;
-  text-align: right;  
+		float: right;
+	width : 5%;
+	text-align: right;  
 }
 
 .timestamp {
-  color: $grayLight;
+	color: $grayLight;
 }
 
 .gravatar {
-  float: left;
-  margin-right: 10px;
+	float: left;
+	margin-right: 10px;
 }
 
 aside {
-  textarea {
-    height: 100px;
-    margin-bottom: 5px;
-  }
+	textarea {
+		height: 100px;
+		margin-bottom: 5px;
+	}
 }
 

@@ -1,11 +1,11 @@
 <li>
 	<span class="survey_title"><%= link_to survey.title, edit_survey_path(survey) %> </span>
 	
-    | <%= link_to "delete", survey, method: :delete, confirm: "This survey will be deleted. Are you sure ?" %>
+	| <%= link_to "delete", survey, method: :delete, confirm: "This survey will be deleted. Are you sure ?" %>
 
 	<br />
 	
 	<span class="timestamp">
-    	Created <%= time_ago_in_words(survey.created_at) %> ago.
-  	</span>
+		Created <%= time_ago_in_words(survey.created_at) %> ago.
+	</span>
 </li>
