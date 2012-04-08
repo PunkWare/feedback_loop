@@ -44,7 +44,15 @@ class SurveysController < ApplicationController
 	private
 
 			def correct_user
-				@user = Survey.find(params[:id]).user
-				redirect_to(root_path) unless current_user?(@user)
+				@survey = current_user.surveys.find_by_id(params[:id])
+				redirect_to(root_path) if @survey.nil?
+
+				# ANOTHER METHOD BELOW A LITTLE BIT 
+				#current_survey = Survey.find_by_id(params[:id])
+				##if a survey with this id exist
+				#if current_survey
+				#	@user = current_survey.user
+				#end
+				#redirect_to(root_path) unless current_user?(@user)
 			end
 end
