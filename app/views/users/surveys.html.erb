@@ -13,8 +13,9 @@
 	</aside>
 	
 	<div class="span8">
+		<h1>My surveys</h1>
 		<% if @user.surveys.any? %>
-			<h3>Surveys (<%= @user.surveys.count %>)</h3>
+			<h3><%=  pluralize(@user.surveys.count, "survey")  %></h3>
 			<p class="surveys">
 				<span class="header_title">Title</span>
 			</p>

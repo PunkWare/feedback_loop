@@ -1,17 +1,27 @@
 <%= f.label :title %>
 <%= f.text_field :title %>
 
-<p>
-	<%= f.label :anonymous %>
-	<%= f.check_box :anonymous %>
-</p>
+<div class="survey_field">
+	<p>
+		<%= f.label :anonymous %>
+		<span class="tips">If checked, the surveyed will be anonymous:</span>
+		<%= f.check_box :anonymous %>
+	</p>
+</div>
 
-<p>
-	<%= f.label :private %>
-	<%= f.check_box :private %>
-</p>
 
-<p>
-	<%= f.label :closed %>
-	<%= f.check_box :closed %>
-</p>
+<div class="survey_field">
+	<p>
+		<%= f.label :private %>
+		<span class="tips">If checked, selected surveyed are notified by email:</span>
+		<%= f.check_box :private %>
+	</p>
+</div>
+
+<div class="survey_field">
+	<p>
+		<%= f.label :closed %>
+		<span class="tips">If checked, the survey is no longer available to surveyed:</span>
+		<%= f.check_box :closed %>
+	</p>
+</div>

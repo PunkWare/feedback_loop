@@ -17,7 +17,7 @@ describe "Regarding all user pages :" do
 	end
 	
 	describe "When providing sign up fields" do
-		let(:create_account_button) {'Create my account'}
+		let(:create_account_button) {'Create account'}
 		
 		before { visit signup_path }
 
@@ -100,8 +100,8 @@ describe "Regarding all user pages :" do
 			visit edit_user_path(user)
 		end
 				
-		let(:heading) {'Update your profile'}
-		let(:page_title) {'Edit user'}
+		let(:heading) {'Update profile'}
+		let(:page_title) {'Update profile'}
 		
 		it_should_behave_like "all user pages"
 		it { should have_link('change', href: 'http://gravatar.com/emails') }
@@ -267,6 +267,14 @@ describe "Regarding all user pages :" do
 			end
 			
 			it_should_behave_like "all user pages"
+
+			it { should have_link('New survey', href: new_survey_path) }
+
+			describe "when clicking the new survey button" do
+				before { click_link 'New survey' }
+				
+				it { should have_title('New survey') }
+			end
 			
 			describe "the surveys" do
 				it { should have_content(survey1.title) }

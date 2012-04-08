@@ -1,12 +1,56 @@
-<% provide(:title, 'Home') %>
-<div class="center hero-unit">
-	<h1>Feedback Loop</h1>
-	<h2>
-		Feedback is a process in which information about the past or the present influences the same phenomenon in the present or future.<br /><br /> 
-		Loop is the complete causal path that leads from the initial detection of the gap to the subsequent modification of the gap.
-	</h2>
-	
-	<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-</div>
+<% if !signed_in? %>
+	<% provide(:title, 'Home') %>
+	<div class="center hero-unit">
+		<h1>Feedback Loop</h1>
+		<h2>
+			Feedback is a process in which information about the past or the present influences the same phenomenon in the present or future.<br /><br /> 
+			Loop is the complete causal path that leads from the initial detection of the gap to the subsequent modification of the gap.
+		</h2>
+		
+		<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+	</div>
 
-<%= link_to image_tag("rails.png", alt: "Rails") , 'http://rubyonrails.org/' %> Powered by Ruby on Rails
+	<%= link_to image_tag("rails.png", alt: "Rails") , 'http://rubyonrails.org/' %> Powered by Ruby on Rails
+<% else %>
+	<% provide(:title, 'All surveys') %>
+	<div class="center hero-unit">
+		<h1>Give Feedback!</h1>
+	</div>
+	<div class="row">
+		<aside class="span4">
+			<section>
+				<h1>
+					<%= gravatar_for @current_user %>
+					<%= @current_user.name %>
+				</h1>
+			</section>
+			<%= link_to "Join private survey", root_path, class: "btn btn-large btn-primary" %>
+		</aside>
+		
+		<div class="span8">
+			<% if @surveys.any? %>
+				<h3><%=  pluralize(@surveys.count, "public survey")  %></h3>
+				<p class="surveys">
+					<span class="header_title">Title</span>
+				</p>
+		
+				<ol class="surveys">
+					<% @surveys.each do |survey| %>
+						<li>
+							<span><%= link_to survey.title, edit_survey_path(survey) %> </span>
+
+							<br />
+							
+							<span class="timestamp">
+								Created <%= time_ago_in_words(survey.created_at) %> ago by <%= survey.user.name %>.
+							</span>
+						</li>
+					<% end %>
+				</ol>
+		
+				<%= will_paginate @surveys %>
+			<% end %>
+		</div>
+	</div>
+<% end %>
+

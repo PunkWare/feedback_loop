@@ -1,5 +1,5 @@
 <li>
-	<span class="survey_title"><%= link_to survey.title, edit_survey_path(survey) %> </span>
+	<span><%= link_to survey.title, edit_survey_path(survey) %> </span>
 	
 	| <%= link_to "delete", survey, method: :delete, confirm: "This survey will be deleted. Are you sure ?" %>
 

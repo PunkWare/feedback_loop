@@ -41,7 +41,7 @@ describe "Signin, and signout pages" do
 			it { should have_title(user.name) }
 		
 			it { should have_link('View Profile', href: user_path(user)) }
-			it { should have_link('Edit Profile', href: edit_user_path(user)) }
+			it { should have_link('Update Profile', href: edit_user_path(user)) }
 			it { should have_link('Sign out',     href: signout_path) }
 			it { should_not have_link('Sign in',  href: signin_path) }
 			it { should_not have_link('Users',    href: users_path) }
@@ -64,7 +64,7 @@ describe "Authenticated pages" do
 			before { visit root_path }
 
 			it { should_not have_link('View Profile', href: user_path(user)) }
-			it { should_not have_link('Edit Profile', href: edit_user_path(user)) }
+			it { should_not have_link('Update Profile', href: edit_user_path(user)) }
 			it { should_not have_link('Sign out',     href: signout_path) }
 			it { should have_link('Sign in',          href: signin_path) }
 			it { should_not have_link('Users',        href: users_path) }
@@ -168,7 +168,7 @@ describe "Authenticated pages" do
 			before { visit users_path }
 
 			# it shouldn't allow to go to users index page, and forward to root page instead
-			it { should have_title('Home') }
+			it { should have_title('All surveys') }
 		end
 		
 		describe "when trying a get index action" do
@@ -182,7 +182,7 @@ describe "Authenticated pages" do
 		describe "when trying to sign-up again" do
 			before { visit signup_path }
 
-			it { should have_title('Home') }
+			it { should have_title('All surveys') }
 		end
 		describe "when trying a new action" do
 			before { get signup_path }
@@ -201,7 +201,7 @@ describe "Authenticated pages" do
 			describe "when trying to edit a survey" do
 				describe "visiting the edit survey page" do
 					before { visit edit_survey_path(survey) }
-					it { should have_title('Home') }
+					it { should have_title('All surveys') }
 				end
 
 				describe "submitting to the update action" do
@@ -250,7 +250,7 @@ describe "Authenticated pages" do
 
 				describe "after signing in" do
 					it "should render the edit profile page" do
-						page.should have_title('Edit user')
+						page.should have_title('Update profile')
 					end
 
 					describe "when signin again" do

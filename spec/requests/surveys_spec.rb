@@ -22,7 +22,7 @@ describe "Regarding all survey pages :" do
 		it_should_behave_like "all survey pages"
 
 		describe "when filling fields on new page" do
-			let(:create_survey_button) {'Create my survey'}
+			let(:create_survey_button) {'Create survey'}
 
 			describe "with invalid information," do
 				it "should not create a survey" do
@@ -68,8 +68,8 @@ describe "Regarding all survey pages :" do
 			visit edit_survey_path(survey)
 		end
 
-		let(:heading) {'Update your survey'}
-		let(:page_title) {'Edit survey'}
+		let(:heading) {'Update survey'}
+		let(:page_title) {heading}
 		
 		it_should_behave_like "all survey pages"
 	end
