@@ -1,6 +1,6 @@
 class SurveysController < ApplicationController
 	before_filter :signed_in_user
-	before_filter :correct_user,    only: [:destroy, :edit, :update]
+	before_filter :correct_user,    only: [:destroy, :edit, :update, :show]
 
 	def create
 		@survey = current_user.surveys.build(params[:survey])
@@ -18,12 +18,16 @@ class SurveysController < ApplicationController
 		@survey = current_user.surveys.build
 	end
 
+	def show
+		@survey = current_user.surveys.find(params[:id])
+	end
+
 	def edit
-		@survey = Survey.find(params[:id]) 
+		@survey = current_user.surveys.find(params[:id])
 	end
 
 	def update
-		@survey = Survey.find(params[:id])
+		@survey = current_user.surveys.find(params[:id])
 		
 		if @survey.update_attributes(params[:survey])
 			
@@ -36,7 +40,7 @@ class SurveysController < ApplicationController
 	end
 
 	def destroy
-		deleted_survey = Survey.find(params[:id]).destroy
+		deleted_survey = current_user.surveys.find(params[:id]).destroy
 		flash[:success] = "Survey deleted."
 		redirect_to user_surveys_path
 	end

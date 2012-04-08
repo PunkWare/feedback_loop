@@ -120,6 +120,23 @@ describe "Authenticated pages" do
 				specify { response.should redirect_to(signin_path) }
 			end
 
+			describe "when trying to show a survey" do
+				let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
+
+				describe "visiting the show survey page" do
+					before { visit survey_path(survey) }
+
+					it { should have_title('Sign in') }
+				end
+
+				describe "submitting to the update action" do
+					before { get survey_path(survey)  }
+
+					specify { response.should redirect_to(signin_path) }
+				end
+			end
+
+
 			describe "when trying to edit a survey" do
 				let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
 
@@ -197,6 +214,18 @@ describe "Authenticated pages" do
 		
 		describe "in the Surveys controller" do
 			let(:survey) { FactoryGirl.create(:survey, user: wrong_user, title: "Survey 1") }
+
+			describe "when trying to view a survey" do
+				before { visit survey_path(survey) }
+
+				it { should have_title('All surveys') }
+			end
+
+			describe "when trying a show action on a survey" do
+				before { get survey_path(survey)  }
+
+				specify { response.should redirect_to(root_path) }
+			end
 
 			describe "when trying to edit a survey" do
 				describe "visiting the edit survey page" do

@@ -58,6 +58,23 @@ describe "Regarding all survey pages :" do
 		end
 	end
 
+	describe "When testing title and h1 on view page, " do
+		let(:user) { FactoryGirl.create(:user) }
+		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
+		
+		# must sign in user to comply with authorization restrictions
+		before do
+			sign_in user
+			visit survey_path(survey)
+		end
+		
+		let(:heading) {'Manage questions'}
+		let(:page_title) {heading}
+		
+		it_should_behave_like "all survey pages"
+		it { should have_link('New question', href: root_path) }
+	end
+
 	describe "When testing title and h1 on edit page, " do
 		let(:user) { FactoryGirl.create(:user) }
 		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }

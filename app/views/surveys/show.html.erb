@@ -1,0 +1,21 @@
+<% provide(:title, "Manage questions") %>
+<div class="row">
+	<aside class="span4">
+		<section>
+			<h1>
+				<%= gravatar_for @current_user %>
+				<%= current_user.name %>
+			</h1>
+		</section>
+		
+		<%= link_to "New question", root_path, class: "btn btn-large btn-primary" %>
+	
+	</aside>
+	
+	<div class="span8">
+		<h1>Manage questions</h1>
+		
+		<!-- Insert here the code to manage questions -->
+
+	</div>
+</div>
