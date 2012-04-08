@@ -24,6 +24,7 @@ describe "info_pages" do
 		describe "for signed-in users" do
 			let(:user) { FactoryGirl.create(:user) }
 			let(:another_user) { FactoryGirl.create(:user) }
+			after(:all)  { User.delete_all }
 
 			before do
 				sign_in user
