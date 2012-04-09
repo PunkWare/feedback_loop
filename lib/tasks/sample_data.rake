@@ -23,5 +23,11 @@ namespace :db do
 			title	= Faker::Lorem.sentence(4)
 			users.each { |user| user.surveys.create!( title: title ) }
 		end
+
+		surveys = Survey.all(limit: 6)
+		30.times do
+			title	= Faker::Lorem.sentence(4)
+			surveys.each { |survey| survey.questions.create!( title: title ) }
+		end
 	end
 end

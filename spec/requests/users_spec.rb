@@ -275,59 +275,21 @@ describe "Regarding all user pages :" do
 				
 				it { should have_title('New survey') }
 			end
-			
+
 			describe "the surveys" do
 				it { should have_content(survey1.title) }
-			
+
 				it { should have_content(survey2.title) }
-				
+
 				it { should have_content(user.surveys.count) }
-			end
 
-			describe "pagination" do
-				before(:all) { 30.times { FactoryGirl.create(:survey, user: user) } }
-				after(:all)  { Survey.delete_all }
+				it { should have_link('delete', href: survey_path(Survey.first)) }
 
-				let(:first_page)  { Survey.paginate(page: 1) }
-				let(:second_page) { Survey.paginate(page: 2) }
-
-				it { should have_link('Next') }
-				it { should have_link('2') }
-
-				it "should list each survey" do
-					Survey.all[0..2].each do |survey|
-						page.should have_selector('li', text: survey.title)
-					end
-				end
-
-				it "should list the first page of surveys" do
-					first_page.each do |survey|
-						page.should have_selector('li', text: survey.title)
-					end
-				end
-
-				it "should not list the second page of surveys" do
-					second_page.each do |survey|
-						page.should_not have_selector('li', text: survey.title)
-					end
-				end
-
-				describe "showing the second page" do
-					before { visit users_path(page: 2) }
-
-					it "should list the second page of surveys" do
-						second_page.each do |survey|
-							page.should have_selector('li', text: survey.title)
-						end
-					end
+				it "should be able to delete the survey" do
+					expect { click_link('delete') }.to change(Survey, :count).by(-1)
 				end
 			end
-			
-			it { should have_link('delete', href: survey_path(Survey.first)) }
 
-			it "should be able to delete the survey" do
-				expect { click_link('delete') }.to change(Survey, :count).by(-1)
-			end
 			
 		end
 	end

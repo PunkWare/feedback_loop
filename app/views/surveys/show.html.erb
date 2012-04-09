@@ -15,7 +15,15 @@
 	<div class="span8">
 		<h1>Manage questions</h1>
 		
-		<!-- Insert here the code to manage questions -->
-
+		<% if @survey.questions.any? %>
+			<h3>Questions for survey : <%= @survey.title %> </h3>
+			<br />
+			
+			<ol class="questions">
+				<%= render @questions %>
+			</ol>
+	
+			<%= will_paginate @questions %>
+		<% end %>
 	</div>
 </div>

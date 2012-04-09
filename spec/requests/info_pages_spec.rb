@@ -24,7 +24,6 @@ describe "info_pages" do
 		describe "for signed-in users" do
 			let(:user) { FactoryGirl.create(:user) }
 			let(:another_user) { FactoryGirl.create(:user) }
-			after(:all)  { User.delete_all }
 
 			before do
 				sign_in user
@@ -63,48 +62,6 @@ describe "info_pages" do
 
 					it { should_not have_content(survey12.title) }
 					it { should_not have_content(survey23.title) }
-				end
-
-				describe "pagination" do
-					before(:all) do
-						15.times { FactoryGirl.create(:survey, user: user) }
-						15.times { FactoryGirl.create(:survey, user: another_user) }
-					end
-					after(:all)  { Survey.delete_all }
-
-					let(:first_page)  { Survey.paginate(page: 1) }
-					let(:second_page) { Survey.paginate(page: 2) }
-
-					it { should have_link('Next') }
-					it { should have_link('2') }
-
-					it "should list each survey" do
-						Survey.all[0..2].each do |survey|
-							page.should have_selector('li', text: survey.title)
-						end
-					end
-
-					it "should list the first page of surveys" do
-						first_page.each do |survey|
-							page.should have_selector('li', text: survey.title)
-						end
-					end
-
-					it "should not list the second page of surveys" do
-						second_page.each do |survey|
-							page.should_not have_selector('li', text: survey.title)
-						end
-					end
-
-					describe "showing the second page" do
-						before { visit users_path(page: 2) }
-
-						it "should list the second page of surveys" do
-							second_page.each do |survey|
-								page.should have_selector('li', text: survey.title)
-							end
-						end
-					end
 				end
 				
 				it { should_not have_link('delete', href: survey_path(Survey.first)) }

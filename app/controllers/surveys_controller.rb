@@ -23,6 +23,7 @@ class SurveysController < ApplicationController
 	def show
 		@survey = current_user.surveys.find(params[:id])
 		current_survey = @survey
+		@questions = current_survey.questions.paginate(page: params[:page])
 	end
 
 	def edit

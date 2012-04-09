@@ -11,7 +11,7 @@ FactoryGirl.define do
 	end
 
 	factory :survey do
-		sequence(:title)  { |n| "Survey #{n}" }
+		sequence(:title)  { |n| "Survey #{n}-" }
 		user
 	end
 
