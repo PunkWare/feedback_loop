@@ -16,6 +16,8 @@ describe Survey do
 	it { should respond_to(:private) }
 	it { should respond_to(:closed) }
 
+	it { should respond_to(:questions) }
+
   	# check that survey.user is valid
 	it { should respond_to(:user) }
 	its(:user) { should == user }
@@ -62,6 +64,21 @@ describe Survey do
 			expect do
 				Survey.new(user_id: user.id)
 			end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
+		end
+	end
+
+	describe "question associations" do
+		before { @survey.save }
+
+		let!(:older_question) { FactoryGirl.create(:question, survey: @survey) }
+		let!(:newer_question) { FactoryGirl.create(:question, survey: @survey) }
+
+		it "should destroy associated questions" do
+			questions = @survey.questions
+			@survey.destroy
+			questions.each do |question|
+				Question.find_by_id(question.id).should be_nil
+			end
 		end
 	end
 end

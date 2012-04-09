@@ -14,4 +14,9 @@ FactoryGirl.define do
 		sequence(:title)  { |n| "Survey #{n}" }
 		user
 	end
+
+	factory :question do
+		sequence(:title)  { |n| "Question #{n}" }
+		survey
+	end
 end
