@@ -1,10 +1,11 @@
 class SurveysController < ApplicationController
 	before_filter :signed_in_user
-	before_filter :correct_user,    only: [:destroy, :edit, :update, :show]
+	before_filter :correct_user_of_survey,    only: [:destroy, :edit, :update, :show]
 
 	def create
 		@survey = current_user.surveys.build(params[:survey])
 		if @survey.save
+			current_survey = @survey
 			flash[ :success ] = "Survey created."
 				
 			redirect_to user_surveys_path
@@ -16,21 +17,24 @@ class SurveysController < ApplicationController
 	
 	def new
 		@survey = current_user.surveys.build
+		current_survey = @survey
 	end
 
 	def show
 		@survey = current_user.surveys.find(params[:id])
+		current_survey = @survey
 	end
 
 	def edit
 		@survey = current_user.surveys.find(params[:id])
+		current_survey = @survey
 	end
 
 	def update
 		@survey = current_user.surveys.find(params[:id])
 		
 		if @survey.update_attributes(params[:survey])
-			
+			current_survey = @survey
 			flash[:success] = "Survey updated."
 			
 			redirect_to user_surveys_path
@@ -41,15 +45,16 @@ class SurveysController < ApplicationController
 
 	def destroy
 		deleted_survey = current_user.surveys.find(params[:id]).destroy
+		current_survey = nil
 		flash[:success] = "Survey deleted."
 		redirect_to user_surveys_path
 	end
 
 	private
 
-			def correct_user
-				@survey = current_user.surveys.find_by_id(params[:id])
-				redirect_to(root_path) if @survey.nil?
+			def correct_user_of_survey
+				survey = current_user.surveys.find_by_id(params[:id])
+				redirect_to(root_path) if survey.nil?
 
 				# ANOTHER METHOD BELOW A LITTLE BIT 
 				#current_survey = Survey.find_by_id(params[:id])

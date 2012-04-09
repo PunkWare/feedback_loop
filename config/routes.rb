@@ -4,7 +4,7 @@ BacklogBlooming::Application.routes.draw do
   
   resources :sessions, only: [ :new, :create, :destroy ]
 
-  resources :surveys
+  resources :surveys, only: [ :create, :new, :show, :edit, :update, :destroy ]
 
   root                    to: 'info_pages#home'
 
