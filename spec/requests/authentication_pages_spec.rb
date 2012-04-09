@@ -38,7 +38,7 @@ describe "Signin, and signout pages" do
 		
 			before { sign_in user }
 
-			it { should have_title(user.name) }
+			it { should have_title('All surveys') }
 		
 			it { should have_link('View Profile', href: user_path(user)) }
 			it { should have_link('Update Profile', href: edit_user_path(user)) }
@@ -286,7 +286,7 @@ describe "Authenticated pages" do
 						before { sign_in(user) }
 
 						it "should render the view profile page" do
-							page.should have_title(user.name)
+							page.should have_title('All surveys')
 						end
 					end
 				end
