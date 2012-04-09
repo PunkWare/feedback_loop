@@ -56,7 +56,7 @@ class SurveysController < ApplicationController
 				survey = current_user.surveys.find_by_id(params[:id])
 				redirect_to(root_path) if survey.nil?
 
-				# ANOTHER METHOD BELOW A LITTLE BIT 
+				# ANOTHER METHOD BELOW A LITTLE BIT LESS SECURE
 				#current_survey = Survey.find_by_id(params[:id])
 				##if a survey with this id exist
 				#if current_survey
