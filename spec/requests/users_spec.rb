@@ -66,7 +66,7 @@ describe "Regarding all user pages :" do
 				let(:user) { User.find_by_email('fake@fake.fake') }
 				before { click_button create_account_button }      
 
-				it { should have_title(user.name) }
+				it { should have_title('All surveys') }
 				it { should have_flash_message('Welcome','success') }
 			end
 		end
