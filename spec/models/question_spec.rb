@@ -62,13 +62,13 @@ describe Question do
 		it { should_not be_valid }
 	end
 
-	describe "When remaining effort is blank" do
+	describe "When number of choices is blank" do
 		before { @question.number_of_choices = " " }
 		it { should_not be_valid }
 	end
 
-	describe "when remaining  effort format is invalid" do
-		invalid_formats =  %w[-1 +1 1.0 1,0 a 1e5 ]
+	describe "when number of choices format is invalid" do
+		invalid_formats =  %w[-1 +1 1.0 1,0 a 1e5 1 11 0]
 		invalid_formats.each do |invalid_format|
 			before { @question.number_of_choices = invalid_format}
 			it { should_not be_valid }
@@ -76,7 +76,7 @@ describe Question do
 	end
 
 	describe "when remaining effort format is valid" do
-		valid_formats = %w[ 1 1456 ]
+		valid_formats = %w[ 2 5 10]
 		valid_formats.each do |valid_format|
 			before { @question.number_of_choices = valid_format }
 			it { should be_valid }

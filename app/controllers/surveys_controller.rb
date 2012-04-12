@@ -46,7 +46,7 @@ class SurveysController < ApplicationController
 
 	def destroy
 		deleted_survey = current_user.surveys.find(params[:id]).destroy
-		current_survey = nil
+		current_survey = nil if current_survey?(deleted_survey)
 		flash[:success] = "Survey deleted."
 		redirect_to user_surveys_path
 	end

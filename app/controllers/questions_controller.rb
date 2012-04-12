@@ -54,6 +54,10 @@ class QuestionsController < ApplicationController
 	private
 
 			def correct_survey_of_question
+				if current_survey.nil?
+					redirect_to(root_path) 
+					return
+				end
 				question = current_survey.questions.find_by_id(params[:id])
 				redirect_to(root_path) if question.nil?
 

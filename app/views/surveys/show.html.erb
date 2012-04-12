@@ -16,7 +16,7 @@
 		<h1>Manage questions</h1>
 		
 		<% if @survey.questions.any? %>
-			<h3>Questions for survey : <%= current_survey.title %> </h3>
+			<h3>Questions for survey : <%= @survey.title %> </h3>
 			<br />
 			
 			<ol class="questions">

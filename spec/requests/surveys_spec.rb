@@ -175,9 +175,10 @@ describe "Regarding all survey pages :" do
 				it { should have_content(question1.title) }
 			
 				it { should have_content(question2.title) }
-				
-			end
 
+				it { should have_link('delete', href: question_path(Question.first)) }
+			end
+=begin
 			describe "pagination" do
 				before(:all) { 30.times { FactoryGirl.create(:question, survey: survey) } }
 				after(:all)  { Question.delete_all }
@@ -216,10 +217,9 @@ describe "Regarding all survey pages :" do
 					end
 				end
 			end
-			
-			it { should have_link('delete', href: question_path(Question.first)) }
-
+=end			
 			it "should be able to delete the question" do
+				save_and_open_page
 				expect { click_link('delete') }.to change(Question, :count).by(-1)
 			end
 			

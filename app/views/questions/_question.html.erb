@@ -3,5 +3,7 @@
 
 	| <%= link_to "edit", edit_question_path(question) %>
 
+	| <%= link_to "delete", question, method: :delete, confirm: "This question will be deleted. Are you sure ?" %>
+
 	<br />
 </li>
