@@ -6,7 +6,7 @@ class Question < ActiveRecord::Base
 	validates :title,			presence: true
 	validates :low_choice,	presence: true
 	validates :high_choice,	presence: true
-	validates_numericality_of :number_of_choices, :only_integer => true
+	validates :number_of_choices, :numericality => {:greater_than => 1, :less_than => 11}
 
 
 	default_scope order: 'questions.created_at'

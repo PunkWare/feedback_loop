@@ -57,7 +57,9 @@ describe Survey do
 	describe "key token" do
 		before { @survey.save }
 		its(:key) {should_not be_blank}
+		after { @survey.destroy }
 	end
+
 
 	describe "accessible attributes" do
 		it "should not allow access to user_id" do
@@ -80,6 +82,8 @@ describe Survey do
 				Question.find_by_id(question.id).should be_nil
 			end
 		end
+
+		after { @survey.destroy }
 	end
 end
 

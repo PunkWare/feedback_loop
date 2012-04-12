@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 	# arranges the signed_in_user method to be called before the given actions (edit and update)
-	before_filter :signed_in_user,  only: [:show, :edit, :update, :surveys] 
-	before_filter :new_user,        only: [:new, :create]
-	before_filter :correct_user,    only: [:show, :edit, :update]
-	before_filter :admin_user,      only: [:index, :destroy]
+	before_filter	:signed_in_user,	only: [:show, :edit, :update, :surveys] 
+	before_filter	:new_user,			only: [:new, :create]
+	before_filter	:correct_user,		only: [:show, :edit, :update]
+	before_filter	:admin_user,		only: [:index, :destroy]	   
 	
 	def create
 		@user = User.new(params[:user])

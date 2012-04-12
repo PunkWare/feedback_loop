@@ -1,0 +1,27 @@
+<%= f.label :title %>
+<%= f.text_field :title %>
+
+<div class="question_field">
+	<p>
+		<%= f.label :number_of_choices %>
+		<span class="tips">This is the number of choices the surveyed has at disposal to answer the question e.g. '2' means that the surveyed will have only two choices to answer (usually, 'I agree' or 'I disagree').</span>
+		<%= f.number_field :number_of_choices %>
+	</p>
+</div>
+
+
+<div class="question_field">
+	<p>
+		<%= f.label :first_choice %>
+		<span class="tips">This is the words that will be associated to the first choice in the list of choices.</span>
+		<%= f.text_field :low_choice %>
+	</p>
+</div>
+
+<div class="question_field">
+	<p>
+		<%= f.label :last_choice %>
+		<span class="tips">This is the words that will be associated to the last choice in the list of choices.</span>
+		<%= f.text_field :high_choice %>
+	</p>
+</div>

@@ -136,7 +136,6 @@ describe "Authenticated pages" do
 				end
 			end
 
-
 			describe "when trying to edit a survey" do
 				let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
 
@@ -155,6 +154,54 @@ describe "Authenticated pages" do
 				before do
 					survey = FactoryGirl.create(:survey)
 					delete survey_path(survey)
+				end
+				specify { response.should redirect_to(signin_path) }
+			end
+		end
+
+		describe "in the Questions controller" do
+
+			describe "submitting to the create action" do
+				before { post questions_path }
+				specify { response.should redirect_to(signin_path) }
+			end
+
+			describe "when trying to show a question" do
+				let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
+				let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+
+				describe "visiting the show question page" do
+					before { visit question_path(question) }
+
+					it { should have_title('Sign in') }
+				end
+
+				describe "submitting to the update action" do
+					before { get question_path(question)  }
+
+					specify { response.should redirect_to(signin_path) }
+				end
+			end
+
+			describe "when trying to edit a question" do
+				let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
+				let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+
+				describe "visiting the edit question page" do
+					before { visit edit_question_path(question) }
+					it { should have_title('Sign in') }
+				end
+
+				describe "submitting to the update action" do
+					before { put question_path(question) }
+					specify { response.should redirect_to(signin_path) }
+				end
+			end
+
+			describe "submitting to the destroy action" do
+				before do
+					question = FactoryGirl.create(:question)
+					delete question_path(question)
 				end
 				specify { response.should redirect_to(signin_path) }
 			end
@@ -241,6 +288,40 @@ describe "Authenticated pages" do
 
 			describe "when submitting a DELETE request to the Surveys#destroy action" do
 				before { delete survey_path(survey) }
+				specify { response.should redirect_to(root_path) }        
+			end
+		end
+
+		describe "in the Questions controller" do
+			let(:survey) { FactoryGirl.create(:survey, user: wrong_user, title: "Survey 1") }
+			let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+
+			describe "when trying to view a question" do
+				before { visit question_path(question) }
+
+				it { should have_title('All surveys') }
+			end
+
+			describe "when trying a show action on a question" do
+				before { get question_path(question)  }
+
+				specify { response.should redirect_to(root_path) }
+			end
+
+			describe "when trying to edit a question" do
+				describe "visiting the edit question page" do
+					before { visit edit_question_path(question) }
+					it { should have_title('All surveys') }
+				end
+
+				describe "submitting to the update action" do
+					before { put question_path(question) }
+					specify { response.should redirect_to(root_path) }
+				end
+			end
+
+			describe "when submitting a DELETE request to the Questions#destroy action" do
+				before { delete question_path(question) }
 				specify { response.should redirect_to(root_path) }        
 			end
 		end

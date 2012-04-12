@@ -6,6 +6,8 @@ BacklogBlooming::Application.routes.draw do
 
   resources :surveys, only: [ :create, :new, :show, :edit, :update, :destroy ]
 
+  resources :questions, only: [ :create, :new, :show, :edit, :update, :destroy ]
+
   root                    to: 'info_pages#home'
 
   match '/help',          to: 'info_pages#help'
