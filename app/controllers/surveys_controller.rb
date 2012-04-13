@@ -5,7 +5,7 @@ class SurveysController < ApplicationController
 	def create
 		@survey = current_user.surveys.build(params[:survey])
 		if @survey.save
-			current_survey = @survey
+			set_current_survey(@survey)
 			flash[ :success ] = "Survey created."
 				
 			redirect_to user_surveys_path
@@ -17,25 +17,25 @@ class SurveysController < ApplicationController
 	
 	def new
 		@survey = current_user.surveys.build
-		current_survey = @survey
+		set_current_survey(@survey)
 	end
 
 	def show
 		@survey = current_user.surveys.find(params[:id])
-		current_survey = @survey
+		set_current_survey(@survey)
 		@questions = @survey.questions.paginate(page: params[:page])
 	end
 
 	def edit
 		@survey = current_user.surveys.find(params[:id])
-		current_survey = @survey
+		set_current_survey(@survey)
 	end
 
 	def update
 		@survey = current_user.surveys.find(params[:id])
 		
 		if @survey.update_attributes(params[:survey])
-			current_survey = @survey
+			set_current_survey(@survey)
 			flash[:success] = "Survey updated."
 			
 			redirect_to user_surveys_path

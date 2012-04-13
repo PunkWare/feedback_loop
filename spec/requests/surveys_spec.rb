@@ -219,7 +219,6 @@ describe "Regarding all survey pages :" do
 			end
 =end			
 			it "should be able to delete the question" do
-				save_and_open_page
 				expect { click_link('delete') }.to change(Question, :count).by(-1)
 			end
 			
