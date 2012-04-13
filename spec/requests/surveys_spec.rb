@@ -72,7 +72,7 @@ describe "Regarding all survey pages :" do
 		let(:page_title) {heading}
 		
 		it_should_behave_like "all survey pages"
-		it { should have_link('New question', href: root_path) }
+		it { should have_link('New question', href: new_question_path) }
 	end
 
 	describe "When testing title and h1 on edit page, " do
@@ -163,12 +163,12 @@ describe "Regarding all survey pages :" do
 			
 			it_should_behave_like "all survey pages"
 
-			it { should have_link('New question', href: root_path) }
+			it { should have_link('New question', href: new_question_path) }
 
 			describe "when clicking the new question button" do
 				before { click_link 'New question' }
 				
-				it { should have_title('All surveys') }
+				it { should have_title('New question') }
 			end
 			
 			describe "the questions" do

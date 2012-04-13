@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
 	before_filter :correct_survey_of_question, only: [:destroy, :edit, :update, :show]
 
 	def create
-		@question = current_survey.question.build(params[:question])
+		@question = current_survey.questions.build(params[:question])
 		if @question.save
 			current_question = @question
 			flash[ :success ] = "Question created."
