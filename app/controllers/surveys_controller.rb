@@ -8,7 +8,7 @@ class SurveysController < ApplicationController
 			set_current_survey(@survey)
 			flash[ :success ] = "Survey created."
 				
-			redirect_to user_surveys_path
+			redirect_to survey_path(current_survey)
 				
 		else
 			render 'new'

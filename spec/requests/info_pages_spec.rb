@@ -43,12 +43,12 @@ describe "info_pages" do
 			#end
 
 			describe "as a signed-in user," do
-				let!(:survey11) { FactoryGirl.create(:survey, user: user, title: "Survey 1 from user") }
+				let!(:survey11) { FactoryGirl.create(:survey, user: user, title: "Survey 1 from user", closed: false) }
 				let!(:survey12) { FactoryGirl.create(:survey, user: user, title: "Survey 2 from user", private: true ) }
-				let!(:survey13) { FactoryGirl.create(:survey, user: user, title: "Survey 3 from user") }
-				let!(:survey21) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1 from another user") }
-				let!(:survey22) { FactoryGirl.create(:survey, user: another_user, title: "Survey 2 from another user") }
-				let!(:survey23) { FactoryGirl.create(:survey, user: another_user, title: "Survey 3 from another user", closed: true) }
+				let!(:survey13) { FactoryGirl.create(:survey, user: user, title: "Survey 3 from user", closed: false) }
+				let!(:survey21) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1 from another user", closed: false) }
+				let!(:survey22) { FactoryGirl.create(:survey, user: another_user, title: "Survey 2 from another user", closed: false) }
+				let!(:survey23) { FactoryGirl.create(:survey, user: another_user, title: "Survey 3 from another user") }
 
 				before do
 					visit root_path

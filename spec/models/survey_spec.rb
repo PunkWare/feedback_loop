@@ -40,7 +40,7 @@ describe Survey do
 	end
 
 	describe "with closed attribute set to 'true'" do
-		before { @survey.toggle!(:closed) }
+		#before { @survey.toggle!(:closed) }
 		it { should be_closed }
 	end
 

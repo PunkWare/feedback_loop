@@ -18,10 +18,12 @@
 	</p>
 </div>
 
-<div class="survey_field">
-	<p>
-		<%= f.label :closed %>
-		<span class="tips">If checked, the survey is no longer available to surveyed:</span>
-		<%= f.check_box :closed %>
-	</p>
-</div>
+<% if !creation %>
+	<div class="survey_field">
+		<p>
+			<%= f.label :closed %>
+			<span class="tips">If checked, the survey is not available to surveyed:</span>
+			<%= f.check_box :closed %>
+		</p>
+	</div>
+<% end %>

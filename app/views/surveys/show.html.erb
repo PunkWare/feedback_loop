@@ -8,15 +8,23 @@
 			</h1>
 		</section>
 		
-		<%= link_to "New question", new_question_path, class: "btn btn-large btn-primary" %>
+		<p>
+			<%= link_to "New question", new_question_path, class: "btn btn-large btn-primary" %>
+		</p>
+
+		<p>
+			<% if @survey.questions.count > 0 %>
+				<%= link_to "Make survey available", edit_survey_path(@survey), class: "btn btn-large btn-primary", confirm: "Have you created all the questions for the survey ?" %>
+			<% end %>
+		</p>
 	
 	</aside>
 	
 	<div class="span8">
 		<h1>Manage questions</h1>
-		
-		<% if @survey.questions.any? %>
-			<h3>Questions for survey : <%= @survey.title %> </h3>
+		<h3>Questions for survey : <%= @survey.title %> </h3>
+
+		<% if @survey.questions.any? %>	
 			<br />
 			
 			<ol class="questions">

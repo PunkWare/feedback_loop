@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
 	before_filter :signed_in_user
+	before_filter :survey_exists
 	before_filter :correct_survey_of_question, only: [:destroy, :edit, :update, :show]
 
 	def create
@@ -53,11 +54,11 @@ class QuestionsController < ApplicationController
 
 	private
 
+			def survey_exists
+					redirect_to(root_path) if current_survey.nil?
+			end
+
 			def correct_survey_of_question
-				if current_survey.nil?
-					redirect_to(root_path) 
-					return
-				end
 				question = current_survey.questions.find_by_id(params[:id])
 				redirect_to(root_path) if question.nil?
 

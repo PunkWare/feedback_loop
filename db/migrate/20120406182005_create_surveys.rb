@@ -4,7 +4,7 @@ class CreateSurveys < ActiveRecord::Migration
         t.integer :user_id
         t.string :title
         t.string :key
-        t.boolean :closed, default: false
+        t.boolean :closed, default: true
         t.boolean :anonymous, default: false
         t.boolean :private, default: false
 

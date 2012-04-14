@@ -41,6 +41,8 @@ describe "Regarding all survey pages :" do
 					fill_in "Title",         with: "fake"
 				end
 
+				it { should_not have_field "Closed" }
+
 				it "should create a survey" do
 					expect do
 						click_button create_survey_button
@@ -51,7 +53,7 @@ describe "Regarding all survey pages :" do
 					let(:survey) { Survey.find_by_title('fake') }
 					before { click_button create_survey_button }      
 
-					it { should have_title('My surveys') }
+					it { should have_title('Manage questions') }
 					it { should have_flash_message('Survey created','success') }
 				end
 			end
@@ -89,6 +91,8 @@ describe "Regarding all survey pages :" do
 		let(:page_title) {heading}
 		
 		it_should_behave_like "all survey pages"
+
+		it { should have_field "Closed" }
 	end
 
 	describe "When providing edit fields" do
@@ -152,6 +156,17 @@ describe "Regarding all survey pages :" do
 
 		it { should_not have_title(full_title(page_title)) }
 
+		describe "as a signed-in user, without any question" do
+			before do
+				sign_in user
+				visit survey_path(survey)
+			end
+			
+			it_should_behave_like "all survey pages"
+
+			it { should_not have_link('Make survey available', href: edit_survey_path(survey)) }
+		end
+
 		describe "as a signed-in user," do
 			let!(:question1) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
 			let!(:question2) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
@@ -164,6 +179,7 @@ describe "Regarding all survey pages :" do
 			it_should_behave_like "all survey pages"
 
 			it { should have_link('New question', href: new_question_path) }
+			it { should have_link('Make survey available', href:  edit_survey_path(survey)) }
 
 			describe "when clicking the new question button" do
 				before { click_link 'New question' }

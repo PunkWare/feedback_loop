@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20120409152543) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "key"
-    t.boolean  "closed",     :default => false
+    t.boolean  "closed",     :default => true
     t.boolean  "anonymous",  :default => false
     t.boolean  "private",    :default => false
     t.datetime "created_at",                    :null => false

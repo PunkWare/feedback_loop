@@ -3,11 +3,6 @@ module SurveysHelper
 		cookies.permanent[:survey_token] = survey.key
 		@current_survey = survey
 	end
-
-	def current_survey=(survey)
-		cookies.permanent[:survey_token] = survey.key
-		@current_survey = survey
-	end
 	
 	def current_survey
 		@current_survey ||= survey_from_cookie
