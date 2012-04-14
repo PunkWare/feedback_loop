@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(:version => 20120409152543) do
     t.integer  "survey_id"
     t.string   "title"
     t.integer  "number_of_choices", :default => 5
-    t.string   "low_choice",        :default => "I strongly disagree"
-    t.string   "high_choice",       :default => "I strongly agree"
+    t.string   "first_choice",      :default => "I strongly disagree"
+    t.string   "last_choice",       :default => "I strongly agree"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
   end

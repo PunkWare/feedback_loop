@@ -13,8 +13,8 @@ describe Question do
 	it { should respond_to(:survey_id) }
 	it { should respond_to(:title) }
 	it { should respond_to(:number_of_choices) }
-	it { should respond_to(:low_choice) }
-	it { should respond_to(:high_choice) }
+	it { should respond_to(:first_choice) }
+	it { should respond_to(:last_choice) }
 
   	# check that survey.user is valid
 	it { should respond_to(:survey) }
@@ -37,23 +37,23 @@ describe Question do
 		it { should_not be_valid }
 	end
 
-	describe "When low choice is not present" do
-		before { @question.low_choice = nil }
+	describe "When first choice is not present" do
+		before { @question.first_choice = nil }
 		it { should_not be_valid }
 	end
 
-	describe "When low choice is blank" do
-		before { @question.low_choice = " " }
+	describe "When first choice is blank" do
+		before { @question.first_choice = " " }
 		it { should_not be_valid }
 	end
 
-	describe "When high choice is not present" do
-		before { @question.high_choice = nil }
+	describe "When last choice is not present" do
+		before { @question.last_choice = nil }
 		it { should_not be_valid }
 	end
 
-	describe "When high choice is blank" do
-		before { @question.high_choice = " " }
+	describe "When last choice is blank" do
+		before { @question.last_choice = " " }
 		it { should_not be_valid }
 	end
 
@@ -75,7 +75,7 @@ describe Question do
 		end
 	end
 
-	describe "when remaining effort format is valid" do
+	describe "when number of choices format is valid" do
 		valid_formats = %w[ 2 5 10]
 		valid_formats.each do |valid_format|
 			before { @question.number_of_choices = valid_format }
