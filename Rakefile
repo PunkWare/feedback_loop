@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-BacklogBlooming::Application.load_tasks
+FeedbackLoop::Application.load_tasks
