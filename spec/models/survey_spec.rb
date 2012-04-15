@@ -14,7 +14,7 @@ describe Survey do
 	it { should respond_to(:user_id) }
 	it { should respond_to(:anonymous) }
 	it { should respond_to(:private) }
-	it { should respond_to(:closed) }
+	it { should respond_to(:available) }
 
 	it { should respond_to(:questions) }
 
@@ -39,9 +39,9 @@ describe Survey do
 		it { should_not be_valid }
 	end
 
-	describe "with closed attribute set to 'true'" do
-		#before { @survey.toggle!(:closed) }
-		it { should be_closed }
+	describe "with available attribute set to 'true'" do
+		before { @survey.toggle!(:available) }
+		it { should be_available }
 	end
 
 	describe "with anonymous attribute set to 'true'" do

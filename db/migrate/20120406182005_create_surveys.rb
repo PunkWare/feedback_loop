@@ -4,13 +4,13 @@ class CreateSurveys < ActiveRecord::Migration
         t.integer :user_id
         t.string :title
         t.string :key
-        t.boolean :closed, default: true
+        t.boolean :available, default: false
         t.boolean :anonymous, default: false
         t.boolean :private, default: false
 
         t.timestamps
     end
-     add_index :surveys, [:user_id, :closed, :created_at]
+     add_index :surveys, [:user_id, :available, :created_at]
      add_index :surveys, [:key]
      add_index :surveys, [:created_at]
   end

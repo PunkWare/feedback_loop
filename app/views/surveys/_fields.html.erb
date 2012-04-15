@@ -21,9 +21,9 @@
 <% if !creation %>
 	<div class="survey_field">
 		<p>
-			<%= f.label :closed %>
-			<span class="tips">If checked, the survey is not available to surveyed:</span>
-			<%= f.check_box :closed %>
+			<%= f.label :available, "" %>
+			<span class="tips">If checked, the survey is available to surveyed:</span>
+			<%= f.check_box :available %>
 		</p>
 	</div>
 <% end %>

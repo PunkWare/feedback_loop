@@ -41,7 +41,7 @@ describe "Regarding all survey pages :" do
 					fill_in "Title",         with: "fake"
 				end
 
-				it { should_not have_field "Closed" }
+				it { should_not have_field "Available" }
 
 				it "should create a survey" do
 					expect do
@@ -93,7 +93,7 @@ describe "Regarding all survey pages :" do
 		
 		it_should_behave_like "all survey pages"
 
-		it { should have_field "Closed" }
+		it { should have_field "Available" }
 	end
 
 	describe "When providing edit fields" do
@@ -129,7 +129,6 @@ describe "Regarding all survey pages :" do
 				fill_in "Title",        with: updated_title
 				check('Anonymous')
 				check('Private')
-				check('Closed')
 				click_button save_profile_button
 			end
 
@@ -140,31 +139,31 @@ describe "Regarding all survey pages :" do
 			specify { survey.reload.title.should == updated_title }
 			specify { survey.reload.anonymous.should == true }
 			specify { survey.reload.private.should == true }
-			specify { survey.reload.closed.should == true }
+			specify { survey.reload.available.should == false }
 		end
 
-		describe "trying to uncheck closed field when survey has no question" do
+		describe "trying to check available field when survey has no question" do
 			before do
-				uncheck('Closed')
+				check('Available')
 				click_button save_profile_button
 			end
 
-			it { should have_flash_message('Survey has been set back to closed because the survey has currently no associated question.','error') }
+			it { should have_flash_message('Survey has been set back to unavailable because the survey has currently no associated question.','error') }
 			it { should have_title(full_title('My surveys')) }
-			specify { survey.reload.closed.should == true }
+			specify { survey.reload.available.should == false }
 		end
 
-		describe "trying to uncheck closed field when survey has question" do
+		describe "trying to check available field when survey has question" do
 			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
 
 			before do
-				uncheck('Closed')
+				check('Available')
 				click_button save_profile_button
 			end
 
-			it { should_not have_flash_message('Survey has been set back to closed because the survey has currently no associated question.','error') }
+			it { should_not have_flash_message('Survey has been set back to unavailable because the survey has currently no associated question.','error') }
 			it { should have_title(full_title('My surveys')) }
-			specify { survey.reload.closed.should == false }
+			specify { survey.reload.available.should == true }
 		end
 
 		describe "trying to uncheck anonymous field when survey has no answer" do
@@ -189,7 +188,7 @@ describe "Regarding all survey pages :" do
 
 			it { should have_flash_message('Survey has been set back to anonymous because the survey has some answers. It cannot be changed anymore.','error') }
 			it { should have_title(full_title('My surveys')) }
-			specify { survey.reload.closed.should == true }
+			specify { survey.reload.anonymous.should == true }
 		end
 	end
 

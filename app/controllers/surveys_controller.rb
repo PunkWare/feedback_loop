@@ -37,9 +37,9 @@ class SurveysController < ApplicationController
 		#flash[:notice] = params[:survey].to_s
 
 		# cannot make a survey available if it has no question
-		if params[:survey][:closed] == "0" and !has_question?(@survey)
-			flash[:error] = "Survey has been set back to closed because the survey has currently no associated question."
-			params[:survey][:closed] = "1"
+		if params[:survey][:available] == "1" and !has_question?(@survey)
+			flash[:error] = "Survey has been set back to unavailable because the survey has currently no associated question."
+			params[:survey][:available] = "0"
 		end
 
 		# cannot make a survey not anonymous if it has answer

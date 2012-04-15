@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20120414182142) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "key"
-    t.boolean  "closed",     :default => true
+    t.boolean  "available",  :default => false
     t.boolean  "anonymous",  :default => false
     t.boolean  "private",    :default => false
     t.datetime "created_at",                    :null => false
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20120414182142) do
 
   add_index "surveys", ["created_at"], :name => "index_surveys_on_created_at"
   add_index "surveys", ["key"], :name => "index_surveys_on_key"
-  add_index "surveys", ["user_id", "closed", "created_at"], :name => "index_surveys_on_user_id_and_closed_and_created_at"
+  add_index "surveys", ["user_id", "available", "created_at"], :name => "index_surveys_on_user_id_and_available_and_created_at"
 
   create_table "users", :force => true do |t|
     t.string   "name"
