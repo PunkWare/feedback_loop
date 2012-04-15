@@ -4,6 +4,6 @@ class Answer < ActiveRecord::Base
 	belongs_to :user
 
 	validates :question_id, presence: true
-	validates :user_id, presence: true
+	validates :user_id, presence: true, :uniqueness => { :scope => :question_id}
 	validates :choice, presence: true
 end

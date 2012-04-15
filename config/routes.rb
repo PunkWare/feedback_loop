@@ -8,6 +8,8 @@ FeedbackLoop::Application.routes.draw do
 
   resources :questions, only: [ :create, :new, :show, :edit, :update, :destroy ]
 
+  #resources :answers, only [ :new, :edit ]
+
   root                    to: 'info_pages#home'
 
   match '/help',          to: 'info_pages#help'

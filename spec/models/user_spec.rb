@@ -132,4 +132,19 @@ describe User do
 			end
 		end
 	end
+
+	describe "answer associations" do
+		before { @user.save }
+
+		let!(:answer) { FactoryGirl.create(:answer, user: @user) }
+		let!(:another_answer) { FactoryGirl.create(:answer, user: @user) }
+
+		it "should destroy associated answers" do
+			answers = @user.answers
+			@user.destroy
+			answers.each do |answer|
+				Answer.find_by_id(answer.id).should be_nil
+			end
+		end
+	end
 end

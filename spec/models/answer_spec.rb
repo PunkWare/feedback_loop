@@ -28,6 +28,16 @@ describe Answer do
 
 	it {should be_valid }
 
+	describe "when there's already an user / question association" do
+		before do
+			# duplicate the answer and save it in the test database db/test.sqlite3
+			another_answer_for_same_user_and_same_question = @answer.dup
+			another_answer_for_same_user_and_same_question.save
+		end
+		
+		it { should_not be_valid }
+	end
+
 	describe "When question_id is not present" do
 		before { @answer.question_id = nil }
 		it { should_not be_valid }

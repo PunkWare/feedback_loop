@@ -90,4 +90,22 @@ describe Question do
 			end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
 		end
 	end
+
+	describe "answer associations" do
+		let(:another_user) { FactoryGirl.create(:user) }
+		before { @question.save }
+
+		let!(:older_answer) { FactoryGirl.create(:answer, question: @question, user: user) }
+		let!(:newer_answer) { FactoryGirl.create(:answer, question: @question, user: another_user) }
+
+		it "should destroy associated answers" do
+			answers = @question.answers
+			@question.destroy
+			answers.each do |answer|
+				Answer.find_by_id(answer.id).should be_nil
+			end
+		end
+
+		after { @question.destroy }
+	end
 end
