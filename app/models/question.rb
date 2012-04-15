@@ -1,6 +1,8 @@
 class Question < ActiveRecord::Base
 	attr_accessible :title, :first_choice, :last_choice, :number_of_choices
 	belongs_to :survey
+	has_many :answers, dependent: :destroy
+	#has_many :users, :through => :answers
 
 	validates :survey_id, presence: true
 	validates :title, presence: true

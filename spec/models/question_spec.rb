@@ -16,7 +16,7 @@ describe Question do
 	it { should respond_to(:first_choice) }
 	it { should respond_to(:last_choice) }
 
-  	# check that survey.user is valid
+  	# check that question.survey is valid
 	it { should respond_to(:survey) }
 	its(:survey) { should == survey }
 
