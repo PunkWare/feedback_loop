@@ -17,6 +17,18 @@
 				<%= link_to "Make survey available", edit_survey_path(@survey), class: "btn btn-large btn-primary", confirm: "Have you created all the questions for the survey ?" %>
 			<% end %>
 		</p>
+
+		<p>
+			<% mail_sender = "Hi!\n\nA new survey titled \""+@survey.title+"\" has been added to Feedback Loop by "+@survey.user.name+".\n" %> 
+
+			<% if @survey.private %>
+				<% mail_sender = mail_sender + "\nThis survey is private, to join it, click the \"Join private survey\" button on the home page and enter the code : "+@survey.key+"\n" %>
+			<% end %>
+
+			<% mail_sender = mail_sender + "\nSo just stop whatever you\'re doing and go to http://.... to feedback it.\n\nThanks!\n\nThe Feedback Loop team" %>
+
+			<%= mail_to "", "Notify surveyed", :subject => "A new survey is available on Feedback Loop", :body => mail_sender, class: "btn btn-large btn-primary" %>
+		</p>
 	
 	</aside>
 	
