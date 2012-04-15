@@ -33,6 +33,20 @@ class SurveysController < ApplicationController
 
 	def update
 		@survey = current_user.surveys.find(params[:id])
+
+		#flash[:notice] = params[:survey].to_s
+
+		# cannot make a survey available if it has no question
+		if params[:survey][:closed] == "0" and !has_question?(@survey)
+			flash[:error] = "Survey has been set back to closed because the survey has currently no associated question."
+			params[:survey][:closed] = "1"
+		end
+
+		# cannot make a survey not anonymous if it has answer
+		if params[:survey][:anonymous] == "0" and has_answer?(@survey)
+			flash[:error] = "Survey has been set back to anonymous because the survey has some answers. It cannot be changed anymore."
+			params[:survey][:anonymous] = "1"
+		end
 		
 		if @survey.update_attributes(params[:survey])
 			set_current_survey(@survey)
@@ -42,6 +56,12 @@ class SurveysController < ApplicationController
 		else
 			render 'edit'
 		end
+	end
+
+	def begin
+		@survey = current_user.surveys.find(params[:id])
+		set_current_survey(@survey)
+		@questions = @survey.questions
 	end
 
 	def destroy

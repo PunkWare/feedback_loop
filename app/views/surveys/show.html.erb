@@ -22,7 +22,7 @@
 	
 	<div class="span8">
 		<h1>Manage questions</h1>
-		<h3>Questions for survey : <%= @survey.title %> </h3>
+		<h3>Questions for survey : <%= link_to @survey.title, user_surveys_path %> </h3>
 
 		<% if @survey.questions.any? %>	
 			<br />

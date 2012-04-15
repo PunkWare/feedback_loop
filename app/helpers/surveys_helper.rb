@@ -12,6 +12,30 @@ module SurveysHelper
 		survey == current_survey
 	end
 
+	def has_answer?(survey)
+		questions=survey.questions
+		if questions.blank?
+			return false
+		end
+
+		questions.each do |question|
+   		answers=question.answers
+   		if !answers.blank?
+   			return true
+   		end
+		end
+		return false
+	end
+
+	def has_question?(survey)
+		questions=survey.questions
+		if questions.blank?
+			return false
+		else
+			return true
+		end
+	end
+
 	private
 
 		def survey_from_cookie

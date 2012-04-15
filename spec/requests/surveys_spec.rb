@@ -75,6 +75,7 @@ describe "Regarding all survey pages :" do
 		
 		it_should_behave_like "all survey pages"
 		it { should have_link('New question', href: new_question_path) }
+		it { should have_link(survey.title, href: user_surveys_path) }
 	end
 
 	describe "When testing title and h1 on edit page, " do
@@ -139,6 +140,55 @@ describe "Regarding all survey pages :" do
 			specify { survey.reload.title.should == updated_title }
 			specify { survey.reload.anonymous.should == true }
 			specify { survey.reload.private.should == true }
+			specify { survey.reload.closed.should == true }
+		end
+
+		describe "trying to uncheck closed field when survey has no question" do
+			before do
+				uncheck('Closed')
+				click_button save_profile_button
+			end
+
+			it { should have_flash_message('Survey has been set back to closed because the survey has currently no associated question.','error') }
+			it { should have_title(full_title('My surveys')) }
+			specify { survey.reload.closed.should == true }
+		end
+
+		describe "trying to uncheck closed field when survey has question" do
+			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+
+			before do
+				uncheck('Closed')
+				click_button save_profile_button
+			end
+
+			it { should_not have_flash_message('Survey has been set back to closed because the survey has currently no associated question.','error') }
+			it { should have_title(full_title('My surveys')) }
+			specify { survey.reload.closed.should == false }
+		end
+
+		describe "trying to uncheck anonymous field when survey has no answer" do
+			before do
+				uncheck('Anonymous')
+				click_button save_profile_button
+			end
+
+			it { should_not have_flash_message('Survey has been set back to anonymous because the survey has some answers. It cannot be changed anymore.','error') }
+			it { should have_title(full_title('My surveys')) }
+			specify { survey.reload.anonymous.should == false }
+		end
+
+		describe "trying to uncheck anonymous field when survey has answer" do
+			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+			let!(:answer) { FactoryGirl.create(:answer, question: question, user: user, choice: 5) }
+
+			before do
+				uncheck('Anonymous')
+				click_button save_profile_button
+			end
+
+			it { should have_flash_message('Survey has been set back to anonymous because the survey has some answers. It cannot be changed anymore.','error') }
+			it { should have_title(full_title('My surveys')) }
 			specify { survey.reload.closed.should == true }
 		end
 	end
