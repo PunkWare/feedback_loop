@@ -37,7 +37,7 @@
 				<ol class="surveys">
 					<% @surveys.each do |survey| %>
 						<li>
-							<span><%= link_to survey.title, edit_survey_path(survey) %> </span>
+							<span><%= link_to survey.title, begin_survey_path(survey) %> </span>
 
 							<br />
 							

@@ -1,6 +1,7 @@
 class SurveysController < ApplicationController
 	before_filter :signed_in_user
-	before_filter :correct_user_of_survey,    only: [:destroy, :edit, :update, :show]
+	before_filter :correct_user_of_survey,    only: [ :destroy, :edit, :update, :show ]
+	before_filter :feedbackable, only: [ :begin ]
 
 	def create
 		@survey = current_user.surveys.build(params[:survey])
@@ -59,9 +60,13 @@ class SurveysController < ApplicationController
 	end
 
 	def begin
-		@survey = current_user.surveys.find(params[:id])
-		set_current_survey(@survey)
-		@questions = @survey.questions
+		#if ! (Survey.find_by_id(params[:id]) == nil)
+			@survey = Survey.find(params[:id])
+			set_current_survey(@survey)
+			@questions = @survey.questions
+		#else
+		#	redirect_to root_path
+		#end
 	end
 
 	def destroy
@@ -85,4 +90,25 @@ class SurveysController < ApplicationController
 				#end
 				#redirect_to(root_path) unless current_user?(@user)
 			end
+
+			def feedbackable
+				found = false
+
+				feedback_survey = Survey.find_by_id(params[:id])
+
+				if !feedback_survey.nil?
+					if has_question?(feedback_survey)
+						surveys = Survey.where(:available => true, :private => false)
+						
+						surveys.each do |survey|
+							if survey.id == feedback_survey.id
+								found = true
+							end
+						end
+					end
+				end
+
+				redirect_to(root_path) if !found
+			end
+
 end
