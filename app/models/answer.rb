@@ -5,5 +5,5 @@ class Answer < ActiveRecord::Base
 
 	validates :question_id, presence: true
 	validates :user_id, presence: true, :uniqueness => { :scope => :question_id}
-	validates :choice, presence: true
+	validates :choice, :numericality => {:greater_than => 1, :less_than => 11}
 end

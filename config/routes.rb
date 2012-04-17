@@ -14,7 +14,7 @@ FeedbackLoop::Application.routes.draw do
 
 	resources :questions, only: [ :create, :new, :show, :edit, :update, :destroy ]
 
-	#resources :answers, only [ :new, :edit ]
+	resources :answers, only: [ :create, :new, :edit ]
 
 	root                    to: 'info_pages#home'
 

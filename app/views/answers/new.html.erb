@@ -1,0 +1,36 @@
+<% provide(:title, "Feedback question") %> 
+<h1>Feedback question <%= (current_question_index + 1) %></h1>
+
+<%= render 'shared/error_messages', object: @answer %>
+
+<h2> <%= current_question.title %> </h2>
+
+<div class="row">
+	<div class="span6 offset3">
+		<p>1 : <%= current_question.first_choice %></p> 
+		<% if current_question.number_of_choices > 2 %>
+			<p>
+			<% for intermediate in (2..current_question.number_of_choices - 1) do %>
+				<%= intermediate %>
+				<% if intermediate < current_question.number_of_choices - 1 %>
+					<%=','%>
+				<% else %>
+					<%= ': Intermediate choice(s)' %>
+				<% end %>
+			<% end %>
+			</p>
+		<% end %>
+		<p><%= current_question.number_of_choices %> : <%= current_question.last_choice %>
+		<br /><br />
+
+		<%= form_for(@answer) do |f| %>   
+
+			<%= render 'fields', f: f %>
+
+			<br />
+
+			<%= f.submit "Save changes", :class => "btn btn-large btn-primary" %>
+		<% end %>
+	</div>
+
+</div>

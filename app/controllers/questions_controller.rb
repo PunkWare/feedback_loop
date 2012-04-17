@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
 	def create
 		@question = current_survey.questions.build(params[:question])
 		if @question.save
-			current_question = @question
 			flash[ :success ] = "Question created."
 				
 			redirect_to survey_path(current_survey)
@@ -18,25 +17,21 @@ class QuestionsController < ApplicationController
 	
 	def new
 		@question = current_survey.questions.build
-		current_question = @question
 	end
 
 	def show
 		@question = current_survey.questions.find(params[:id])
-		current_question = @question
 		#@answers = current_question.answers.paginate(page: params[:page])
 	end
 
 	def edit
 		@question = current_survey.questions.find(params[:id])
-		current_question = @question
 	end
 
 	def update
 		@question = current_survey.questions.find(params[:id])
 		
 		if @question.update_attributes(params[:question])
-			current_question = @question
 			flash[:success] = "Question updated."
 			
 			redirect_to survey_path(current_survey)
@@ -47,7 +42,6 @@ class QuestionsController < ApplicationController
 
 	def destroy
 		deleted_question = current_survey.questions.find(params[:id]).destroy
-		current_question = nil
 		flash[:success] = "Question deleted."
 		redirect_to survey_path(current_survey)
 	end

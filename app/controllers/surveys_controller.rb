@@ -60,13 +60,16 @@ class SurveysController < ApplicationController
 	end
 
 	def begin
-		#if ! (Survey.find_by_id(params[:id]) == nil)
-			@survey = Survey.find(params[:id])
-			set_current_survey(@survey)
-			@questions = @survey.questions
-		#else
-		#	redirect_to root_path
-		#end
+		@survey = Survey.find(params[:id])
+		set_current_survey(@survey)
+		@questions = @survey.questions
+
+		questions_list = []
+		@questions.each do |question|
+			questions_list.push(question.id)
+		end
+		set_questions_list(questions_list)
+		set_current_question_index(0)
 	end
 
 	def destroy
