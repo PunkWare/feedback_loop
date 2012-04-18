@@ -15,10 +15,10 @@ module SessionsHelper
 			# permit the forwarding whien the user has signed in
 			store_location
 			
-			redirect_to signin_path, notice: "Please sign in." unless signed_in?
+			redirect_to signin_url, notice: "Please sign in." unless signed_in?
 			# the line above is equivalent to :
 			#flash[:notice] = "Please sign in."
-			#redirect_to signin_path unless signed_in?
+			#redirect_to signin_url unless signed_in?
 		end
 	end
 	

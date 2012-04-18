@@ -1,12 +1,14 @@
 <% provide(:title, "Feedback question") %> 
-<h1>Feedback question <%= (current_question_index + 1) %></h1>
+<h1><%= current_survey.title %></h1>
+<h3 class="question_number">Question <%= (current_question_index + 1) %> out of <%= current_survey.questions.count %></h3>
 
 <%= render 'shared/error_messages', object: @answer %>
 
-<h2> <%= current_question.title %> </h2>
+<h2 = class="question_title"> <%= current_question.title %> </h2>
 
 <div class="row">
 	<div class="span6 offset3">
+		<p>Possible choices :</p>
 		<p>1 : <%= current_question.first_choice %></p> 
 		<% if current_question.number_of_choices > 2 %>
 			<p>
@@ -29,8 +31,15 @@
 
 			<br />
 
-			<%= f.submit "Save changes", :class => "btn btn-large btn-primary" %>
+			<div class="question_buttons">
+				<% if previous_question %>
+					<%= link_to "Previous question", root_path, class: "btn btn-large btn-primary question_previous" %>
+				<%	end %>
+
+				<% if next_question %>
+					<%= f.submit "Save changes and next question", class: "btn btn-large btn-primary question_next" %>
+				<% end %>
+			</div>
 		<% end %>
 	</div>
-
 </div>

@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
 		if @question.save
 			flash[ :success ] = "Question created."
 				
-			redirect_to survey_path(current_survey)
+			redirect_to survey_url(current_survey)
 				
 		else
 			render 'new'
@@ -21,40 +21,47 @@ class QuestionsController < ApplicationController
 
 	def show
 		@question = current_survey.questions.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
+
 		#@answers = current_question.answers.paginate(page: params[:page])
 	end
 
 	def edit
 		@question = current_survey.questions.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
 	end
 
 	def update
 		@question = current_survey.questions.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
 		
 		if @question.update_attributes(params[:question])
 			flash[:success] = "Question updated."
 			
-			redirect_to survey_path(current_survey)
+			redirect_to survey_url(current_survey)
 		else
 			render 'edit'
 		end
 	end
 
 	def destroy
-		deleted_question = current_survey.questions.find(params[:id]).destroy
+		deleted_question = current_survey.questions.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if deleted_question.nil?
+
+		deleted_question.destroy
 		flash[:success] = "Question deleted."
-		redirect_to survey_path(current_survey)
+		redirect_to survey_url(current_survey)
 	end
 
 	private
 
 			def survey_exists
-					redirect_to(root_path) if current_survey.nil?
+					redirect_to(root_url, :alert => "No active survey! Default to home page") if current_survey.nil?
 			end
 
 			def correct_survey_of_question
 				question = current_survey.questions.find_by_id(params[:id])
-				redirect_to(root_path) if question.nil?
+				redirect_to(root_url, :alert => "Access prohibited! Default to home page") if question.nil?
 
 				# ANOTHER METHOD BELOW A LITTLE BIT LESS SECURE
 				#current_question= Question.find_by_id(params[:id])
@@ -62,6 +69,6 @@ class QuestionsController < ApplicationController
 				#if current_question
 				#	survey = current_queston.survey
 				#end
-				#redirect_to(root_path) unless current_survey?(@user)
+				#redirect_to(root_url) unless current_survey?(@user)
 			end
 end

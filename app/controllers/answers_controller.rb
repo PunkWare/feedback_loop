@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
 		if @answer.save
 			flash[ :success ] = "Answer created."
 				
-			redirect_to root_path		
+			redirect_to root_url		
 		else
 			render 'new'
 		end
@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
 	private
 		def correct_user_of_answer
 				answer = current_user.answers.find_by_id(params[:id])
-				redirect_to(root_path) if answer.nil?
+				redirect_to(root_url, :alert => "Access prohibited! Default to home page") if answer.nil?
 
 				# ANOTHER METHOD BELOW A LITTLE BIT LESS SECURE
 				#current_survey = Survey.find_by_id(params[:id])
@@ -29,6 +29,6 @@ class AnswersController < ApplicationController
 				#if current_survey
 				#	@user = current_survey.user
 				#end
-				#redirect_to(root_path) unless current_user?(@user)
+				#redirect_to(root_url) unless current_user?(@user)
 			end
 end

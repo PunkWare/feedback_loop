@@ -9,7 +9,7 @@ class SurveysController < ApplicationController
 			set_current_survey(@survey)
 			flash[ :success ] = "Survey created."
 				
-			redirect_to survey_path(current_survey)
+			redirect_to survey_url(current_survey)
 				
 		else
 			render 'new'
@@ -22,18 +22,24 @@ class SurveysController < ApplicationController
 	end
 
 	def show
-		@survey = current_user.surveys.find(params[:id])
+		@survey = current_user.surveys.find(params[:id])		
 		set_current_survey(@survey)
+
+		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
+
 		@questions = @survey.questions.paginate(page: params[:page])
 	end
 
 	def edit
 		@survey = current_user.surveys.find(params[:id])
 		set_current_survey(@survey)
+
+		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
 	end
 
 	def update
 		@survey = current_user.surveys.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
 
 		#flash[:notice] = params[:survey].to_s
 
@@ -53,7 +59,7 @@ class SurveysController < ApplicationController
 			set_current_survey(@survey)
 			flash[:success] = "Survey updated."
 			
-			redirect_to user_surveys_path
+			redirect_to user_surveys_url
 		else
 			render 'edit'
 		end
@@ -62,7 +68,10 @@ class SurveysController < ApplicationController
 	def begin
 		@survey = Survey.find(params[:id])
 		set_current_survey(@survey)
+		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
+
 		@questions = @survey.questions
+		redirect_to(root_url, :alert => "Can't find questions for survey with id #{params[:id]}! Default to home page") if @questions.nil?
 
 		questions_list = []
 		@questions.each do |question|
@@ -73,17 +82,21 @@ class SurveysController < ApplicationController
 	end
 
 	def destroy
-		deleted_survey = current_user.surveys.find(params[:id]).destroy
+		deleted_survey = current_user.surveys.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if deleted_survey.nil?
+
+
+		deleted_survey.destroy
 		current_survey = nil if current_survey?(deleted_survey)
 		flash[:success] = "Survey deleted."
-		redirect_to user_surveys_path
+		redirect_to user_surveys_url
 	end
 
 	private
 
 			def correct_user_of_survey
 				survey = current_user.surveys.find_by_id(params[:id])
-				redirect_to(root_path) if survey.nil?
+				redirect_to(root_url, :alert => "Access prohibited! Default to home page") if survey.nil?
 
 				# ANOTHER METHOD BELOW A LITTLE BIT LESS SECURE
 				#current_survey = Survey.find_by_id(params[:id])
@@ -91,7 +104,7 @@ class SurveysController < ApplicationController
 				#if current_survey
 				#	@user = current_survey.user
 				#end
-				#redirect_to(root_path) unless current_user?(@user)
+				#redirect_to(root_url) unless current_user?(@user)
 			end
 
 			def feedbackable
@@ -109,9 +122,11 @@ class SurveysController < ApplicationController
 							end
 						end
 					end
+				else
+					redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if feedback_survey.nil?
 				end
 
-				redirect_to(root_path) if !found
+				redirect_to(root_url) if !found
 			end
 
 end

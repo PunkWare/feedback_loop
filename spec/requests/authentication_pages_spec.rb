@@ -82,7 +82,7 @@ describe "Authenticated pages" do
 			before { get user_path(user) }
 
 			# it shouldn't allow to go to view profile page, and forward to sign in page instead
-			specify { response.should redirect_to(signin_path) }
+			specify { response.should redirect_to(signin_url) }
 		end
 
 		describe "when trying to edit a profile page" do
@@ -96,7 +96,7 @@ describe "Authenticated pages" do
 			before { put user_path(user) }
 
 			# it shouldn't allow to go to edit profile page, and forward to sign in page instead
-			specify { response.should redirect_to(signin_path) }
+			specify { response.should redirect_to(signin_url) }
 		end
 		
 		describe "when trying to view the users page" do
@@ -110,14 +110,14 @@ describe "Authenticated pages" do
 			before { get users_path }
 
 			# it shouldn't allow to go to view profile page, and forward to sign in page instead
-			specify { response.should redirect_to(root_path) }
+			specify { response.should redirect_to(root_url) }
 		end
 
 		describe "in the Surveys controller" do
 
 			describe "submitting to the create action" do
 				before { post surveys_path }
-				specify { response.should redirect_to(signin_path) }
+				specify { response.should redirect_to(signin_url) }
 			end
 
 			describe "when trying to show a survey" do
@@ -132,7 +132,7 @@ describe "Authenticated pages" do
 				describe "submitting to the update action" do
 					before { get survey_path(survey)  }
 
-					specify { response.should redirect_to(signin_path) }
+					specify { response.should redirect_to(signin_url) }
 				end
 			end
 
@@ -146,7 +146,7 @@ describe "Authenticated pages" do
 
 				describe "submitting to the update action" do
 					before { put survey_path(survey) }
-					specify { response.should redirect_to(signin_path) }
+					specify { response.should redirect_to(signin_url) }
 				end
 			end
 
@@ -155,7 +155,7 @@ describe "Authenticated pages" do
 					survey = FactoryGirl.create(:survey)
 					delete survey_path(survey)
 				end
-				specify { response.should redirect_to(signin_path) }
+				specify { response.should redirect_to(signin_url) }
 			end
 		end
 
@@ -163,7 +163,7 @@ describe "Authenticated pages" do
 
 			describe "submitting to the create action" do
 				before { post questions_path }
-				specify { response.should redirect_to(signin_path) }
+				specify { response.should redirect_to(signin_url) }
 			end
 
 			describe "when trying to show a question" do
@@ -179,7 +179,7 @@ describe "Authenticated pages" do
 				describe "submitting to the update action" do
 					before { get question_path(question)  }
 
-					specify { response.should redirect_to(signin_path) }
+					specify { response.should redirect_to(signin_url) }
 				end
 			end
 
@@ -194,7 +194,7 @@ describe "Authenticated pages" do
 
 				describe "submitting to the update action" do
 					before { put question_path(question) }
-					specify { response.should redirect_to(signin_path) }
+					specify { response.should redirect_to(signin_url) }
 				end
 			end
 
@@ -203,7 +203,7 @@ describe "Authenticated pages" do
 					question = FactoryGirl.create(:question)
 					delete question_path(question)
 				end
-				specify { response.should redirect_to(signin_path) }
+				specify { response.should redirect_to(signin_url) }
 			end
 		end
 	end
@@ -225,7 +225,7 @@ describe "Authenticated pages" do
 
 		describe "when submitting a PUT request to the Users#update action" do
 			before { put user_path(wrong_user) }
-			specify { response.should redirect_to(root_path) }
+			specify { response.should redirect_to(root_url) }
 		end
 		
 		describe "when trying to view the users page" do
@@ -239,7 +239,7 @@ describe "Authenticated pages" do
 			before { get users_path }
 
 			# it shouldn't allow to go to view profile page, and forward to sign in page instead
-			specify { response.should redirect_to(root_path) }
+			specify { response.should redirect_to(root_url) }
 		end
 		
 		# user already signed_in should not be able to signup (3 following tests)
@@ -251,12 +251,12 @@ describe "Authenticated pages" do
 		describe "when trying a new action" do
 			before { get signup_path }
 
-			specify { response.should redirect_to(root_path) }
+			specify { response.should redirect_to(root_url) }
 		end
 		describe "when trying a create action" do
 			before { post users_path }
 
-			specify { response.should redirect_to(root_path) }
+			specify { response.should redirect_to(root_url) }
 		end
 		
 		describe "in the Surveys controller" do
@@ -271,7 +271,7 @@ describe "Authenticated pages" do
 			describe "when trying a show action on a survey" do
 				before { get survey_path(survey)  }
 
-				specify { response.should redirect_to(root_path) }
+				specify { response.should redirect_to(root_url) }
 			end
 
 			describe "when trying to edit a survey" do
@@ -282,13 +282,13 @@ describe "Authenticated pages" do
 
 				describe "submitting to the update action" do
 					before { put survey_path(survey) }
-					specify { response.should redirect_to(root_path) }
+					specify { response.should redirect_to(root_url) }
 				end
 			end
 
 			describe "when submitting a DELETE request to the Surveys#destroy action" do
 				before { delete survey_path(survey) }
-				specify { response.should redirect_to(root_path) }        
+				specify { response.should redirect_to(root_url) }        
 			end
 		end
 
@@ -305,7 +305,7 @@ describe "Authenticated pages" do
 			describe "when trying a show action on a question" do
 				before { get question_path(question)  }
 
-				specify { response.should redirect_to(root_path) }
+				specify { response.should redirect_to(root_url) }
 			end
 
 			describe "when trying to edit a question" do
@@ -316,13 +316,13 @@ describe "Authenticated pages" do
 
 				describe "submitting to the update action" do
 					before { put question_path(question) }
-					specify { response.should redirect_to(root_path) }
+					specify { response.should redirect_to(root_url) }
 				end
 			end
 
 			describe "when submitting a DELETE request to the Questions#destroy action" do
 				before { delete question_path(question) }
-				specify { response.should redirect_to(root_path) }        
+				specify { response.should redirect_to(root_url) }        
 			end
 		end
 	end
@@ -383,7 +383,7 @@ describe "Authenticated pages" do
 
 		describe "when submitting a DELETE request to the Users#destroy action" do
 			before { delete user_path(user) }
-			specify { response.should redirect_to(root_path) }        
+			specify { response.should redirect_to(root_url) }        
 		end
 	end
 	
