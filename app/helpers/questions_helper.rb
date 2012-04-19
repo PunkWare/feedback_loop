@@ -1,6 +1,6 @@
 module QuestionsHelper
 	def set_current_question_index(question)
-		cookies[:current_question] = { :value => question.to_s, :expires => 1.day.from_now }
+		cookies.permanent[:current_question] = question.to_s
 		@current_question = question
 	end
 	
@@ -9,7 +9,7 @@ module QuestionsHelper
 	end
 
 	def set_questions_list(questions_list)
-		cookies[:questions_list] = { :value => questions_list.join(','), :expires => 1.day.from_now }
+		cookies.permanent[:questions_list] = questions_list.join(',')
 		@questions_list = questions_list
 	end
 	
@@ -23,15 +23,38 @@ module QuestionsHelper
 		Question.find(question_id)
 	end
 
-	def next_question
+	def next_question?
 		if (current_question_index + 1 ) == questions_list_to_array.length
 			return nil
 		else
 			question_id = questions_list_to_array[ current_question_index + 1 ]
-			redirect_to(root_url, :alert => "Can't find question with id #{question_id}! Default to home page") if question_id.nil?
-			Question.find(question_id)
 		end
 	end
+
+	def previous_question?
+		if current_question_index.zero?
+			return nil
+		else
+			question_id = questions_list_to_array[ current_question_index - 1 ]
+		end
+	end
+
+	def next_question
+		question_id = next_question?
+
+		if question_id
+			set_current_question_index ( current_question_index + 1 )
+
+			answer_exist = Answer.where(user_id: current_user.id, question_id: question_id)
+
+			if answer_exist
+				edit_answer_path(answer_exist)
+			else
+				new_answer_path
+			end
+		end
+	end
+
 
 	def previous_question
 		if current_question_index.zero?

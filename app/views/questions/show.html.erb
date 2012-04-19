@@ -13,21 +13,8 @@
 	<div class="span8">
 		<h1> <%= @question.title %> </h1>
 		
-		<p>1 : <%= @question.first_choice %> </p>
-		<% if @question.number_of_choices > 2 %>
-			<p>
-			<% for intermediate in (2..@question.number_of_choices - 1) do %>
-				<%= intermediate %>
-				<% if intermediate < @question.number_of_choices - 1 %>
-					<%=','%>
-				<% else %>
-					<%= ': Intermediate choice(s)' %>
-				<% end %>
-			<% end %>
-			</p>
-		<% end %>
-		<p><%= @question.number_of_choices %> : <%= @question.last_choice %>
-		<br /><br />
+		<%= render 'choices', question: @question %>
+
 		<%= link_to 'Back to survey', survey_path(current_survey) %>
 	</div>
 </div>

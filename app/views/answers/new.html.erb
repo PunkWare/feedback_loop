@@ -8,22 +8,8 @@
 
 <div class="row">
 	<div class="span6 offset3">
-		<p>Possible choices :</p>
-		<p>1 : <%= current_question.first_choice %></p> 
-		<% if current_question.number_of_choices > 2 %>
-			<p>
-			<% for intermediate in (2..current_question.number_of_choices - 1) do %>
-				<%= intermediate %>
-				<% if intermediate < current_question.number_of_choices - 1 %>
-					<%=','%>
-				<% else %>
-					<%= ': Intermediate choice(s)' %>
-				<% end %>
-			<% end %>
-			</p>
-		<% end %>
-		<p><%= current_question.number_of_choices %> : <%= current_question.last_choice %>
-		<br /><br />
+		
+		<%= render 'questions/choices', question: current_question %>
 
 		<%= form_for(@answer) do |f| %>   
 
@@ -32,11 +18,11 @@
 			<br />
 
 			<div class="question_buttons">
-				<% if previous_question %>
+				<% if previous_question? %>
 					<%= link_to "Previous question", root_path, class: "btn btn-large btn-primary question_previous" %>
 				<%	end %>
 
-				<% if next_question %>
+				<% if next_question? %>
 					<%= f.submit "Save changes and next question", class: "btn btn-large btn-primary question_next" %>
 				<% end %>
 			</div>

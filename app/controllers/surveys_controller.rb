@@ -79,6 +79,7 @@ class SurveysController < ApplicationController
 		end
 		set_questions_list(questions_list)
 		set_current_question_index(0)
+		
 	end
 
 	def destroy

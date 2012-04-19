@@ -345,6 +345,7 @@ describe "Regarding all survey pages :" do
 		describe "and the survey is valid" do
 			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", available: true) }
 			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+			let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
 			let(:page_title) {"Give feedback"}
 
 			before do
@@ -355,6 +356,22 @@ describe "Regarding all survey pages :" do
 			it "should work " do
 				should have_title(full_title(page_title))
 				should have_link('Start survey !', href: new_answer_path)
+			end
+
+			describe ", starting the survey" do
+				let(:heading) {survey.title}
+				let(:page_title) {'Feedback question'}
+				
+				before do
+					click_link 'Start survey !'
+				end
+
+				it_should_behave_like "all survey pages"
+
+				it "should display the first question" do
+					should have_button('Save changes and next question')
+					should_not have_content('Previous question')
+				end
 			end
 		end
 	end
