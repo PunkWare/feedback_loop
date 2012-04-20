@@ -23,5 +23,6 @@ FactoryGirl.define do
 	factory :answer do
 		sequence(:choice)  { |n| "#{n}" }
 		question
+		user
 	end
 end

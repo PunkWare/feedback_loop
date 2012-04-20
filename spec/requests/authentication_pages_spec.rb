@@ -206,6 +206,30 @@ describe "Authenticated pages" do
 				specify { response.should redirect_to(signin_url) }
 			end
 		end
+
+		describe "in the Answers controller" do
+
+			describe "submitting to the create action" do
+				before { post answers_path }
+				specify { response.should redirect_to(signin_url) }
+			end
+
+			describe "when trying to edit an answer" do
+				let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
+				let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+				let(:answer) { FactoryGirl.create(:answer, question: question, user: user, choice: 3) }
+
+				describe "visiting the edit answer page" do
+					before { visit edit_answer_path(answer) }
+					it { should have_title('Sign in') }
+				end
+
+				describe "submitting to the update action" do
+					before { put answer_path(answer) }
+					specify { response.should redirect_to(signin_url) }
+				end
+			end
+		end
 	end
 
 	describe "for signed-in users" do
@@ -323,6 +347,25 @@ describe "Authenticated pages" do
 			describe "when submitting a DELETE request to the Questions#destroy action" do
 				before { delete question_path(question) }
 				specify { response.should redirect_to(root_url) }        
+			end
+		end
+
+		describe "in the Answers controller" do
+
+			describe "when trying to edit an answer" do
+				let(:survey) { FactoryGirl.create(:survey, user: wrong_user, title: "Survey 1") }
+				let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+				let(:answer) { FactoryGirl.create(:answer, question: question, user: wrong_user, choice: 3) }
+
+				describe "visiting the edit answer page" do
+					before { visit edit_answer_path(answer) }
+					it { should have_title('All surveys') }
+				end
+
+				describe "submitting to the update action" do
+					before { put answer_path(answer) }
+					specify { response.should redirect_to(root_url) }
+				end
 			end
 		end
 	end
