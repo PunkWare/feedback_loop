@@ -103,5 +103,14 @@ describe "info_pages" do
 		page.should have_title(full_title('Sign up'))
 		
 	end
+
+	describe "end page" do
+		before { visit end_path }
+		let(:page_title) {'Give feedback'}
+		let(:heading) {'Thank you!'}  
+			
+		it_should_behave_like "all static pages"
+		it { should have_link('Back to home page', href: root_path ) }
+	end
 	
 end

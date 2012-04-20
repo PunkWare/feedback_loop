@@ -20,6 +20,7 @@ FeedbackLoop::Application.routes.draw do
 
 	match '/help',          to: 'info_pages#help'
 	match '/about',         to: 'info_pages#about'
+	match '/end',				to: 'info_pages#end'
 	
 	match '/signup',        to: 'users#new'
 	match '/user_surveys',  to: 'users#surveys'
