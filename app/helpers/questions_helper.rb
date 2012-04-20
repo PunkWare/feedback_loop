@@ -24,8 +24,8 @@ module QuestionsHelper
 	end
 
 	def next_question?
-		if (current_question_index + 1 ) == questions_list_to_array.length
-			return nil
+		if (current_question_index + 1 ) >= questions_list_to_array.length
+			return false
 		else
 			question_id = questions_list_to_array[ current_question_index + 1 ]
 		end
@@ -33,7 +33,7 @@ module QuestionsHelper
 
 	def previous_question?
 		if current_question_index.zero?
-			return nil
+			return false
 		else
 			question_id = questions_list_to_array[ current_question_index - 1 ]
 		end
@@ -55,16 +55,21 @@ module QuestionsHelper
 		end
 	end
 
-
-	def previous_question
-		if current_question_index.zero?
-			return nil
-		else
-			question_id = questions_list_to_array[ current_question_index - 1 ]
-			redirect_to(root_url, :alert => "Can't find question with id #{question_id}! Default to home page") if question_id.nil?
-			Question.find(question_id)
-		end
-	end
+#	def previous_question
+#		question_id = previous_question?
+#
+#		if question_id
+#			set_current_question_index ( current_question_index - 1 )
+#
+#			answer_exist = Answer.where(user_id: current_user.id, question_id: question_id)
+#
+#			if answer_exist[0]
+#				edit_answer_path(answer_exist[0])
+#			else
+#				nil
+#			end
+#		end
+#	end
 
 	private
 		def questions_list_to_array

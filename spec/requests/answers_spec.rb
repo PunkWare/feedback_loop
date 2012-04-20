@@ -23,6 +23,10 @@ describe "Regarding all answer pages :" do
 		let(:heading) {survey.title}
 		let(:page_title) {'Feedback question'}
 
+		it { should_not have_link('Previous question') }
+		it { should have_button('Save changes and next question') }
+		it { should_not have_button('Save changes and finish' ) }	
+
 		it_should_behave_like "all answer pages"
 
 		describe "when filling fields on new page" do
@@ -53,6 +57,23 @@ describe "Regarding all answer pages :" do
 						click_button create_answer_button
 					end.to change(Answer, :count).by(1)
 				end
+
+				describe "going to question after" do
+					before do 
+						fill_in "Your choice", with: 3
+						click_button create_answer_button
+					end
+
+					it_should_behave_like "all answer pages"
+
+					it "should display second question" do 
+						#save_and_open_page
+
+						should have_link('Previous question')
+						should have_button('Save changes and finish')
+						should_not have_button('Save changes and next question')
+					end
+				end			
 			end
 		end
 	end

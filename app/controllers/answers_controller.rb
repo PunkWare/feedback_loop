@@ -11,8 +11,13 @@ class AnswersController < ApplicationController
 			if @answer.save
 				flash[ :success ] = "Answer created."
 					
-				redirect_to root_url		
+				if next_question?
+					redirect_to next_question
+				else
+					redirect_to end_path
+				end
 			else
+				flash[:notice] = @answer.question_id.to_s+" - "+@answer.user_id.to_s+" - "+current_question.id.to_s+" - "+current_question_index.to_s+" - "+questions_list.to_s
 				render 'new'
 			end
 		else
@@ -23,6 +28,7 @@ class AnswersController < ApplicationController
 	
 	def new
 		@answer = current_question.answers.build
+		flash[:notice] = @answer.question_id.to_s+" - "+@answer.user_id.to_s+" - "+current_question.id.to_s+" - "+current_question_index.to_s+" - "+questions_list.to_s
 	end
 
 	def edit
@@ -40,7 +46,11 @@ class AnswersController < ApplicationController
 			if @answer.update_attributes(params[:answer])
 				flash[ :success ] = "Answer saved."
 					
-				redirect_to root_url		
+				if next_question?
+					redirect_to next_question
+				else
+					redirect_to end_path
+				end
 			else
 				render 'edit'
 			end

@@ -24,6 +24,8 @@
 
 				<% if next_question? %>
 					<%= f.submit "Save changes and next question", class: "btn btn-large btn-primary question_next" %>
+				<% else %>
+					<%= f.submit "Save changes and finish", class: "btn btn-large btn-primary question_next" %>
 				<% end %>
 			</div>
 		<% end %>
