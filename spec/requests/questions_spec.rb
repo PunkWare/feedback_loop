@@ -48,7 +48,7 @@ describe "Regarding all question pages :" do
 
 			describe " with valid information, " do
 				before do
-					fill_in "Title",         with: "fake"
+					fill_in "Title", with: "fake"
 				end
 
 				it "should create a question" do

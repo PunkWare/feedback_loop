@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
 	def create
 		@answer = current_question.answers.build(params[:answer])
 
-		if @answer.choice <= current_question.number_of_choices
+		if @answer.choice && @answer.choice <= current_question.number_of_choices
 			@answer.user = current_user
 			if @answer.save
 				flash[ :success ] = "Answer created."
@@ -15,8 +15,7 @@ class AnswersController < ApplicationController
 				render 'new'
 			end
 		else
-			#flash.now[ :error ] = "Choice must be betwwen 1 and "+current_question.number_of_choices.to_s
-			@answer.errors.add(:choice, "must be betwwen 1 and "+current_question.number_of_choices.to_s)
+			@answer.errors.add(:choice, "must be between 1 and "+current_question.number_of_choices.to_s)
 			render 'new'
 		end
 	end

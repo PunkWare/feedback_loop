@@ -349,7 +349,7 @@ describe "Regarding all survey pages :" do
 			let(:page_title) {"Give feedback"}
 
 			before do
-				visit survey_path(survey)
+				#visit survey_path(survey)
 				visit begin_survey_path(survey)
 			end
 			
