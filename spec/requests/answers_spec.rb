@@ -57,79 +57,49 @@ describe "Regarding all answer pages :" do
 		end
 	end
 
-=begin
 	describe "When testing title and h1 on edit page, " do
 		let(:user) { FactoryGirl.create(:user) }
-		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
-		let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1", available: true) }
+		let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+		let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
+		let(:answer) { FactoryGirl.create(:answer, question: question, user: user) }
 
-		# must sign in user to comply with authorization restrictions
 		before do
 			sign_in user
-			visit survey_path(survey)
-			visit edit_question_path(question)
+			visit begin_survey_path(survey)
+			visit edit_answer_path(answer)
 		end
-
-		let(:heading) {'Update question'}
-		let(:page_title) {heading}
 		
-		it_should_behave_like "all question pages"
-	end
+		let(:heading) {survey.title}
+		let(:page_title) {'Feedback question'}
 
-	describe "When providing edit fields" do
-		let(:save_profile_button) {'Save changes'}
-		let(:user) { FactoryGirl.create(:user) }
-		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
-		let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
-		
-		# must sign in user to comply with authorization restrictions
-		before do
-			sign_in user
-			visit survey_path(survey)
-			visit edit_question_path(question)
-		end
+		it_should_behave_like "all answer pages"
 
-		describe "with invalid information," do
+		describe "when filling fields on edit page" do
+			let(:save_answer_button) {'Save changes and next question'}
 
-			describe "should display error messages" do
+			describe "with invalid information," do
 
-				# by default the two fields are already filled with user's information
-				# they are emptied so that errors messages can be checked
-				before do
-					fill_in "Title", with: ""
-					fill_in "Number of choices", with: ""
-					fill_in "Text for first choice", with: ""
-					fill_in "Text for last choice", with: ""
-					click_button save_profile_button
+				describe "should display error messages" do
+					before do
+						fill_in "Your choice", with: 7
+						click_button save_answer_button
+					end
+
+					it { should have_flash_message('Choice must be between 1 and 5','error') }
 				end
-				
-				it { should have_flash_message('Title can\'t be blank','error') }
-				it { should have_flash_message('First choice can\'t be blank','error') } 
-				it { should have_flash_message('Last choice can\'t be blank','error') }
-				it { should have_flash_message('Number of choices is not a number','error') }
-			end
-		end
-
-		describe " with valid information, " do
-			let(:updated_title) { "title updated" }
-
-			before do
-				fill_in "Title",        with: updated_title
-				fill_in "Number of choices", with: "8"
-				fill_in "Text for first choice", with: "Never"
-				fill_in "Text for last choice", with: "Always"
-				click_button save_profile_button
 			end
 
-			it { should have_flash_message('Question updated','success') }
-			it { should have_title(full_title('Manage questions')) }
+			describe " with valid information, " do
+				before do
+					fill_in "Your choice", with: "3"
+					fill_in "Comment", with: "Fake fake fake"
+					click_button save_answer_button
+				end
 
-			# Check that the data have been indeed modified
-			specify { question.reload.title.should == updated_title }
-			specify { question.reload.number_of_choices.should == 8 }
-			specify { question.reload.first_choice.should == "Never" }
-			specify { question.reload.last_choice.should == "Always" }
+				specify { answer.reload.choice.should == 3 }
+				specify { answer.reload.comment.should == "Fake fake fake" }
+			end
 		end
 	end
-=end
 end

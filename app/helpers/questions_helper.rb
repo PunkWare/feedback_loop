@@ -10,7 +10,7 @@ module QuestionsHelper
 
 	def set_questions_list(questions_list)
 		cookies.permanent[:questions_list] = questions_list.join(',')
-		@questions_list = questions_list
+		@questions_list = questions_list.join(',')
 	end
 	
 	def questions_list
@@ -47,8 +47,8 @@ module QuestionsHelper
 
 			answer_exist = Answer.where(user_id: current_user.id, question_id: question_id)
 
-			if answer_exist
-				edit_answer_path(answer_exist)
+			if answer_exist[0]
+				edit_answer_path(answer_exist[0])
 			else
 				new_answer_path
 			end

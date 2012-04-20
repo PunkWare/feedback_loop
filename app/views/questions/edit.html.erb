@@ -1,4 +1,4 @@
-<% provide(:title, "Update question") %> 
+<%= provide(:title, "Update question") %> 
 <h1>Update question</h1>
 
 <%= render 'shared/error_messages', object: @question %>
@@ -8,8 +8,6 @@
 		<%= form_for(@question) do |f| %>   
 
 			<%= render 'fields', f: f %>
-
-			<br />
 
 			<%= f.submit "Save changes", :class => "btn btn-large btn-primary" %>
 		<% end %>

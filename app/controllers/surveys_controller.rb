@@ -73,13 +73,14 @@ class SurveysController < ApplicationController
 		@questions = @survey.questions
 		redirect_to(root_url, :alert => "Can't find questions for survey with id #{params[:id]}! Default to home page") if @questions.nil?
 
-		questions_list = []
+		questions_array = []
 		@questions.each do |question|
-			questions_list.push(question.id)
+			questions_array.push(question.id)
 		end
-		set_questions_list(questions_list)
-		set_current_question_index(0)
-		
+		set_questions_list(questions_array)
+		set_current_question_index(-1)
+
+		#flash[:notice] = current_user.answers
 	end
 
 	def destroy

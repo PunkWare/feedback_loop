@@ -304,7 +304,6 @@ describe "Regarding all survey pages :" do
 			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", available: false) }
 
 			before do
-				visit survey_path(survey)
 				visit begin_survey_path(survey)
 			end
 
@@ -318,7 +317,6 @@ describe "Regarding all survey pages :" do
 			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", private: true) }
 
 			before do
-				visit survey_path(survey)
 				visit begin_survey_path(survey)
 			end
 
@@ -332,7 +330,6 @@ describe "Regarding all survey pages :" do
 			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", available: true, private: false) }
 
 			before do
-				visit survey_path(survey)
 				visit begin_survey_path(survey)
 			end
 
@@ -349,13 +346,12 @@ describe "Regarding all survey pages :" do
 			let(:page_title) {"Give feedback"}
 
 			before do
-				#visit survey_path(survey)
 				visit begin_survey_path(survey)
 			end
 			
 			it "should work " do
 				should have_title(full_title(page_title))
-				should have_link('Start survey !', href: new_answer_path)
+				should have_content('Start survey !')
 			end
 
 			describe ", starting the survey" do

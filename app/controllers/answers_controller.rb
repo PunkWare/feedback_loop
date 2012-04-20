@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
 	before_filter :signed_in_user
-	before_filter :correct_user_answer, only: [ :edit, :update]
+	before_filter :correct_user_of_answer, only: [ :edit, :update]
 
 	def create
 		@answer = current_question.answers.build(params[:answer])
@@ -22,6 +22,31 @@ class AnswersController < ApplicationController
 	
 	def new
 		@answer = current_question.answers.build
+	end
+
+	def edit
+		@answer = current_question.answers.find(params[:id])
+
+		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page") if @answer.nil?
+	end
+
+	
+	def update
+		@answer = current_question.answers.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page") if @answer.nil?
+
+		if params[:answer][:choice] && (params[:answer][:choice].to_i <= current_question.number_of_choices)
+			if @answer.update_attributes(params[:answer])
+				flash[ :success ] = "Answer saved."
+					
+				redirect_to root_url		
+			else
+				render 'edit'
+			end
+		else
+			@answer.errors.add(:choice, "must be between 1 and "+current_question.number_of_choices.to_s)
+			render 'edit'
+		end
 	end
 
 	private
