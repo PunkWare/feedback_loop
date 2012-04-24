@@ -4,50 +4,51 @@ class AnswersController < ApplicationController
 	before_filter :ready_to_feedback
 
 	def create
-		@answer = current_question.answers.build(params[:answer])
+		@answer = ApplicationController.current_question.answers.build(params[:answer])
 
-		if @answer.choice && @answer.choice <= current_question.number_of_choices
+		if @answer.choice && @answer.choice <= @answer.question.number_of_choices
 			@answer.user = current_user
 			if @answer.save
 				flash[ :success ] = "Answer created."
 					
-				if next_question?
-					redirect_to next_question
+				if question_after?(@answer.question)
+					redirect_to answer_path_for_question_after(@answer.question)
 				else
 					redirect_to end_path
 				end
 			else
-				flash[:notice] = @answer.question_id.to_s+" - "+@answer.user_id.to_s+" - "+current_question.id.to_s+" - "+current_question_index.to_s+" - "+questions_list.to_s
 				render 'new'
 			end
 		else
-			@answer.errors.add(:choice, "must be between 1 and "+current_question.number_of_choices.to_s)
+			@answer.errors.add(:choice, "must be between 1 and " + @answer.question.number_of_choices.to_s)
 			render 'new'
 		end
 	end
 	
 	def new
-		@answer = current_question.answers.build
-		flash[:notice] = @answer.question_id.to_s+" - "+@answer.user_id.to_s+" - "+current_question.id.to_s+" - "+current_question_index.to_s+" - "+questions_list.to_s
+		@answer = ApplicationController.current_question.answers.build
 	end
 
 	def edit
-		@answer = current_question.answers.find(params[:id])
+		if params[:backward] == "true"
+			ApplicationController.set_current_question(question_before?(ApplicationController.current_question))
+		end
 
-		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page.") if @answer.nil?
+		@answer = ApplicationController.current_question.answers.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page.") if !current_survey.questions.index(@answer.question)
 	end
 
 	
 	def update
-		@answer = current_question.answers.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page.") if @answer.nil?
+		@answer = ApplicationController.current_question.answers.find(params[:id])
+		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page.") if !current_survey.questions.index(@answer.question)
 
-		if params[:answer][:choice] && (params[:answer][:choice].to_i <= current_question.number_of_choices)
+		if params[:answer][:choice] && (params[:answer][:choice].to_i <= @answer.question.number_of_choices)
 			if @answer.update_attributes(params[:answer])
 				flash[ :success ] = "Answer saved."
 					
-				if next_question?
-					redirect_to next_question
+				if question_after?(@answer.question)
+					redirect_to answer_path_for_question_after(@answer.question)
 				else
 					redirect_to end_path
 				end
@@ -55,7 +56,7 @@ class AnswersController < ApplicationController
 				render 'edit'
 			end
 		else
-			@answer.errors.add(:choice, "must be between 1 and "+current_question.number_of_choices.to_s)
+			@answer.errors.add(:choice, "must be between 1 and " + @answer.question.number_of_choices.to_s)
 			render 'edit'
 		end
 	end
@@ -64,18 +65,10 @@ class AnswersController < ApplicationController
 		def correct_user_of_answer
 			answer = current_user.answers.find_by_id(params[:id])
 			redirect_to(root_url, :alert => "Access prohibited! Default to home page.") if answer.nil?
-
-			# ANOTHER METHOD BELOW A LITTLE BIT LESS SECURE
-			#current_survey = Survey.find_by_id(params[:id])
-			##if a survey with this id exist
-			#if current_survey
-			#	@user = current_survey.user
-			#end
-			#redirect_to(root_url) unless current_user?(@user)
 		end
 
 		def ready_to_feedback
 			answer = current_user.answers.find_by_id(params[:id])
-			redirect_to(begin_survey_path(answer.question.survey), :alert => "Access to this answer is allowed only by giving feedback to this survey.") if current_survey.nil? || questions_list.nil? || questions_list.blank?		
+			redirect_to(begin_survey_path(answer.question.survey), :alert => "Access to this answer is allowed only by giving feedback to this survey.") if current_survey.nil? || 	current_survey.questions.blank?
 		end
 end

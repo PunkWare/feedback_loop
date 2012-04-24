@@ -8,5 +8,5 @@
 		<p> This survey is NOT anonymous. <%= @survey.user.name %> will be able to see your name with your answers. </p>
 	<% end %>
 	
-	<%= link_to "Start survey !", next_question, class: "btn btn-large btn-primary" %>
+	<%= link_to "Start survey !", answer_path_for_question(@survey.questions[0]), class: "btn btn-large btn-primary" %>
 </div>

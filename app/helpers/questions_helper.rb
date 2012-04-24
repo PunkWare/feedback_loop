@@ -1,79 +1,91 @@
 module QuestionsHelper
-	def set_current_question_index(question)
-		cookies.permanent[:current_question] = question.to_s
-		@current_question = question
-	end
-	
-	def current_question_index
-		@current_question ||= cookies[:current_question].to_i
-	end
 
-	def set_questions_list(questions_list)
-		cookies.permanent[:questions_list] = questions_list.join(',')
-		@questions_list = questions_list.join(',')
-	end
-	
-	def questions_list
-		@questions_list ||= cookies[:questions_list]
-	end
+	def question_index(this_question)
+		position = current_survey.questions.index(this_question)
 
-	def current_question
-		question_id = questions_list_to_array[current_question_index]
-		redirect_to(root_url, :alert => "Can't find question with id #{question_id}! Default to home page") if question_id.nil?
-		Question.find(question_id)
-	end
-
-	def next_question?
-		if (current_question_index + 1 ) >= questions_list_to_array.length
-			return false
+		if !position
+			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
 		else
-			question_id = questions_list_to_array[ current_question_index + 1 ]
+			position
 		end
 	end
 
-	def previous_question?
-		if current_question_index.zero?
-			return false
+
+	def question_after?(this_question)
+		position = current_survey.questions.index(this_question)
+
+		if !position
+			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
 		else
-			question_id = questions_list_to_array[ current_question_index - 1 ]
-		end
-	end
-
-	def next_question
-		question_id = next_question?
-
-		if question_id
-			set_current_question_index ( current_question_index + 1 )
-
-			answer_exist = Answer.where(user_id: current_user.id, question_id: question_id)
-
-			if answer_exist[0]
-				edit_answer_path(answer_exist[0])
+			if ( position + 1 ) >= current_survey.questions.length
+				false
 			else
-				new_answer_path
+				current_survey.questions[ position + 1]
 			end
 		end
 	end
 
-#	def previous_question
-#		question_id = previous_question?
-#
-#		if question_id
-#			set_current_question_index ( current_question_index - 1 )
-#
-#			answer_exist = Answer.where(user_id: current_user.id, question_id: question_id)
-#
-#			if answer_exist[0]
-#				edit_answer_path(answer_exist[0])
-#			else
-#				nil
-#			end
-#		end
-#	end
+	def question_before?(this_question)
+		position = current_survey.questions.index(this_question)
 
-	private
-		def questions_list_to_array
-			current_list = questions_list.split(',')
-			current_list.collect! {|x| x.to_i}
+		if !position
+			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
+		else
+			if position.zero?
+				false
+			else
+				current_survey.questions[ position - 1]
+			end
 		end
+	end
+
+	def answer_path_for_question(this_question)
+		if this_question
+			answer_exist = Answer.where(user_id: current_user.id, question_id: this_question.id)
+
+			ApplicationController.set_current_question(this_question)
+
+			if answer_exist[0]
+				edit_answer_path(answer_exist[0], backward: false)
+			else
+				new_answer_path
+			end
+		else
+			redirect_to(root_url, :alert => "Can't find question! Default to home page")
+		end
+	end
+
+	def answer_path_for_question_after(this_question)
+		question = question_after?(this_question)
+
+		if question
+			answer_exist = Answer.where(user_id: current_user.id, question_id: question.id)
+
+			ApplicationController.set_current_question(question)
+
+			if answer_exist[0]
+				edit_answer_path(answer_exist[0], backward: false)
+			else
+				new_answer_path
+			end
+		else
+			redirect_to(root_url, :alert => "Can't find question! Default to home page")
+		end
+	end
+
+	def answer_path_for_question_before(this_question)
+		question = question_before?(this_question)
+
+		if question
+			answer_exist = Answer.where(user_id: current_user.id, question_id: question.id)
+
+			if answer_exist[0]
+				edit_answer_path(answer_exist[0], backward: true)
+			else
+				redirect_to(root_url, :alert => "Can't find answer with question id #{question_id}! Default to home page")
+			end
+		else
+			redirect_to(root_url, :alert => "Can't find question! Default to home page")
+		end
+	end
 end

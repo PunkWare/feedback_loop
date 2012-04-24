@@ -1,15 +1,15 @@
 <% provide(:title, "Feedback question") %> 
 <h1><%= current_survey.title %></h1>
-<h3 class="question_number">Question <%= (current_question_index + 1) %> out of <%= current_survey.questions.count %></h3>
+<h3 class="question_number">Question <%= question_index(@answer.question) + 1 %> out of <%= current_survey.questions.count %></h3>
 
 <%= render 'shared/error_messages', object: @answer %>
 
-<h2 = class="question_title"> <%= current_question.title %> </h2>
+<h2 = class="question_title"> <%= @answer.question.title %> </h2>
 
 <div class="row">
 	<div class="span6 offset3">
 		
-		<%= render 'questions/choices', question: current_question %>
+		<%= render 'questions/choices', question: @answer.question %>
 
 		<%= form_for(@answer) do |f| %>   
 
@@ -18,11 +18,11 @@
 			<br />
 
 			<div class="question_buttons">
-				<% if previous_question? %>
-					<%= link_to "Previous question", root_path, class: "btn btn-large btn-primary question_previous" %>
+				<% if question_before?(@answer.question) %>
+					<%= link_to "Previous question", answer_path_for_question_before(@answer.question), class: "btn btn-large btn-primary question_previous" %>
 				<%	end %>
 
-				<% if next_question? %>
+				<% if question_after?(@answer.question) %>
 					<%= f.submit "Save changes and next question", class: "btn btn-large btn-primary question_next" %>
 				<% else %>
 					<%= f.submit "Save changes and finish", class: "btn btn-large btn-primary question_next" %>
