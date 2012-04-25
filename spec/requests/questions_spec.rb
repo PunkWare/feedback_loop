@@ -163,4 +163,30 @@ describe "Regarding all question pages :" do
 			specify { question.reload.link.should == updated_link }
 		end
 	end
+
+	describe "When deleting questions of a survey" do
+		let(:user) { FactoryGirl.create(:user) }
+		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1", available: true) }
+		let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+		let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
+
+
+		before do
+			sign_in user
+			visit survey_path(survey)
+			click_link('delete')
+		end
+
+		it { should_not have_flash_message("This question was the last of the survey. As a result, the survey is not available for feedback anymore.",'notice') }
+		specify { survey.reload.available.should == true }
+
+		describe ", deleting last one" do
+			before do
+				click_link('delete')
+			end
+
+			it { should have_flash_message("This question was the last of the survey. As a result, the survey is not available for feedback anymore.",'notice') }
+			specify { another_question.survey.reload.available.should == false }
+		end
+	end
 end

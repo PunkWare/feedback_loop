@@ -34,7 +34,7 @@ describe "Regarding all user pages :" do
 				it { should have_flash_message('Email can\'t be blank','error') }
 				it { should have_flash_message('Email is invalid','error') }
 				it { should have_flash_message('Password is too short','error') }
-				it { should have_flash_message('Password confirmation can\'t be blank','error') }   
+				it { should have_flash_message('Password confirmation can\'t be blank','error') }
 			end
 			
 			describe "should display password matching error message" do
@@ -44,7 +44,7 @@ describe "Regarding all user pages :" do
 					click_button create_account_button
 				end
 				
-				it { should have_flash_message('Password doesn\'t match confirmation','error') }   
+				it { should have_flash_message('Password doesn\'t match confirmation','error') }
 			end
 		end
 
@@ -133,7 +133,7 @@ describe "Regarding all user pages :" do
 				it { should have_flash_message('Email can\'t be blank','error') }
 				it { should have_flash_message('Email is invalid','error') }
 				it { should have_flash_message('Password is too short','error') }
-				it { should have_flash_message('Password confirmation can\'t be blank','error') }   
+				it { should have_flash_message('Password confirmation can\'t be blank','error') }
 			end
 			
 			describe "should display password matching error message" do
@@ -143,7 +143,7 @@ describe "Regarding all user pages :" do
 					click_button save_profile_button
 				end
 				
-				it { should have_flash_message('Password doesn\'t match confirmation','error') }   
+				it { should have_flash_message('Password doesn\'t match confirmation','error') }
 			end
 		end
 

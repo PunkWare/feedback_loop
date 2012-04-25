@@ -9,7 +9,7 @@ describe "info_pages" do
 	end
 	
 	let(:home_page_title) {"Home"}
-	let(:about_page_title) {"About"}
+	let(:contact_page_title) {"Contact"}
 	let(:help_page_title) {"Help"}
 	
 	describe "home page" do
@@ -81,10 +81,10 @@ describe "info_pages" do
 		it_should_behave_like "all static pages"
 	end
 	
-	describe "about page" do
-		before { visit about_path }
-		let(:page_title) {about_page_title}
-		let(:heading) {about_page_title}  
+	describe "contact page" do
+		before { visit contact_path }
+		let(:page_title) {contact_page_title}
+		let(:heading) {contact_page_title}  
 			
 		it_should_behave_like "all static pages"
 	end
@@ -93,8 +93,8 @@ describe "info_pages" do
 	it "should have the right links on the layout" do
 		visit root_path
 		
-		click_link "About"
-		page.should have_title(full_title(about_page_title))
+		click_link "Contact"
+		page.should have_title(full_title(contact_page_title))
 		
 		click_link "Help"
 		page.should have_title(full_title(help_page_title))

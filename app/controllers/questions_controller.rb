@@ -50,6 +50,13 @@ class QuestionsController < ApplicationController
 
 		deleted_question.destroy
 		flash[:success] = "Question deleted."
+
+		if deleted_question.survey.questions.blank? && deleted_question.survey.available
+			deleted_question.survey.available = false
+			deleted_question.survey.save
+			flash[:notice] = "This question was the last of the survey. As a result, the survey is not available for feedback anymore."
+		end
+
 		redirect_to survey_url(current_survey)
 	end
 

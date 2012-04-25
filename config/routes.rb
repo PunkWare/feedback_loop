@@ -16,17 +16,17 @@ FeedbackLoop::Application.routes.draw do
 
 	resources :answers, only: [ :create, :new, :edit, :update]
 
-	root                    to: 'info_pages#home'
+	root							to: 'info_pages#home'
 
-	match '/help',          to: 'info_pages#help'
-	match '/about',         to: 'info_pages#about'
+	match '/help',				to: 'info_pages#help'
+	match '/contact',			to: 'info_pages#contact'
 	match '/end',				to: 'info_pages#end'
 	
-	match '/signup',        to: 'users#new'
-	match '/user_surveys',  to: 'users#surveys'
-	
-	match '/signin',        to: 'sessions#new'
-	match '/signout',       to: 'sessions#destroy', via: :delete
+	match '/signup',			to: 'users#new'
+	match '/user_surveys',	to: 'users#surveys'
+
+	match '/signin',			to: 'sessions#new'
+	match '/signout',			to: 'sessions#destroy', via: :delete
 
 	# The priority is based upon order of creation:
 	# first created -> highest priority.
