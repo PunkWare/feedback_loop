@@ -64,6 +64,9 @@ describe "info_pages" do
 					it { should_not have_content(survey23.title) }
 				end
 				
+				it { should have_link('Manage my surveys', href: user_surveys_path) }
+				it { should have_link('Join private survey', href: root_path) }
+
 				it { should_not have_link('delete', href: survey_path(Survey.first)) }
 
 			end

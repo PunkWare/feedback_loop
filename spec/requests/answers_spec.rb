@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe "Regarding all answer pages :" do
+	let(:updated_link)	{ "http://www.github.com/punkware" }
+
 	subject { page }
 
 	shared_examples_for "all answer pages" do
@@ -11,7 +13,7 @@ describe "Regarding all answer pages :" do
 	describe "When testing title and h1 on new page, " do
 		let(:user) { FactoryGirl.create(:user) }
 		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1", available: true) }
-		let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+		let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1", link: updated_link) }
 		let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
 
 		before do
@@ -26,6 +28,7 @@ describe "Regarding all answer pages :" do
 		it { should_not have_link('Previous question') }
 		it { should have_button('Save changes and next question') }
 		it { should_not have_button('Save changes and finish' ) }	
+		it { should have_link('Additional information about the question available here.', href: updated_link) }
 
 		it_should_behave_like "all answer pages"
 
@@ -81,7 +84,7 @@ describe "Regarding all answer pages :" do
 	describe "When testing title and h1 on edit page, " do
 		let(:user) { FactoryGirl.create(:user) }
 		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1", available: true) }
-		let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+		let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1", link: updated_link) }
 		let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
 		let(:answer) { FactoryGirl.create(:answer, question: question, user: user) }
 
@@ -93,6 +96,8 @@ describe "Regarding all answer pages :" do
 		
 		let(:heading) {survey.title}
 		let(:page_title) {'Feedback question'}
+
+		it { should have_link('Additional information about the question available here.', href: updated_link) }
 
 		it_should_behave_like "all answer pages"
 

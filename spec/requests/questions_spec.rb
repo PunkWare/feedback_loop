@@ -140,13 +140,15 @@ describe "Regarding all question pages :" do
 		end
 
 		describe " with valid information, " do
-			let(:updated_title) { "title updated" }
+			let(:updated_title)	{ "title updated" }
+			let(:updated_link)	{ "http://www.github.com/punkware" }
 
 			before do
-				fill_in "Title",        with: updated_title
-				fill_in "Number of choices", with: "8"
-				fill_in "Text for first choice", with: "Never"
-				fill_in "Text for last choice", with: "Always"
+				fill_in "Title",						with: updated_title
+				fill_in "Number of choices",		with: "8"
+				fill_in "Text for first choice",	with: "Never"
+				fill_in "Text for last choice",	with: "Always"
+				fill_in "Link",						with: updated_link
 				click_button save_profile_button
 			end
 
@@ -158,6 +160,7 @@ describe "Regarding all question pages :" do
 			specify { question.reload.number_of_choices.should == 8 }
 			specify { question.reload.first_choice.should == "Never" }
 			specify { question.reload.last_choice.should == "Always" }
+			specify { question.reload.link.should == updated_link }
 		end
 	end
 end

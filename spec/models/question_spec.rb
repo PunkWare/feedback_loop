@@ -15,6 +15,7 @@ describe Question do
 	it { should respond_to(:number_of_choices) }
 	it { should respond_to(:first_choice) }
 	it { should respond_to(:last_choice) }
+	it { should respond_to(:link) }
 
   	# check that question.survey is valid
 	it { should respond_to(:survey) }

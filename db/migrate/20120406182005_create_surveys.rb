@@ -1,12 +1,13 @@
 class CreateSurveys < ActiveRecord::Migration
   def change
-    create_table :surveys do |t|
-        t.integer :user_id
-        t.string :title
-        t.string :key
-        t.boolean :available, default: false
-        t.boolean :anonymous, default: false
-        t.boolean :private, default: false
+    create_table    :surveys do |t|
+        t.integer   :user_id
+        t.string    :title
+        t.string    :key
+        t.boolean   :available, default: false
+        t.boolean   :anonymous, default: false
+        t.boolean   :private, default: false
+        t.string    :link
 
         t.timestamps
     end

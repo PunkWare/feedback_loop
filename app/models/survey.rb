@@ -1,5 +1,5 @@
 class Survey < ActiveRecord::Base
-	attr_accessible :title, :anonymous, :private, :available
+	attr_accessible :title, :anonymous, :private, :available, :link
 	belongs_to :user
 	has_many :questions, dependent: :destroy
 	before_save :create_key

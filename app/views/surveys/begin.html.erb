@@ -1,12 +1,17 @@
 <% provide(:title, 'Give feedback') %>
 <div class="center hero-unit">
-	<h2> You're about to start survey "<%= @survey.title %>"</h2>
+	<h2> You're about to start the survey "<%= @survey.title %>"</h2>
 
 	<% if @survey.anonymous %>
 		<p> This survey is anonymous. <%= @survey.user.name %> will not be able to see your name. </p>
 	<% else %>
 		<p> This survey is NOT anonymous. <%= @survey.user.name %> will be able to see your name with your answers. </p>
 	<% end %>
+
+	<% if !@survey.link.blank? %>
+		<p><%= link_to "Additional information about the survey available here.", @survey.link, target: "_blank" %></p>
+	<% end %>
 	
+	<br />
 	<%= link_to "Start survey !", answer_path_for_question(@survey.questions[0]), class: "btn btn-large btn-primary" %>
 </div>

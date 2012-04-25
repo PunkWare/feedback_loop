@@ -4,7 +4,11 @@
 
 <%= render 'shared/error_messages', object: @answer %>
 
-<h2 = class="question_title"> <%= @answer.question.title %> </h2>
+<h2 class="question_title"> <%= @answer.question.title %> </h2>
+
+<% if !@answer.question.link.blank? %>
+	<h4 class="center"><%= link_to "Additional information about the question available here.", @answer.question.link, target: "_blank" %></h4>
+<% end %>
 
 <div class="row">
 	<div class="span6 offset3">

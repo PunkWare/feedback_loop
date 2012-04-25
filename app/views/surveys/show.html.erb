@@ -9,12 +9,12 @@
 		</section>
 		
 		<p>
-			<%= link_to "New question", new_question_path, class: "btn btn-large btn-primary" %>
+			<%= link_to "New question", new_question_path, class: "btn btn-large btn-primary btn_width50" %>
 		</p>
 
 		<p>
 			<% if @survey.questions.count > 0 %>
-				<%= link_to "Make survey available", edit_survey_path(@survey), class: "btn btn-large btn-primary", confirm: "Have you created all the questions for the survey ?" %>
+				<%= link_to "Make survey available", edit_survey_path(@survey), class: "btn btn-large btn-primary btn_width50", confirm: "Have you created all the questions for the survey ?" %>
 			<% end %>
 		</p>
 
@@ -27,7 +27,7 @@
 
 			<% mail_sender = mail_sender + "\nSo just stop whatever you\'re doing and go to http://.... to feedback it.\n\nThanks!\n\nThe Feedback Loop team" %>
 
-			<%= mail_to "", "Notify surveyed", :subject => "A new survey is available on Feedback Loop", :body => mail_sender, class: "btn btn-large btn-primary" %>
+			<%= mail_to "", "Notify surveyed", :subject => "A new survey is available on Feedback Loop", :body => mail_sender, class: "btn btn-large btn-primary btn_width50" %>
 		</p>
 	
 	</aside>

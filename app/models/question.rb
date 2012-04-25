@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-	attr_accessible :title, :first_choice, :last_choice, :number_of_choices
+	attr_accessible :title, :first_choice, :last_choice, :number_of_choices, :link
 	belongs_to :survey
 	has_many :answers, dependent: :destroy
 	#has_many :users, :through => :answers

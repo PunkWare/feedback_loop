@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20120414182142) do
     t.integer  "number_of_choices", :default => 5
     t.string   "first_choice",      :default => "I strongly disagree"
     t.string   "last_choice",       :default => "I strongly agree"
+    t.string   "link"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
   end
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20120414182142) do
     t.boolean  "available",  :default => false
     t.boolean  "anonymous",  :default => false
     t.boolean  "private",    :default => false
+    t.string   "link"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end

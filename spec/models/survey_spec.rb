@@ -15,6 +15,7 @@ describe Survey do
 	it { should respond_to(:anonymous) }
 	it { should respond_to(:private) }
 	it { should respond_to(:available) }
+	it { should respond_to(:link) }
 
 	it { should respond_to(:questions) }
 

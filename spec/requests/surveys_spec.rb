@@ -123,12 +123,14 @@ describe "Regarding all survey pages :" do
 		end
 
 		describe " with valid information, " do
-			let(:updated_title) { "title updated" }
+			let(:updated_title)	{ "title updated" }
+			let(:updated_link) 	{ "http://www.github.com/punkware" }
 
 			before do
-				fill_in "Title",        with: updated_title
+				fill_in "Title",	with: updated_title
 				check('Anonymous')
 				check('Private')
+				fill_in "Link",		with: updated_link
 				click_button save_profile_button
 			end
 
@@ -140,6 +142,7 @@ describe "Regarding all survey pages :" do
 			specify { survey.reload.anonymous.should == true }
 			specify { survey.reload.private.should == true }
 			specify { survey.reload.available.should == false }
+			specify { survey.reload.link.should == updated_link }
 		end
 
 		describe "trying to check available field when survey has no question" do
@@ -340,7 +343,7 @@ describe "Regarding all survey pages :" do
 		end
 
 		describe "and the survey is valid" do
-			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", available: true) }
+			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", available: true, anonymous: false, link: "http://www.github.com/punkware") }
 			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
 			let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
 			let(:page_title) {"Give feedback"}
@@ -351,6 +354,8 @@ describe "Regarding all survey pages :" do
 			
 			it "should work " do
 				should have_title(full_title(page_title))
+				should have_content("This survey is NOT anonymous")
+				should have_link("Additional information about the survey available here.", href: "http://www.github.com/punkware")
 				should have_content('Start survey !')
 			end
 
