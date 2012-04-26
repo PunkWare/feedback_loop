@@ -5,6 +5,8 @@
 	
 	| <%= link_to "delete", survey, method: :delete, confirm: "This survey will be deleted. Are you sure ?" %>
 
+	| <%= link_to "results", results_survey_path(survey) %>
+
 	<br />
 	
 	<span class="timestamp">

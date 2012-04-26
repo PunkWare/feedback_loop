@@ -8,6 +8,7 @@ class CreateSurveys < ActiveRecord::Migration
         t.boolean   :anonymous, default: false
         t.boolean   :private, default: false
         t.string    :link
+        t.integer   :order
 
         t.timestamps
     end

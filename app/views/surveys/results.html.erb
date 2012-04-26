@@ -1,0 +1,45 @@
+<% provide(:title, "Survey results") %> 
+<h1><%= current_survey.title %></h1>
+
+<div class="row">
+	<div class="div6 offset3">
+		
+		<% @survey.questions.each do |question| %>
+	
+			<h2 class="question_title"> <%= question.title %> </h2>
+			
+			<% for answer in (1..question.number_of_choices) do %>
+				<p>
+					<div class="result_choice">
+						<%= 'Choice '+answer.to_s+' : ' %>
+					</div>
+					
+					<div class="result_answer">
+						<%= pluralize(question.answers.where(choice: answer).count, "answer") %>
+					</div>
+				</p>
+			<% end %>
+
+			<p>
+				<div class="result_choice">
+					Count :
+				</div>
+				
+				<div class="result_answer">
+					<%= pluralize(question.answers.count, "answer") %>
+				</div>
+			</p>
+
+			<p>
+				<div class="result_choice">
+					Average : 
+				</div>
+				
+				<div class="result_answer">
+					<%= question.answers.average("choice")?question.answers.average("choice"):0 %>
+				</div>
+			</p>
+		<% end %>
+
+	</div>
+</div>

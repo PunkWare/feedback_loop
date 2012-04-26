@@ -75,6 +75,13 @@ class SurveysController < ApplicationController
 
 	end
 
+	def results
+		@survey = current_user.surveys.find(params[:id])
+		set_current_survey(@survey)
+
+		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
+	end
+
 	def destroy
 		deleted_survey = current_user.surveys.find(params[:id])
 		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if deleted_survey.nil?

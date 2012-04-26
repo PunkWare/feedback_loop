@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20120414182142) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "answers", ["question_id", "choice"], :name => "index_answers_on_question_id_and_choice"
   add_index "answers", ["question_id", "user_id"], :name => "index_answers_on_question_id_and_user_id", :unique => true
 
   create_table "questions", :force => true do |t|
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20120414182142) do
     t.boolean  "anonymous",  :default => false
     t.boolean  "private",    :default => false
     t.string   "link"
+    t.integer  "order"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end

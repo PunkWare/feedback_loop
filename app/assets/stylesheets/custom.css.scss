@@ -295,3 +295,16 @@ aside {
 .question_next {
 	float: right;	
 }
+
+/* results index */
+.result_choice {
+	text-align: left;
+	float: left;
+	width : 10%;
+}
+
+.result_answer {
+	text-align: left;
+	float: center;
+	width : 90%;
+}

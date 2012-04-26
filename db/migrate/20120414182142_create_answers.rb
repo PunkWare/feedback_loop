@@ -9,5 +9,6 @@ class CreateAnswers < ActiveRecord::Migration
       t.timestamps
     end
     add_index :answers, [:question_id, :user_id], unique: true
+    add_index :answers, [:question_id, :choice]
   end
 end

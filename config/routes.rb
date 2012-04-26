@@ -7,6 +7,7 @@ FeedbackLoop::Application.routes.draw do
 	resources :surveys do
 		member do
 			get 'begin'
+			get 'results'
 		end
 	end
 
