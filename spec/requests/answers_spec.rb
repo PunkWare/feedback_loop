@@ -35,24 +35,25 @@ describe "Regarding all answer pages :" do
 		describe "when filling fields on new page" do
 			let(:create_answer_button) {'Save changes and next question'}
 
-			describe "with invalid information," do
-				it "should not create a answer" do
-					expect { click_button create_answer_button }.not_to change(Answer, :count)
-				end
-
-				describe "should display error messages" do
-					before do
-						fill_in "Your choice", with: ""
-						click_button create_answer_button
-					end
-
-					it { should have_flash_message('Choice must be between 1 and 5','error') } 
-				end
-			end
+			# The block below is obsolete as the choice is a select field : can't be blank or undefined 
+			#describe "with invalid information," do
+			#	it "should not create a answer" do
+			#		expect { click_button create_answer_button }.not_to change(Answer, :count)
+			#	end
+			#
+			#	describe "should display error messages" do
+			#		before do
+			#			fill_in "Your choice", with: ""
+			#			click_button create_answer_button
+			#		end
+			#
+			#		it { should have_flash_message('Choice must be between 1 and 5','error') } 
+			#	end
+			#end
 
 			describe " with valid information, " do
 				before do
-					fill_in "Your choice", with: 3
+					select '3', from: "Your choice"
 				end
 
 				it "should create an answer" do
@@ -63,7 +64,7 @@ describe "Regarding all answer pages :" do
 
 				describe "going to question after" do
 					before do 
-						fill_in "Your choice", with: 3
+						select '3', from: "Your choice"
 						click_button create_answer_button
 					end
 
@@ -104,21 +105,22 @@ describe "Regarding all answer pages :" do
 		describe "when filling fields on edit page" do
 			let(:save_answer_button) {'Save changes and next question'}
 
-			describe "with invalid information," do
+			# The block below is obsolete as the choice is a select field : can't be out of range
+			# describe "with invalid information," do
 
-				describe "should display error messages" do
-					before do
-						fill_in "Your choice", with: 7
-						click_button save_answer_button
-					end
+			# 	describe "should display error messages" do
+			# 		before do
+			# 			select '7', from: "Your choice"
+			# 			click_button save_answer_button
+			# 		end
 
-					it { should have_flash_message('Choice must be between 1 and 5','error') }
-				end
-			end
+			# 		it { should have_flash_message('Choice must be between 1 and 5','error') }
+			# 	end
+			# end
 
 			describe " with valid information, " do
 				before do
-					fill_in "Your choice", with: "3"
+					select '3', from: "Your choice"
 					fill_in "Comment", with: "Fake fake fake"
 					click_button save_answer_button
 				end

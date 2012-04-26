@@ -1,6 +1,6 @@
 
 <%= f.label :choice, "Your choice" %>
-<%= f.number_field( :choice, min: 1, max: @answer.question.number_of_choices) %>
+<%= f.select :choice, options_for_select(list_of_choices(@answer), @answer.choice) %>
 
 <%= f.label :comment %>
 <%= f.text_area(:comment, :rows => 4) %>
