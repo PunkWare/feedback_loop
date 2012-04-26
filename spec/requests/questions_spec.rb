@@ -33,7 +33,6 @@ describe "Regarding all question pages :" do
 
 				describe "should display error messages" do
 					before do
-						fill_in "Number of choices", with: ""
 						fill_in "Text for first choice", with: ""
 						fill_in "Text for last choice", with: ""
 						click_button create_question_button
@@ -42,7 +41,6 @@ describe "Regarding all question pages :" do
 					it { should have_flash_message('Title can\'t be blank','error') } 
 					it { should have_flash_message('First choice can\'t be blank','error') } 
 					it { should have_flash_message('Last choice can\'t be blank','error') }
-					it { should have_flash_message('Number of choices is not a number','error') }
 				end
 			end
 
@@ -126,7 +124,6 @@ describe "Regarding all question pages :" do
 				# they are emptied so that errors messages can be checked
 				before do
 					fill_in "Title", with: ""
-					fill_in "Number of choices", with: ""
 					fill_in "Text for first choice", with: ""
 					fill_in "Text for last choice", with: ""
 					click_button save_profile_button
@@ -135,7 +132,6 @@ describe "Regarding all question pages :" do
 				it { should have_flash_message('Title can\'t be blank','error') }
 				it { should have_flash_message('First choice can\'t be blank','error') } 
 				it { should have_flash_message('Last choice can\'t be blank','error') }
-				it { should have_flash_message('Number of choices is not a number','error') }
 			end
 		end
 
@@ -145,7 +141,7 @@ describe "Regarding all question pages :" do
 
 			before do
 				fill_in "Title",						with: updated_title
-				fill_in "Number of choices",		with: "8"
+				select '8', from: "Number of choices"
 				fill_in "Text for first choice",	with: "Never"
 				fill_in "Text for last choice",	with: "Always"
 				fill_in "Link",						with: updated_link

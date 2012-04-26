@@ -1,0 +1,13 @@
+<% provide(:title, 'Contact') %>
+<h1>Contact</h1>
+<div class="center hero-unit">
+	<h2>
+	Feedback Loop v0 by
+	<% mail_sender = "Dear Punkware, I want to let you know that ..." %> 
+	<% if signed_in? %>
+		<% mail_sender = mail_sender + "\n\nSincerely yours,\n\n" + current_user.name %>
+	<% end %>
+	<%= mail_to "punkware@free.fr", "Punkware", :subject => "Regarding your Feedback Loop site...", :body => mail_sender %>
+	<br /><br />
+	Found a bug ? Want a new functionality ? Tell me by clicking the link above. Thanks.
+</div>

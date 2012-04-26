@@ -88,4 +88,16 @@ module QuestionsHelper
 			redirect_to(root_url, :alert => "Can't find question! Default to home page")
 		end
 	end
+
+	def list_of_choices_for_question(this_question)
+		list=[]
+		for choice in (2..MAX_CHOICES) do
+			pair = []
+			pair.push choice.to_s
+			pair.push choice
+			list.push pair
+		end
+
+		return list
+	end
 end

@@ -5,7 +5,7 @@
 	<p>
 		<%= f.label :number_of_choices %>
 		<span class="tips">This is the number of choices the surveyed has at disposal to answer the question e.g. '2' means that the surveyed will have only two choices to answer (usually, 'I agree' or 'I disagree').</span>
-		<%= f.number_field :number_of_choices %>
+		<%= f.select :number_of_choices, options_for_select(list_of_choices_for_question(@question), @question.number_of_choices) %>
 	</p>
 </div>
 
