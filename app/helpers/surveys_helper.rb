@@ -20,7 +20,7 @@ module SurveysHelper
 
 		questions.each do |question|
    		answers=question.answers
-   		if !answers.blank?
+   		if answers.any?
    			return true
    		end
 		end

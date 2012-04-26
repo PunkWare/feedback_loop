@@ -45,8 +45,8 @@ module QuestionsHelper
 
 			ApplicationController.set_current_question(this_question)
 
-			if answer_exist[0]
-				edit_answer_path(answer_exist[0], backward: false)
+			if answer_exist.first
+				edit_answer_path(answer_exist.first, backward: false)
 			else
 				new_answer_path
 			end
@@ -63,8 +63,8 @@ module QuestionsHelper
 
 			ApplicationController.set_current_question(question)
 
-			if answer_exist[0]
-				edit_answer_path(answer_exist[0], backward: false)
+			if answer_exist.first
+				edit_answer_path(answer_exist.first, backward: false)
 			else
 				new_answer_path
 			end
@@ -79,8 +79,8 @@ module QuestionsHelper
 		if question
 			answer_exist = Answer.where(user_id: current_user.id, question_id: question.id)
 
-			if answer_exist[0]
-				edit_answer_path(answer_exist[0], backward: true)
+			if answer_exist.first
+				edit_answer_path(answer_exist.first, backward: true)
 			else
 				redirect_to(root_url, :alert => "Can't find answer with question id #{question_id}! Default to home page")
 			end

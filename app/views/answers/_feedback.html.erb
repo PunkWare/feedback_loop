@@ -6,7 +6,7 @@
 
 <h2 class="question_title"> <%= @answer.question.title %> </h2>
 
-<% if !@answer.question.link.blank? %>
+<% if @answer.question.link.present? %>
 	<h4 class="center"><%= link_to "Additional information about the question available here.", @answer.question.link, target: "_blank" %></h4>
 <% end %>
 
