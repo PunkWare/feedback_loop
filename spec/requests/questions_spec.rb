@@ -185,4 +185,29 @@ describe "Regarding all question pages :" do
 			specify { another_question.survey.reload.available.should == false }
 		end
 	end
+
+	describe "when accessing results page, " do
+
+		describe "with an non anonymous survey" do
+			let(:user) { FactoryGirl.create(:user) }
+			let!(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1", available: true, anonymous: false) }
+			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+			let!(:answer) { FactoryGirl.create(:answer, question: question, user: user, choice: 3) }
+
+
+			let(:heading) {survey.title}
+			let(:page_title) {'Survey results'}
+
+			before do
+				sign_in user
+				visit results_survey_path(survey)
+				visit results_question_path(question)
+			end
+
+			it_should_behave_like "all question pages"
+
+			it { should have_content(question.title) }
+			it { should have_content(user.name) }
+		end
+	end
 end

@@ -2,8 +2,7 @@
 <h1><%= current_survey.title %></h1>
 
 <div class="row">
-	<div class="div6 offset3">
-		
+	<div class="span11 offset1">
 		<% @survey.questions.each do |question| %>
 	
 			<h2 class="result_question_title"> <%= question.title %> </h2>
@@ -29,7 +28,10 @@
 
 				<% if question.answers.where(choice: choice).any? %>
 					<% question.answers.where(choice: choice).each do |answer| %>
-						<% comments << '<div class="result_choice">Choice ' << choice.to_s << ' : </div>' << '<div class="result_answer">' << sanitize(answer.comment) << '</div>' %>
+						<% if ! answer.comment.nil? && ! answer.comment.blank? %>
+							<% comments << '<div class="result_choice">Choice ' << choice.to_s << ' : </div>' %>
+							<% comments << '<div class="result_answer">' << sanitize(answer.comment) << '</div>' %>
+						<% end %>
 					<% end %>
 				<% end %>
 			<% end %>
@@ -54,14 +56,16 @@
 				</div>
 			</p>
 
+
+			<p>
+				<div class="result_choice result_bold">Comments :</div>
+				<div class="result_answer">&nbsp;</div>
+			</p>
 			
-			<div>
-				<div class="result_bold">Comments :</div>
-			</div>
-			
-			<%=raw comments %>
+			<p>
+				<%=raw comments %>
+			</p>
 			<br /><br />
 		<% end %>
-
 	</div>
 </div>

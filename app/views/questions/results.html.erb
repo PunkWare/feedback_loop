@@ -2,15 +2,14 @@
 <h1><%= current_survey.title %></h1>
 
 <div class="row">
-	<div class="div6 offset3">
-		
+	<div class="span11 offset1">
 		<h2 class="question_title"> <%= @question.title %> </h2>
 
 		<% if @question.answers.any? %>
 			<% @question.answers.each do |answer| %>
 				<p>
 					<div class="result_choice result_user_list">
-						<%= answer.user.name %> <%= answer.user.name %> 
+						<%= answer.user.name %> 
 					</div>
 					
 					<div class="result_answer result_user_list">
@@ -19,13 +18,15 @@
 				</p>
 
 				<p>
-					<div class="result_choice">
-						comments : 
-					</div>
+					<% if ! answer.comment.nil? && ! answer.comment.blank? %>
+						<div class="result_choice">
+							comments : 
+						</div>
 					
-					<div class="result_answer">
-						<%= answer.comment %>
-					</div>
+						<div class="result_answer">
+							<%= answer.comment %>
+						</div>
+					<% end %>
 				</p>
 			<% end %>
 		<% end %>

@@ -3,7 +3,7 @@ module QuestionsHelper
 	def question_index(this_question)
 		position = current_survey.questions.index(this_question)
 
-		if !position
+		if ! position
 			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
 		else
 			position
@@ -14,7 +14,7 @@ module QuestionsHelper
 	def question_after?(this_question)
 		position = current_survey.questions.index(this_question)
 
-		if !position
+		if ! position
 			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
 		else
 			if ( position + 1 ) >= current_survey.questions.length
@@ -28,7 +28,7 @@ module QuestionsHelper
 	def question_before?(this_question)
 		position = current_survey.questions.index(this_question)
 
-		if !position
+		if ! position
 			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
 		else
 			if position.zero?

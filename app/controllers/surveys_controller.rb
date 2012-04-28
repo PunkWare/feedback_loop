@@ -42,7 +42,7 @@ class SurveysController < ApplicationController
 		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
 
 		# cannot make a survey available if it has no question
-		if params[:survey][:available] == "1" and !has_question?(@survey)
+		if params[:survey][:available] == "1" and ! has_question?(@survey)
 			flash[:error] = "Survey has been set back to unavailable because the survey has currently no associated question."
 			params[:survey][:available] = "0"
 		end
@@ -113,7 +113,7 @@ class SurveysController < ApplicationController
 
 				feedback_survey = Survey.find_by_id(params[:id])
 
-				if !feedback_survey.nil?
+				if ! feedback_survey.nil?
 					if has_question?(feedback_survey)
 						surveys = Survey.where(:available => true, :private => false)
 						
@@ -127,7 +127,7 @@ class SurveysController < ApplicationController
 					redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if feedback_survey.nil?
 				end
 
-				redirect_to(root_url) if !found
+				redirect_to(root_url) if ! found
 			end
 
 end

@@ -6,7 +6,7 @@ module SessionsHelper
 	end
 	
 	def signed_in?
-		!current_user.nil?
+		! current_user.nil?
 	end
 
 	def signed_in_user

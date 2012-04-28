@@ -195,7 +195,7 @@ describe "Regarding all survey pages :" do
 		end
 	end
 
-	describe "When displaying survey's questions page" do
+	describe "When displaying survey's questions page, " do
 		let(:user) { FactoryGirl.create(:user) }
 		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
 		let(:heading) {'Manage questions'}
@@ -292,7 +292,7 @@ describe "Regarding all survey pages :" do
 		end
 	end
 
-	describe "When testing begin page, " do
+	describe "When accessing begin page, " do
 		let(:user) { FactoryGirl.create(:user) }
 		let(:another_user) { FactoryGirl.create(:user) }
 		let(:heading) {""}
@@ -373,6 +373,68 @@ describe "Regarding all survey pages :" do
 					should have_button('Save changes and next question')
 					should_not have_content('Previous question')
 				end
+			end
+		end
+	end
+
+	describe "when accessing results page, " do
+
+		describe "with an anonymous survey" do
+			let(:user) { FactoryGirl.create(:user) }
+			let!(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1", available: true, anonymous: true) }
+			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+			let!(:answer) { FactoryGirl.create(:answer, question: question, user: user, choice: 3) }
+
+
+			let(:heading) {survey.title}
+			let(:page_title) {'Survey results'}
+
+			before do
+				sign_in user
+				visit results_survey_path(survey)
+			end
+
+			it_should_behave_like "all survey pages"
+
+			it { should_not have_link('See details', href: results_question_path(question)) }
+
+			it { should have_content(question.title) }
+			it { should have_content('Count') }
+			it { should have_content('Average') }
+			it { should have_content('Comment') }
+		end
+
+		describe "with an non anonymous survey" do
+			let(:user) { FactoryGirl.create(:user) }
+			let!(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1", available: true, anonymous: false) }
+			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+			let!(:answer) { FactoryGirl.create(:answer, question: question, user: user, choice: 3) }
+
+
+			let(:heading) {survey.title}
+			let(:page_title) {'Survey results'}
+
+			before do
+				sign_in user
+				visit results_survey_path(survey)
+			end
+
+			it_should_behave_like "all survey pages"
+
+			it { should have_link('See details', href: results_question_path(question)) }
+
+			it { should have_content(question.title) }
+			it { should have_content('Count') }
+			it { should have_content('Average') }
+			it { should have_content('Comment') }
+
+			describe "when clicking details link" do
+				before { click_link "See details" }
+
+				it_should_behave_like "all survey pages"
+
+				it { should have_content(question.title) }
+				it { should have_content(user.name) }
 			end
 		end
 	end

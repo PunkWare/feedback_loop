@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
 	before_filter :signed_in_user
 	before_filter :survey_exists
 	before_filter :correct_survey_of_question, only: [:destroy, :edit, :update, :show, :results]
+	before_filter :not_anonymous_survey, only: :results
 
 	def create
 		@question = current_survey.questions.build(params[:question])
@@ -68,12 +69,17 @@ class QuestionsController < ApplicationController
 	private
 
 			def survey_exists
-					redirect_to(root_url, :alert => "No active survey! Default to home page") if current_survey.nil?
+				redirect_to(root_url, alert: "No active survey! Default to home page") if current_survey.nil?
+			end
+
+			def not_anonymous_survey
+				question = current_user.surveys.find(current_survey).questions.find_by_id(params[:id])
+				redirect_to(root_url, alert: "Access prohibited! Default to home page") if question.survey.anonymous
 			end
 
 			def correct_survey_of_question
 				question = current_user.surveys.find(current_survey).questions.find_by_id(params[:id])
-				redirect_to(root_url, :alert => "Access prohibited! Default to home page") if question.nil?
+				redirect_to(root_url, alert: "Access prohibited! Default to home page") if question.nil?
 
 				# ANOTHER METHOD BELOW A LITTLE BIT LESS SECURE
 				#current_question= Question.find_by_id(params[:id])

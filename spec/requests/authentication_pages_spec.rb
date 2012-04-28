@@ -367,6 +367,22 @@ describe "Authenticated pages" do
 				end
 			end
 		end
+
+		describe "when trying to see results" do
+			let(:survey) { FactoryGirl.create(:survey, user: wrong_user, title: "Survey 1", available: true) }
+			let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+			let(:answer) { FactoryGirl.create(:answer, question: question, user: wrong_user, choice: 3) }
+
+			describe "the survey results" do
+				before { visit results_survey_path(survey) }
+				it { should have_title('All surveys') }
+			end
+
+			describe "the survey results" do
+				before { visit results_question_path(question) }
+				it { should have_title('All surveys') }
+			end
+		end
 	end
 
 	# when a non-signed-in user try to view or edit profile, he's redirected
