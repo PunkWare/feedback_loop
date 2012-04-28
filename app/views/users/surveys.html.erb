@@ -16,11 +16,8 @@
 		<h1>My surveys</h1>
 		<% if @user.surveys.any? %>
 			<h3><%=  pluralize(@user.surveys.count, "survey")  %></h3>
-			<p class="surveys">
-				<span class="header_title">Title</span>
-			</p>
 	
-			<ol class="surveys">
+			<ol class="survey_line">
 				<%= render @surveys %>
 			</ol>
 	

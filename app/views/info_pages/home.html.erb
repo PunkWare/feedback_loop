@@ -31,15 +31,35 @@
 		<div class="span8">
 			<% if @surveys.any? %>
 				<h3><%=  pluralize(@surveys.count, "available survey")  %></h3>
-				<p class="surveys">
-					<span class="header_title">Title</span>
+
+				<p class="legend_line">
+					Legend : 
+					<span class="legend_item">
+						<i class="icon-lock"></i> Private
+					</span>
+
+					<span class="legend_item">
+						<i class="icon-eye-open"></i> NOT anonymous
+					</span>
 				</p>
-		
-				<ol class="surveys">
+
+				<ol class="survey_line">
 					<% @surveys.each do |survey| %>
 						<li>
-							<span><%= link_to survey.title, begin_survey_path(survey) %> </span>
+							<span class="icons">
+								<% if survey.private %>
+									<i class="icon-lock"></i>
+								<% end %>
+							</span>
 
+							<span class="icons">
+								<% if ! survey.anonymous %>
+									<i class="icon-eye-open"></i>
+								<% end %>
+							</span>
+							
+							<%= link_to survey.title, begin_survey_path(survey) %>
+							
 							<br />
 							
 							<span class="timestamp">
@@ -48,7 +68,6 @@
 						</li>
 					<% end %>
 				</ol>
-		
 				<%= will_paginate @surveys %>
 			<% end %>
 		</div>

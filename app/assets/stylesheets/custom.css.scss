@@ -202,7 +202,7 @@ input, textarea, select, .uneditable-input {
 
 /* surveys index */
 
-.surveys {
+.survey_line {
 	list-style: none;
 	margin: 10px 0 0 0;
 
@@ -246,6 +246,21 @@ input, textarea, select, .uneditable-input {
 		padding: 10px 0;
 		border-top: 1px solid $grayLighter;
 	}
+}
+
+.icons {
+	display: inline-block;
+	width: 15px;
+}
+
+.legend_line {
+	padding-left: 340px;
+	font-size: 0.9em;
+}
+
+.legend_item {
+	display: inline-block;
+	width: 110px;
 }
 
 aside {
