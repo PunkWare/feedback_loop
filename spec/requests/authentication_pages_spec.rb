@@ -320,31 +320,46 @@ describe "Authenticated pages" do
 			let(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
 
 			describe "when trying to view a question" do
-				before { visit question_path(question) }
+				before do
+					visit edit_survey_path(survey)
+					visit question_path(question)
+				end
 
 				it { should have_title('All surveys') }
 			end
 
 			describe "when trying a show action on a question" do
-				before { get question_path(question)  }
+				before do
+					visit edit_survey_path(survey)
+					get question_path(question)
+				end
 
 				specify { response.should redirect_to(root_url) }
 			end
 
 			describe "when trying to edit a question" do
 				describe "visiting the edit question page" do
-					before { visit edit_question_path(question) }
+					before do
+						visit edit_survey_path(survey)
+						visit edit_question_path(question)
+					end
 					it { should have_title('All surveys') }
 				end
 
 				describe "submitting to the update action" do
-					before { put question_path(question) }
+					before do
+						visit edit_survey_path(survey)
+						put question_path(question)
+					end
 					specify { response.should redirect_to(root_url) }
 				end
 			end
 
 			describe "when submitting a DELETE request to the Questions#destroy action" do
-				before { delete question_path(question) }
+				before do
+					visit edit_survey_path(survey)
+					delete question_path(question)
+				end
 				specify { response.should redirect_to(root_url) }        
 			end
 		end

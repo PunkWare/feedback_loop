@@ -1,6 +1,6 @@
 <% provide(:title, "Feedback question") %> 
-<h1><%= current_survey.title %></h1>
-<h3 class="question_number">Question <%= question_index(@answer.question) + 1 %> out of <%= current_survey.questions.count %></h3>
+<h1><%= @answer.question.survey.title %></h1>
+<h3 class="question_number">Question <%= question_index(@answer.question) + 1 %> out of <%= @answer.question.survey.questions.count %></h3>
 
 <%= render 'shared/error_messages', object: @answer %>
 

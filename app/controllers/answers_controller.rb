@@ -35,13 +35,13 @@ class AnswersController < ApplicationController
 		end
 
 		@answer = ApplicationController.current_question.answers.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page.") if !current_survey.questions.index(@answer.question)
+		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page.") if ! ApplicationController.current_survey.questions.index(@answer.question)
 	end
 
 	
 	def update
 		@answer = ApplicationController.current_question.answers.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page.") if !current_survey.questions.index(@answer.question)
+		redirect_to(root_url, :alert => "Can't find answer with id #{params[:id]}! Default to home page.") if ! ApplicationController.current_survey.questions.index(@answer.question)
 
 		if params[:answer][:choice] && (params[:answer][:choice].to_i <= @answer.question.number_of_choices)
 			if @answer.update_attributes(params[:answer])
@@ -69,6 +69,6 @@ class AnswersController < ApplicationController
 
 		def ready_to_feedback
 			answer = current_user.answers.find_by_id(params[:id])
-			redirect_to(begin_survey_path(answer.question.survey), :alert => "Access to this answer is allowed only by giving feedback to this survey.") if current_survey.nil? || 	current_survey.questions.blank?
+			redirect_to(begin_survey_path(answer.question.survey), :alert => "Access to this answer is allowed only by giving feedback to this survey.") if ApplicationController.current_survey.nil? || ApplicationController.current_survey.questions.blank?
 		end
 end

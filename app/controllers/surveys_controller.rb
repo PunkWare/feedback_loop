@@ -6,10 +6,10 @@ class SurveysController < ApplicationController
 	def create
 		@survey = current_user.surveys.build(params[:survey])
 		if @survey.save
-			set_current_survey(@survey)
+			ApplicationController.set_current_survey(@survey)
 			flash[ :success ] = "Survey created."
 				
-			redirect_to survey_url(current_survey)
+			redirect_to survey_url(ApplicationController.current_survey)
 				
 		else
 			render 'new'
@@ -18,12 +18,12 @@ class SurveysController < ApplicationController
 	
 	def new
 		@survey = current_user.surveys.build
-		set_current_survey(@survey)
+		ApplicationController.set_current_survey(@survey)
 	end
 
 	def show
 		@survey = current_user.surveys.find(params[:id])		
-		set_current_survey(@survey)
+		ApplicationController.set_current_survey(@survey)
 
 		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
 
@@ -32,7 +32,7 @@ class SurveysController < ApplicationController
 
 	def edit
 		@survey = current_user.surveys.find(params[:id])
-		set_current_survey(@survey)
+		ApplicationController.set_current_survey(@survey)
 
 		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
 	end
@@ -54,7 +54,7 @@ class SurveysController < ApplicationController
 		end
 		
 		if @survey.update_attributes(params[:survey])
-			set_current_survey(@survey)
+			ApplicationController.set_current_survey(@survey)
 			flash[:success] = "Survey updated."
 			
 			redirect_to user_surveys_url
@@ -65,7 +65,7 @@ class SurveysController < ApplicationController
 
 	def begin
 		@survey = Survey.find(params[:id])
-		set_current_survey(@survey)
+		ApplicationController.set_current_survey(@survey)
 		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
 
 		@questions = @survey.questions
@@ -75,7 +75,7 @@ class SurveysController < ApplicationController
 
 	def results
 		@survey = current_user.surveys.find(params[:id])
-		set_current_survey(@survey)
+		ApplicationController.set_current_survey(@survey)
 
 		flash.now[:alert] = "The survey is still available to surveyed. The results may change at anytime." if @survey.available
 
@@ -88,7 +88,7 @@ class SurveysController < ApplicationController
 
 
 		deleted_survey.destroy
-		current_survey = nil if current_survey?(deleted_survey)
+		ApplicationController.set_current_survey(nil) if ApplicationController.current_survey?(deleted_survey)
 		flash[:success] = "Survey deleted."
 		redirect_to user_surveys_url
 	end
