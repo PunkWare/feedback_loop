@@ -1,4 +1,16 @@
 <li>
+	<span class="icons">
+		<% if survey.private %>
+			<i class="icon-lock"></i>
+		<% end %>
+	</span>
+
+	<span class="icons">
+		<% if ! survey.anonymous %>
+			<i class="icon-eye-open"></i>
+		<% end %>
+	</span>
+
 	<%= link_to survey.title, survey_path(survey) %>
 
 	| <%= link_to "results", results_survey_path(survey) %>

@@ -15,8 +15,19 @@
 	<div class="span8">
 		<h1>My surveys</h1>
 		<% if @user.surveys.any? %>
-			<h3><%=  pluralize(@user.surveys.count, "survey")  %></h3>
+			<h3><%=  pluralize(@user.surveys.count, "owned survey")  %></h3>
 	
+			<p class="legend_line">
+				Legend : 
+				<span class="legend_item">
+					<i class="icon-lock"></i> Private
+				</span>
+
+				<span class="legend_item">
+					<i class="icon-eye-open"></i> NOT anonymous
+				</span>
+			</p>
+
 			<ol class="survey_line">
 				<%= render @surveys %>
 			</ol>
