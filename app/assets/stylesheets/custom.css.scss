@@ -4,6 +4,7 @@
 
 $grayMediumLight: #eaeaea;
 
+
 @mixin box_sizing {
 	-moz-box-sizing: border-box; 
 	-webkit-box-sizing: border-box; 
@@ -207,7 +208,7 @@ input, textarea, select, .uneditable-input {
 
 	li {
 		padding: 10px 0;
-		border-top: 1px solid #e8e8e8;
+		border-top: 1px solid $grayLighter;
 	}
 }
 
@@ -243,7 +244,7 @@ input, textarea, select, .uneditable-input {
 .survey_field {
 	p {
 		padding: 10px 0;
-		border-top: 1px solid #e8e8e8;
+		border-top: 1px solid $grayLighter;
 	}
 }
 
@@ -261,14 +262,14 @@ aside {
 
 	li {
 		padding: 10px 0;
-		border-top: 1px solid #e8e8e8;
+		border-top: 1px solid $grayLighter;
 	}
 }
 
 .question_field {
 	p {
 		padding: 10px 0;
-		border-top: 1px solid #e8e8e8;
+		border-top: 1px solid $grayLighter;
 	}
 }
 
@@ -297,14 +298,41 @@ aside {
 }
 
 /* results index */
-.result_choice {
-	text-align: left;
+.result_question_title {
+	color: black;
+	padding: 10px 0;
+	border-top: 1px solid #e8e8e8;
 	float: left;
+	width : 90%;
+}
+
+.result_question_details {
+	text-align: right;
+	float: right;
 	width : 10%;
 }
 
+.result_choice {
+	text-align: left;
+	float: left;
+	width : 20%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .result_answer {
+	display: block;
 	text-align: left;
 	float: center;
-	width : 90%;
+	width : 80%;
+}
+
+.result_bold {
+	font-weight: bold;
+}
+
+.result_user_list {
+	padding: 10px 0;
+	border-top: 1px solid $grayLighter;
 }

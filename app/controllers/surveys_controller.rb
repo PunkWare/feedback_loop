@@ -1,6 +1,6 @@
 class SurveysController < ApplicationController
 	before_filter :signed_in_user
-	before_filter :correct_user_of_survey,    only: [ :destroy, :edit, :update, :show ]
+	before_filter :correct_user_of_survey,    only: [ :destroy, :edit, :update, :show, :results ]
 	before_filter :feedbackable, only: [ :begin ]
 
 	def create
@@ -41,8 +41,6 @@ class SurveysController < ApplicationController
 		@survey = current_user.surveys.find(params[:id])
 		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
 
-		#flash[:notice] = params[:survey].to_s
-
 		# cannot make a survey available if it has no question
 		if params[:survey][:available] == "1" and !has_question?(@survey)
 			flash[:error] = "Survey has been set back to unavailable because the survey has currently no associated question."
@@ -78,6 +76,8 @@ class SurveysController < ApplicationController
 	def results
 		@survey = current_user.surveys.find(params[:id])
 		set_current_survey(@survey)
+
+		flash.now[:alert] = "The survey is still available to surveyed. The results may change at anytime." if @survey.available
 
 		redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if @survey.nil?
 	end

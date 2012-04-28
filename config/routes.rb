@@ -11,6 +11,12 @@ FeedbackLoop::Application.routes.draw do
 		end
 	end
 
+	resources :questions do
+		member do
+			get 'results'
+		end
+	end
+
 	resources :surveys, only: [ :create, :new, :show, :edit, :update, :destroy ]
 
 	resources :questions, only: [ :create, :new, :show, :edit, :update, :destroy ]

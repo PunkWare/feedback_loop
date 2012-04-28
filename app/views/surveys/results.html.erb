@@ -6,23 +6,37 @@
 		
 		<% @survey.questions.each do |question| %>
 	
-			<h2 class="question_title"> <%= question.title %> </h2>
-			
-			<% for answer in (1..question.number_of_choices) do %>
+			<h2 class="result_question_title"> <%= question.title %> </h2>
+
+			<div class="result_question_details">
+				<% if ! @survey.anonymous %>
+					<%= link_to "See details", results_question_path(question) %>
+				<% end %>
+			</div>
+
+			<% comments = "" %>
+
+			<% for choice in (1..question.number_of_choices) do %>
 				<p>
 					<div class="result_choice">
-						<%= 'Choice '+answer.to_s+' : ' %>
+						<%= 'Choice ' << choice.to_s << ' : ' %>
 					</div>
 					
 					<div class="result_answer">
-						<%= pluralize(question.answers.where(choice: answer).count, "answer") %>
+						<%= pluralize(question.answers.where(choice: choice).count, "answer") %>
 					</div>
 				</p>
+
+				<% if question.answers.where(choice: choice).any? %>
+					<% question.answers.where(choice: choice).each do |answer| %>
+						<% comments << '<div class="result_choice">Choice ' << choice.to_s << ' : </div>' << '<div class="result_answer">' << sanitize(answer.comment) << '</div>' %>
+					<% end %>
+				<% end %>
 			<% end %>
 
 			<p>
 				<div class="result_choice">
-					Count :
+					<div class="result_bold">Count :</div>
 				</div>
 				
 				<div class="result_answer">
@@ -32,13 +46,21 @@
 
 			<p>
 				<div class="result_choice">
-					Average : 
+					<div class="result_bold">Average :</div> 
 				</div>
 				
 				<div class="result_answer">
 					<%= question.answers.average("choice")?question.answers.average("choice"):0 %>
 				</div>
 			</p>
+
+			
+			<div>
+				<div class="result_bold">Comments :</div>
+			</div>
+			
+			<%=raw comments %>
+			<br /><br />
 		<% end %>
 
 	</div>

@@ -173,7 +173,7 @@ describe "Regarding all question pages :" do
 			click_link('delete')
 		end
 
-		it { should_not have_flash_message("This question was the last of the survey. As a result, the survey is not available for feedback anymore.",'notice') }
+		it { should_not have_flash_message("This question was the last of the survey. As a result, the survey is not available for feedback anymore.",'alert') }
 		specify { survey.reload.available.should == true }
 
 		describe ", deleting last one" do
@@ -181,7 +181,7 @@ describe "Regarding all question pages :" do
 				click_link('delete')
 			end
 
-			it { should have_flash_message("This question was the last of the survey. As a result, the survey is not available for feedback anymore.",'notice') }
+			it { should have_flash_message("This question was the last of the survey. As a result, the survey is not available for feedback anymore.",'alert') }
 			specify { another_question.survey.reload.available.should == false }
 		end
 	end
