@@ -1,5 +1,11 @@
 <li>
 	<span class="icons">
+		<% if survey.available %>
+			<i class="icon-ok"></i>
+		<% end %>
+	</span>
+
+	<span class="icons">
 		<% if survey.private %>
 			<i class="icon-lock"></i>
 		<% end %>

@@ -17,8 +17,12 @@
 		<% if @user.surveys.any? %>
 			<h3><%=  pluralize(@user.surveys.count, "owned survey")  %></h3>
 	
-			<p class="legend_line">
+			<p class="legend_line_surveys">
 				Legend : 
+				<span class="legend_item">
+					<i class="icon-ok"></i> Available
+				</span>
+
 				<span class="legend_item">
 					<i class="icon-lock"></i> Private
 				</span>
