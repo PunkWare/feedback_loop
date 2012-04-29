@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 	has_many :accesses, dependent: :destroy
 	#has_many :questions, :through => :answers
 	before_save :create_remember_token
+	before_save { |user| user.email = email.downcase }
 	
 	validates :name, presence: true, length: { maximum: 50 }
 	
