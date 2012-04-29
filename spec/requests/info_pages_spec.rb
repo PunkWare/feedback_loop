@@ -43,7 +43,7 @@ describe "info_pages" do
 				let!(:survey12) { FactoryGirl.create(:survey, user: user, title: "Survey 2 from user", private: true ) }
 				let!(:survey13) { FactoryGirl.create(:survey, user: user, title: "Survey 3 from user", available: true) }
 				let!(:survey21) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1 from another user", available: true) }
-				let!(:survey22) { FactoryGirl.create(:survey, user: another_user, title: "Survey 2 from another user", available: true) }
+				let!(:survey22) { FactoryGirl.create(:survey, user: another_user, title: "Survey 2 from another user", available: true, private: true) }
 				let!(:survey23) { FactoryGirl.create(:survey, user: another_user, title: "Survey 3 from another user") }
 
 				before do
@@ -54,10 +54,11 @@ describe "info_pages" do
 					it { should have_content(survey11.title) }
 					it { should have_content(survey13.title) }
 					it { should have_content(survey21.title) }
-					it { should have_content(survey22.title) }
+					
 
 					it { should_not have_content(survey12.title) }
 					it { should_not have_content(survey23.title) }
+					it { should_not have_content(survey22.title) }
 				end
 				
 				it { should have_link('Manage my surveys', href: user_surveys_path) }

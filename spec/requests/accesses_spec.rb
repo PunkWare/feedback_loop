@@ -71,6 +71,8 @@ describe "Regarding all access pages :" do
 					before { click_button create_access_button }
 					
 					it { should have_title(full_title('All surveys')) }
+
+					it { should have_content(survey.title) }
 				end   
 			end
 		end
