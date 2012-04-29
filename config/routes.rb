@@ -1,5 +1,7 @@
 FeedbackLoop::Application.routes.draw do
 
+  get "accesses/new"
+
 	resources :users
 	
 	resources :sessions, only: [ :new, :create, :destroy ]
@@ -21,7 +23,9 @@ FeedbackLoop::Application.routes.draw do
 
 	resources :questions, only: [ :create, :new, :show, :edit, :update, :destroy ]
 
-	resources :answers, only: [ :create, :new, :edit, :update]
+	resources :answers, only: [ :create, :new, :edit, :update ]
+
+	resources :accesses, only: [ :create, :new ]
 
 	root							to: 'info_pages#home'
 

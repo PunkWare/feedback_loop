@@ -6,7 +6,7 @@ describe "Regarding all answer pages :" do
 	subject { page }
 
 	shared_examples_for "all answer pages" do
-		it { should have_title(full_title(page_title)) }   
+		it { should have_title(full_title(page_title)) }
 		it { should have_heading(heading) }
 	end
 
@@ -27,7 +27,7 @@ describe "Regarding all answer pages :" do
 
 		it { should_not have_link('Previous question') }
 		it { should have_button('Save changes and next question') }
-		it { should_not have_button('Save changes and finish' ) }	
+		it { should_not have_button('Save changes and finish' ) }
 		it { should have_link('Additional information about the question available here.', href: updated_link) }
 
 		it_should_behave_like "all answer pages"

@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 	has_secure_password
 	has_many :surveys, dependent: :destroy
 	has_many :answers, dependent: :destroy
+	has_many :accesses, dependent: :destroy
 	#has_many :questions, :through => :answers
 	before_save :create_remember_token
 	

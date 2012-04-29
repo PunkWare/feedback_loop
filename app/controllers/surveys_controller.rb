@@ -48,7 +48,7 @@ class SurveysController < ApplicationController
 		end
 
 		# cannot make a survey not anonymous if it has answer
-		if params[:survey][:anonymous] == "0" and has_answer?(@survey)
+		if params[:survey][:anonymous] == "0" and has_answer?(@survey) and @survey.anonymous
 			flash[:error] = "Survey has been set back to anonymous because the survey has some answers. It cannot be changed anymore."
 			params[:survey][:anonymous] = "1"
 		end

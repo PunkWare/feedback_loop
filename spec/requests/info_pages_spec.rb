@@ -19,6 +19,9 @@ describe "info_pages" do
 			let(:heading) {'Feedback Loop'}  
 		
 			it_should_behave_like "all static pages"
+
+			it { should_not have_link('Manage my surveys', href: user_surveys_path) }
+			it { should_not have_link('Join private survey', href: new_access_path) }
 		end
 
 		describe "for signed-in users" do
@@ -34,13 +37,6 @@ describe "info_pages" do
 			let(:heading) {''}  
 		
 			it_should_behave_like "all static pages"
-			it { should have_link('Join private survey', href: root_path) }
-			#TO BE TESTED
-			#describe "when clicking the new survey button" do
-				#before { click_link 'Answer survey' }
-				
-				#it { should have_title('Feedback survey') }
-			#end
 
 			describe "as a signed-in user," do
 				let!(:survey11) { FactoryGirl.create(:survey, user: user, title: "Survey 1 from user", available: true) }
@@ -65,7 +61,19 @@ describe "info_pages" do
 				end
 				
 				it { should have_link('Manage my surveys', href: user_surveys_path) }
-				it { should have_link('Join private survey', href: root_path) }
+				it { should have_link('Join private survey', href: new_access_path) }
+
+				describe "when clicking the Manage my surveys button" do
+					before { click_link 'Manage my surveys' }
+				
+					it { should have_title('My surveys') }
+				end
+
+				describe "when clicking the Join private survey button" do
+					before { click_link 'Join private survey' }
+					
+					it { should have_title('Join private survey') }
+				end
 
 				it { should_not have_link('delete', href: survey_path(Survey.first)) }
 

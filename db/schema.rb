@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120414182142) do
+ActiveRecord::Schema.define(:version => 20120429093248) do
+
+  create_table "accesses", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "survey_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "accesses", ["survey_id", "user_id"], :name => "index_accesses_on_survey_id_and_user_id", :unique => true
 
   create_table "answers", :force => true do |t|
     t.integer  "question_id"

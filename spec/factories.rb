@@ -25,4 +25,9 @@ FactoryGirl.define do
 		question
 		user
 	end
+
+	factory :access do
+		survey
+		user
+	end
 end

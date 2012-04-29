@@ -1,0 +1,17 @@
+<% provide(:title, "Join private survey") %> 
+<h1>Join private survey</h1>
+
+<%= render 'shared/error_messages', object: @access %>
+
+<h2>Enter below the key that has been emailed to you.</h2>
+
+<div class="row">
+	<div class="span6 offset3">
+	
+		<%= form_tag("/accesses") do %>
+  			<%= label_tag(:key, "Key") %>
+  			<%= text_field_tag(:key) %>
+  			<%= submit_tag("Join", class: "btn btn-large btn-primary question_next") %>
+		<% end %>
+	</div>
+</div>

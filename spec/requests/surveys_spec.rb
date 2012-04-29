@@ -99,7 +99,7 @@ describe "Regarding all survey pages :" do
 	describe "When providing edit fields" do
 		let(:save_profile_button) {'Save changes'}
 		let(:user) { FactoryGirl.create(:user) }
-		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1") }
+		let(:survey) { FactoryGirl.create(:survey, user: user, title: "Survey 1", anonymous: true) }
 		
 		# must sign in user to comply with authorization restrictions
 		before do
@@ -208,7 +208,7 @@ describe "Regarding all survey pages :" do
 
 		it { should_not have_title(full_title(page_title)) }
 
-		describe "as a signed-in user, without any question" do
+		describe "as a signed-in user, without any question (thus survey not available)" do
 			before do
 				sign_in user
 				visit survey_path(survey)
@@ -217,9 +217,10 @@ describe "Regarding all survey pages :" do
 			it_should_behave_like "all survey pages"
 
 			it { should_not have_link('Make survey available', href: edit_survey_path(survey)) }
+			it { should_not have_link('Notify surveyed') }
 		end
 
-		describe "as a signed-in user," do
+		describe "as a signed-in user, with questions " do
 			let!(:question1) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
 			let!(:question2) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
 			
@@ -289,6 +290,23 @@ describe "Regarding all survey pages :" do
 			it "should be able to delete the question" do
 				expect { click_link('delete') }.to change(Question, :count).by(-1)
 			end
+		end
+
+		describe "as a signed-in user, with survey available" do
+			let!(:question1) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
+			let!(:question2) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
+			
+			before do
+				sign_in user
+				survey.available = true
+				survey.save
+				visit survey_path(survey)
+			end
+			
+			it_should_behave_like "all survey pages"
+
+			it { should_not have_link('Make survey available', href: edit_survey_path(survey)) }
+			it { should have_link('Notify surveyed') }
 		end
 	end
 
