@@ -3,6 +3,7 @@ class Question < ActiveRecord::Base
 	belongs_to :survey
 	has_many :answers, dependent: :destroy
 	#has_many :users, :through => :answers
+	before_save :well_formed_uri
 
 	validates :survey_id, presence: true
 	validates :title, presence: true
@@ -12,4 +13,9 @@ class Question < ActiveRecord::Base
 
 
 	default_scope order: 'questions.created_at'
+
+	private
+		def well_formed_uri
+			self.link = ("http://" << self.link) if ! self.link.nil? and self.link.start_with?('www') 
+		end
 end

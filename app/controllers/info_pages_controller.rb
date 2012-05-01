@@ -2,7 +2,7 @@ class InfoPagesController < ApplicationController
 	def home
 		if signed_in?
 			non_private_surveys	= Survey.where(available: true, private: false)
-			private_surveys 		= Survey.joins(:accesses).where(available: true)
+			private_surveys 		= Survey.joins(:accesses).where(available: true, accesses: { user_id: current_user.id })
 
 			merged_surveys = non_private_surveys.concat(private_surveys)
 			merged_surveys.sort! {|x,y| y.created_at <=> x.created_at }

@@ -115,19 +115,16 @@ class SurveysController < ApplicationController
 
 				if ! feedback_survey.nil?
 					if has_question?(feedback_survey)
-						surveys = Survey.where(:available => true, :private => false)
-						
-						surveys.each do |survey|
-							if survey.id == feedback_survey.id
-								found = true
-							end
+						non_private_surveys	= Survey.where(available: true, private: false)
+						private_surveys 		= Survey.joins(:accesses).where(available: true, accesses: { user_id: current_user.id })
+
+						merged_surveys = non_private_surveys.concat(private_surveys)
+						if merged_surveys.find {|x| x.id == feedback_survey.id }
+							found = true
 						end
 					end
-				else
-					redirect_to(root_url, :alert => "Can't find survey with id #{params[:id]}! Default to home page") if feedback_survey.nil?
 				end
-
-				redirect_to(root_url) if ! found
+				redirect_to(root_url, :alert => "Survey with id #{params[:id]} is not ready for feedback! Default to home page") if ! found
 			end
 
 end

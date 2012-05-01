@@ -4,6 +4,7 @@ class Survey < ActiveRecord::Base
 	has_many :questions, dependent: :destroy
 	has_many :accesses, dependent: :destroy
 	before_save :create_key
+	before_save :well_formed_uri
 
 	validates :user_id,	presence: true
 	validates :title,		presence: true
@@ -14,5 +15,9 @@ class Survey < ActiveRecord::Base
 
 		def create_key
 			self.key = SecureRandom.urlsafe_base64
+		end
+
+		def well_formed_uri
+			self.link = ("http://" << self.link) if ! self.link.nil? and self.link.start_with?('www') 
 		end
 end

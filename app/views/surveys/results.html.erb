@@ -13,6 +13,10 @@
 				<% end %>
 			</div>
 
+			<div>
+				<h5>1: <%= sanitize(question.first_choice) %> <i class="icon-arrow-right"></i> <%= question.number_of_choices %>: <%= sanitize(question.last_choice) %></h5>
+			</div>
+
 			<% comments = "" %>
 
 			<% for choice in (1..question.number_of_choices) do %>

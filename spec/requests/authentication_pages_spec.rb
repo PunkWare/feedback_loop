@@ -229,6 +229,12 @@ describe "Authenticated pages" do
 				end
 			end
 		end
+
+		describe "when trying to join a private survey" do
+			before { visit new_access_path }
+
+			it { should have_title('Sign in') }
+		end
 	end
 
 	describe "for signed-in users" do

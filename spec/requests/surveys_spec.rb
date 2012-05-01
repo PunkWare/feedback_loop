@@ -330,11 +330,11 @@ describe "Regarding all survey pages :" do
 
 			it "should not work" do
 				should have_title(full_title(page_title))
-				should_not have_link('Start survey !', href: root_path)
+				should_not have_link('Start survey !')
 			end
 		end
 
-		describe "and the survey is private" do
+		describe "and the survey is private with no access" do
 			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", private: true) }
 
 			before do
@@ -343,7 +343,35 @@ describe "Regarding all survey pages :" do
 
 			it "should not work" do
 				should have_title(full_title(page_title))
-				should_not have_link('Start survey !', href: root_path)
+				should_not have_link('Start survey !')
+			end
+		end
+
+		describe "and the survey is private with access" do
+			let(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", available: true, private: true) }
+			let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
+			let!(:access) { FactoryGirl.create(:access, user: user, survey: survey) }
+
+
+			before do
+				visit begin_survey_path(survey)
+			end
+
+			it "should work" do
+				should have_title(full_title("Give feedback"))
+				should have_link('Start survey !')
+			end
+
+			describe "and the survey is private without access" do
+				before do
+					sign_in another_user
+					visit begin_survey_path(survey)
+				end
+
+				it "should not work" do
+					should have_title(full_title(page_title))
+					should_not have_link('Start survey !')
+				end
 			end
 		end
 
@@ -356,11 +384,11 @@ describe "Regarding all survey pages :" do
 
 			it "should not work " do
 				should have_title(full_title(page_title))
-				should_not have_link('Start survey !', href: root_path)
+				should_not have_link('Start survey !')
 			end
 		end
 
-		describe "and the survey is valid" do
+		describe "and the survey (not private) is valid" do
 			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", available: true, anonymous: false, link: "http://www.github.com/punkware") }
 			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
 			let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
@@ -374,7 +402,7 @@ describe "Regarding all survey pages :" do
 				should have_title(full_title(page_title))
 				should have_content("This survey is NOT anonymous")
 				should have_link("Additional information about the survey available here.", href: "http://www.github.com/punkware")
-				should have_content('Start survey !')
+				should have_link('Start survey !')
 			end
 
 			describe ", starting the survey" do

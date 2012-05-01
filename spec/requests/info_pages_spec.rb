@@ -41,10 +41,16 @@ describe "info_pages" do
 			describe "as a signed-in user," do
 				let!(:survey11) { FactoryGirl.create(:survey, user: user, title: "Survey 1 from user", available: true) }
 				let!(:survey12) { FactoryGirl.create(:survey, user: user, title: "Survey 2 from user", private: true ) }
-				let!(:survey13) { FactoryGirl.create(:survey, user: user, title: "Survey 3 from user", available: true) }
+				let!(:survey13) { FactoryGirl.create(:survey, user: user, title: "Survey 3 from user", available: true, anonymous: true) }
+				let!(:survey14) { FactoryGirl.create(:survey, user: user, title: "Survey 4 from user", available: true, private: true) }
+				let!(:access14) { FactoryGirl.create(:access, user: another_user, survey: survey14) }
 				let!(:survey21) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1 from another user", available: true) }
 				let!(:survey22) { FactoryGirl.create(:survey, user: another_user, title: "Survey 2 from another user", available: true, private: true) }
 				let!(:survey23) { FactoryGirl.create(:survey, user: another_user, title: "Survey 3 from another user") }
+				let!(:survey24) { FactoryGirl.create(:survey, user: another_user, title: "Survey 4 from another user", available: true, private: true) }
+				let!(:access24) { FactoryGirl.create(:access, user: user, survey: survey24) }
+				let!(:survey25) { FactoryGirl.create(:survey, user: another_user, title: "Survey 5 from another user", private: true) }
+				let!(:access25) { FactoryGirl.create(:access, user: user, survey: survey25) }
 
 				before do
 					visit root_path
@@ -54,11 +60,13 @@ describe "info_pages" do
 					it { should have_content(survey11.title) }
 					it { should have_content(survey13.title) }
 					it { should have_content(survey21.title) }
+					it { should have_content(survey24.title) }
 					
-
+					it { should_not have_content(survey14.title) }
 					it { should_not have_content(survey12.title) }
 					it { should_not have_content(survey23.title) }
 					it { should_not have_content(survey22.title) }
+					it { should_not have_content(survey25.title) }
 				end
 				
 				it { should have_link('Manage my surveys', href: user_surveys_path) }
