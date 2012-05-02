@@ -3,7 +3,7 @@ class Survey < ActiveRecord::Base
 	belongs_to :user
 	has_many :questions, dependent: :destroy
 	has_many :accesses, dependent: :destroy
-	before_save :create_key
+	before_create :create_key
 	before_save :well_formed_uri
 
 	validates :user_id,	presence: true
