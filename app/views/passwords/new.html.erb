@@ -1,0 +1,17 @@
+<% provide(:title, "Reset password") %>
+<h1>Reset password</h1>
+
+<h2>Enter below your email and a new password will be sent to you.</h2>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(:password, :url => passwords_path) do |f| %>
+
+			<%= f.label :email %>
+			<%= f.text_field :email %>
+
+			<%= f.submit "Send", :class => "btn btn-large btn-primary" %>
+
+		<% end %>
+	</div>
+</div>
