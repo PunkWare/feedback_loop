@@ -1,5 +1,5 @@
 class ResetMailer < ActionMailer::Base
-	default from: "punkware@free.fr"
+	default from: "feedbackloop@free.fr"
 
 	def reset_password(this_user, this_password)
 		@user = this_user
