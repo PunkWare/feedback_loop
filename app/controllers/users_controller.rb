@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(params[:user])
 		if @user.save
-			flash[ :success ] = "Welcome to Feedback Loop!"
+			flash[ :success ] = 'Welcome to Feedback Loop! Click "Help" link at the bottom-right for more information.'
 			
 			#redirect_to user_url(@user)
 			
