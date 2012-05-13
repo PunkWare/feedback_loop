@@ -17,6 +17,15 @@ def sign_in(user)
 	cookies[:remember_token] = user.remember_token
 end
 
+def new_password(email_body)
+	position = email_body.index('new password')
+	if position
+		email_body[position + 18, 10]
+	else
+		return nil
+	end
+end
+
 RSpec::Matchers.define :have_flash_message do |message, kind|
 	match do |page|
 		page.should have_selector('div.alert.alert-'+kind, text: message)

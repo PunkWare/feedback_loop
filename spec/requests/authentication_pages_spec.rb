@@ -8,7 +8,7 @@ describe "Signin, and signout pages" do
 		it { should have_heading(heading) }
 	end
 
-	describe "When testing title and h1 on sign up page, " do
+	describe "When testing title and h1 on sign in page, " do
 		before { visit signin_path }
 		let(:heading) {'Sign in'}
 		let(:page_title) {heading}

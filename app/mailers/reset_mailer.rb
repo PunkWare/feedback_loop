@@ -7,4 +7,4 @@ class ResetMailer < ActionMailer::Base
 
 		mail(:to => this_user.email, :subject => "Reset your Feedback Loop password")
 	end
-end
+end 

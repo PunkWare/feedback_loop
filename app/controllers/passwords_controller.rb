@@ -14,6 +14,6 @@ class PasswordsController < ApplicationController
 			ResetMailer.reset_password(user, password).deliver
 		end
 		flash[:success] = 'An email has been set with password reset instructions.'
-		redirect_to root_url
+		redirect_to signin_url
 	end
 end

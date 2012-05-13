@@ -39,7 +39,7 @@ describe "Regarding all access pages :" do
 						click_button create_access_button
 					end
 			
-					it { should have_flash_message('The key you entered is not valid.','error') } 
+					it { should have_flash_message('The key you entered is not valid.','error') }
 				end
 			end
 
@@ -52,7 +52,7 @@ describe "Regarding all access pages :" do
 						click_button create_access_button
 					end
 			
-					it { should have_flash_message('You have joined this survey already.','alert') } 
+					it { should have_flash_message('You have joined this survey already.','alert') }
 				end
 			end
 
@@ -73,7 +73,7 @@ describe "Regarding all access pages :" do
 					it { should have_title(full_title('All surveys')) }
 
 					it { should have_content(survey.title) }
-				end   
+				end
 			end
 		end
 	end
