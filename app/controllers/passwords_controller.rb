@@ -6,10 +6,10 @@ class PasswordsController < ApplicationController
 		user = User.find_by_email(params[:password][:email]) 
 		if user
 			
-			password = ('a'..'z').to_a.shuffle[0..9].join
+			password = SecureRandom.urlsafe_base64[0..9]
 
-    		user.password = user.password_confirmation = password
-    		user.save
+			user.password = user.password_confirmation = password
+			user.save
 
 			ResetMailer.reset_password(user, password).deliver
 		end
