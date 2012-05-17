@@ -28,11 +28,15 @@ describe "Password pages" do
 				end
 
 				describe "it should create an email" do
-					before { click_button reset_password_button }
+					before do
+						ActionMailer::Base.deliveries.clear
+						click_button reset_password_button
+					end
 
 					it "and sends the email" do
 						assert !ActionMailer::Base.deliveries.empty?, "Queue is empty"
 						ActionMailer::Base.deliveries.last.to.should == [user.email]
+						ActionMailer::Base.deliveries.last.subject.should == "Reset your Feedback Loop password"
 					end
 				end
 

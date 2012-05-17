@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe ResetMailer do
-	describe 'reset_mailer' do
+	describe 'reset_password' do
 		let(:email_address) { "fake@fake.fake" }
 		let(:password) { "fakefake" }
 		let!(:user) { FactoryGirl.create(:user, name: "imfake", email: email_address, password: password, password_confirmation: password ) }

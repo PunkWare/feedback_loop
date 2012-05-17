@@ -14,6 +14,9 @@ class AnswersController < ApplicationController
 				if question_after?(@answer.question)
 					redirect_to answer_path_for_question_after(@answer.question)
 				else
+					if @answer.question.survey.user.notified
+						NotifyMailer.notify_feedback(@answer.question.survey.user, current_user, @answer.question.survey).deliver
+					end
 					redirect_to end_path
 				end
 			else
@@ -50,6 +53,9 @@ class AnswersController < ApplicationController
 				if question_after?(@answer.question)
 					redirect_to answer_path_for_question_after(@answer.question)
 				else
+					if @answer.question.survey.user.notified
+						NotifyMailer.notify_feedback(@answer.question.survey.user, current_user, @answer.question.survey).deliver
+					end
 					redirect_to end_path
 				end
 			else

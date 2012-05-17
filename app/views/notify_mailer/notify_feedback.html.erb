@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	</head>
+	<body>
+		<p>
+			Dear <%= @owner.name %>,
+		</p>
+		<p>
+			Your survey "<%= @survey.title %>" has just got feedback
+			<% if ! @survey.anonymous %>
+				<%= " by " << @feedbacker.name %>
+			<% end %>
+			!
+		</p>
+		<p>
+			Kind regards,
+		</p>
+		<p>
+			The Feedback Loop team
+		</p>
+	</body>
+</html>

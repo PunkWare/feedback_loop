@@ -312,7 +312,7 @@ describe "Regarding all survey pages :" do
 
 	describe "When accessing begin page, " do
 		let(:user) { FactoryGirl.create(:user) }
-		let(:another_user) { FactoryGirl.create(:user) }
+		let(:another_user) { FactoryGirl.create(:user, notified: true) }
 		let(:heading) {""}
 		let(:page_title) {"All surveys"}
 		
@@ -388,7 +388,7 @@ describe "Regarding all survey pages :" do
 			end
 		end
 
-		describe "and the survey (not private) is valid" do
+		describe "and the survey (not private) is valid." do
 			let!(:survey) { FactoryGirl.create(:survey, user: another_user, title: "Survey 1", available: true, anonymous: false, link: "http://www.github.com/punkware") }
 			let!(:question) { FactoryGirl.create(:question, survey: survey, title: "Question 1") }
 			let!(:another_question) { FactoryGirl.create(:question, survey: survey, title: "Question 2") }
@@ -398,14 +398,14 @@ describe "Regarding all survey pages :" do
 				visit begin_survey_path(survey)
 			end
 			
-			it "should work " do
+			it "should start the survey." do
 				should have_title(full_title(page_title))
 				should have_content("This survey is NOT anonymous")
 				should have_link("Additional information about the survey available here.", href: "http://www.github.com/punkware")
 				should have_link('Start survey !')
 			end
 
-			describe ", starting the survey" do
+			describe "Starting the survey" do
 				let(:heading) {survey.title}
 				let(:page_title) {'Feedback question'}
 				
@@ -418,6 +418,42 @@ describe "Regarding all survey pages :" do
 				it "should display the first question" do
 					should have_button('Save changes and next question')
 					should_not have_content('Previous question')
+				end
+
+				describe ", then finishing the survey" do
+					before { click_button 'Save changes and next question' }
+
+					it_should_behave_like "all survey pages"
+
+					it "should display the last question" do
+						should have_button('Save changes and finish')
+						should have_content('Previous question')
+					end 
+
+					describe ", if the owner of the survey wants to be notified" do
+						before do
+							ActionMailer::Base.deliveries.clear
+							click_button 'Save changes and finish'
+						end
+
+						it "should send a notification to him by email" do
+							assert !ActionMailer::Base.deliveries.empty?, "Queue is empty"
+							ActionMailer::Base.deliveries.last.to.should == [another_user.email]
+							ActionMailer::Base.deliveries.last.subject.should == "Your survey has feedback!"
+						end
+					end
+
+					describe ", if the owner of the survey doesn't want to be notified" do
+						before do
+							ActionMailer::Base.deliveries.clear
+							another_user.toggle!(:notified)
+							click_button 'Save changes and finish'
+						end
+
+						it "should not send a notification to him by email" do
+							assert ActionMailer::Base.deliveries.empty?, "Queue is empty"
+						end
+					end
 				end
 			end
 		end

@@ -1,0 +1,10 @@
+Dear <%= @owner.name %>,
+
+Your survey "<%= @survey.title %>" has just got feedback
+<% if ! @survey.anonymous %>
+	<%= " by " << @feedbacker.name %>
+<% end %>!
+
+Kind regards,
+
+The Feedback Loop team
