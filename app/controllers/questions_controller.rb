@@ -22,19 +22,19 @@ class QuestionsController < ApplicationController
 
 	def show
 		@question = ApplicationController.current_survey.questions.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
+		redirect_to(root_url, alert: "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
 
 		#@answers = current_question.answers.paginate(page: params[:page])
 	end
 
 	def edit
 		@question = ApplicationController.current_survey.questions.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
+		redirect_to(root_url, alert: "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
 	end
 
 	def update
 		@question = ApplicationController.current_survey.questions.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
+		redirect_to(root_url, alert: "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
 		
 		if @question.update_attributes(params[:question])
 			flash[:success] = "Question updated."
@@ -47,7 +47,7 @@ class QuestionsController < ApplicationController
 
 	def destroy
 		deleted_question = ApplicationController.current_survey.questions.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if deleted_question.nil?
+		redirect_to(root_url, alert: "Can't find question with id #{params[:id]}! Default to home page") if deleted_question.nil?
 
 		deleted_question.destroy
 		flash[:success] = "Question deleted."
@@ -63,7 +63,7 @@ class QuestionsController < ApplicationController
 
 	def results
 		@question = ApplicationController.current_survey.questions.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
+		redirect_to(root_url, alert: "Can't find question with id #{params[:id]}! Default to home page") if @question.nil?
 	end
 
 	private

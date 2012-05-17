@@ -31,12 +31,12 @@ class UsersController < ApplicationController
 	
 	def show
 		@user = User.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find user with id #{params[:id]}! Default to home page") if @user.nil?
+		redirect_to(root_url, alert: "Can't find user with id #{params[:id]}! Default to home page") if @user.nil?
 	end
 
 	def surveys
 		@user = current_user
-		redirect_to(root_url, :alert => "Can't find user with id #{params[:id]}! Default to home page") if @user.nil?
+		redirect_to(root_url, alert: "Can't find user with id #{params[:id]}! Default to home page") if @user.nil?
 
 		@surveys = @user.surveys.paginate(page: params[:page])
 	end
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
 	
 	def destroy
 		deleted_user = User.find(params[:id])
-		redirect_to(root_url, :alert => "Can't find user with id #{params[:id]}! Default to home page") if deleted_user.nil?
+		redirect_to(root_url, alert: "Can't find user with id #{params[:id]}! Default to home page") if deleted_user.nil?
 
 		deleted_user.destroy
 		#deleted_user.destroy
@@ -92,10 +92,10 @@ class UsersController < ApplicationController
 
 			def correct_user
 				@user = User.find(params[:id])
-				redirect_to(root_url, :alert => "Access prohibited! Default to home page") unless current_user?(@user)
+				redirect_to(root_url, alert: "Access prohibited! Default to home page") unless current_user?(@user)
 			end
 			
 			def admin_user
-				redirect_to(root_url, :alert => "Access prohibited! Default to home page") unless (signed_in? && current_user.admin?)
+				redirect_to(root_url, alert: "Access prohibited! Default to home page") unless (signed_in? && current_user.admin?)
 			end
 end

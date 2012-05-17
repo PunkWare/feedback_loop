@@ -2,7 +2,7 @@ class Question < ActiveRecord::Base
 	attr_accessible :title, :first_choice, :last_choice, :number_of_choices, :link
 	belongs_to :survey
 	has_many :answers, dependent: :destroy
-	#has_many :users, :through => :answers
+	#has_many :users, through: :answers
 	before_save :well_formed_uri
 
 	validates :survey_id, presence: true

@@ -28,7 +28,7 @@
 
 				<% mail_sender << "\nSo just stop whatever you\'re doing and go to https://feedback-loop.herokuapp.com/ to feedback it.\n\nThanks!\n\n" << @survey.user.name %>
 
-				<%= mail_to "", "Notify surveyed", :subject => "A new survey is available on Feedback Loop", :body => mail_sender, class: "btn btn-large btn-primary btn_width50" %>
+				<%= mail_to "", "Notify surveyed", subject: "A new survey is available on Feedback Loop", body: mail_sender, class: "btn btn-large btn-primary btn_width50" %>
 			</p>
 		<% end %>
 	

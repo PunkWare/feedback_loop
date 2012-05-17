@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 	has_many :surveys, dependent: :destroy
 	has_many :answers, dependent: :destroy
 	has_many :accesses, dependent: :destroy
-	#has_many :questions, :through => :answers
+	#has_many :questions, through: :answers
 	before_save :create_remember_token
 	before_save { |user| user.email = email.downcase }
 	

@@ -5,6 +5,6 @@ class ResetMailer < ActionMailer::Base
 		@user = this_user
 		@password = this_password
 
-		mail(:to => this_user.email, :subject => "Reset your Feedback Loop password")
+		mail(to: this_user.email, subject: "Reset your Feedback Loop password")
 	end
 end 

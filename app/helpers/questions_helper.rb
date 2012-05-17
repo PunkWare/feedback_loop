@@ -4,7 +4,7 @@ module QuestionsHelper
 		position = ApplicationController.current_survey.questions.index(this_question)
 
 		if ! position
-			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
+			redirect_to(root_url, alert: "Can't find position for question! Default to home page")
 		else
 			position
 		end
@@ -15,7 +15,7 @@ module QuestionsHelper
 		position = ApplicationController.current_survey.questions.index(this_question)
 
 		if ! position
-			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
+			redirect_to(root_url, alert: "Can't find position for question! Default to home page")
 		else
 			if ( position + 1 ) >= ApplicationController.current_survey.questions.length
 				false
@@ -29,7 +29,7 @@ module QuestionsHelper
 		position = ApplicationController.current_survey.questions.index(this_question)
 
 		if ! position
-			redirect_to(root_url, :alert => "Can't find position for question! Default to home page")
+			redirect_to(root_url, alert: "Can't find position for question! Default to home page")
 		else
 			if position.zero?
 				false
@@ -51,7 +51,7 @@ module QuestionsHelper
 				new_answer_path
 			end
 		else
-			redirect_to(root_url, :alert => "Can't find question! Default to home page")
+			redirect_to(root_url, alert: "Can't find question! Default to home page")
 		end
 	end
 
@@ -69,7 +69,7 @@ module QuestionsHelper
 				new_answer_path
 			end
 		else
-			redirect_to(root_url, :alert => "Can't find question! Default to home page")
+			redirect_to(root_url, alert: "Can't find question! Default to home page")
 		end
 	end
 
@@ -82,10 +82,10 @@ module QuestionsHelper
 			if answer_exist.first
 				edit_answer_path(answer_exist.first, backward: true)
 			else
-				redirect_to(root_url, :alert => "Can't find answer with question id #{question_id}! Default to home page")
+				redirect_to(root_url, alert: "Can't find answer with question id #{question_id}! Default to home page")
 			end
 		else
-			redirect_to(root_url, :alert => "Can't find question! Default to home page")
+			redirect_to(root_url, alert: "Can't find question! Default to home page")
 		end
 	end
 
