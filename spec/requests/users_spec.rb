@@ -50,10 +50,10 @@ describe "Regarding all user pages :" do
 
 		describe " with valid information, " do
 			before do
-				fill_in "Name",         with: "fake"
-				fill_in "Email",        with: "fake@fake.fake"
-				fill_in "Password",     with: "fakefake"
-				fill_in "Confirmation", with: "fakefake"
+				fill_in	"Name",         with: "fake"
+				fill_in	"Email",        with: "fake@fake.fake"
+				fill_in	"Password",     with: "fakefake"
+				fill_in	"Confirmation", with: "fakefake"
 			end
 
 			it "should create a user" do
@@ -152,10 +152,11 @@ describe "Regarding all user pages :" do
 			let(:updated_email) { "update@update.update" }
 						
 			before do
-				fill_in "Name",         with: updated_name
-				fill_in "Email",        with: updated_email
-				fill_in "Password",     with: user.password
-				fill_in "Confirmation", with: user.password
+				fill_in	"Name",         with: updated_name
+				fill_in	"Email",        with: updated_email
+				check		"Notify me"
+				fill_in	"Password",     with: user.password
+				fill_in	"Confirmation", with: user.password
 				click_button save_profile_button
 			end
 
@@ -163,9 +164,10 @@ describe "Regarding all user pages :" do
 			it { should have_flash_message('Profile updated','success') }
 			it { should have_link('Sign out', href: signout_path) }
 			
-			# Check that the name and email have been indeed modified
+			# Check that the fields have been indeed modified
 			specify { user.reload.name.should  == updated_name }
 			specify { user.reload.email.should == updated_email }
+			specify { user.reload.notified.should == true }
 			
 		end
 	end

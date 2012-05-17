@@ -7,6 +7,7 @@ describe User do
 	
 	it { should respond_to(:name) }
 	it { should respond_to(:email) }
+	it { should respond_to(:notified) }
 	it { should respond_to(:password_digest) }
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
@@ -40,6 +41,11 @@ describe User do
 	describe "when email is not present" do
 		before { @user.email = " " }
 		it { should_not be_valid }
+	end
+
+	describe "with notified attribute set to 'true'" do
+		before { @user.toggle!(:notified) }
+		it { should be_notified }
 	end
 	
 	describe "when password is not present" do

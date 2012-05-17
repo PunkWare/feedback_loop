@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20120429093248) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
+    t.boolean  "notified",        :default => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.string   "password_digest"

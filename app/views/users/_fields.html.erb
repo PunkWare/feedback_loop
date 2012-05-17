@@ -4,6 +4,14 @@
 <%= f.label :email %>
 <%= f.text_field :email %>
 
+<% if ! creation %>
+	<p>
+		<%= f.label :notified, "Notify me" %>
+		<span class="tips">Notify me when someone feedback one of my survey:</span>
+		<%= f.check_box :notified %>
+	</p>
+<% end %>
+
 <%= f.label :password %>
 <%= f.password_field :password %>
 

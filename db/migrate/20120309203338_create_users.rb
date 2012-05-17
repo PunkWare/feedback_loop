@@ -1,10 +1,11 @@
 class CreateUsers < ActiveRecord::Migration
-  def change
-    create_table :users do |t|
-      t.string :name
-      t.string :email
+ 	def change
+		create_table	:users do |t|
+			t.string		:name
+			t.string		:email
+			t.boolean	:notified, default: false
 
-      t.timestamps
-    end
-  end
+			t.timestamps
+		end
+	end
 end
